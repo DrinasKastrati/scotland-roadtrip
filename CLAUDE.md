@@ -30,4 +30,7 @@ Most content changes (times, stops, campsites, links, notes) belong in `TRIP`, n
 
 - Keep the site a single self-contained `index.html`; external requests only to Google Fonts and the linked official sites.
 - External links open in a new tab with `target="_blank" rel="noopener"`.
-- Checklist and progress state live in the visitor's `localStorage`; do not rename its keys, or saved progress is lost.
+- Checklist, progress and Road Mode state live in the visitor's `localStorage` under versioned keys `scotland-roadtrip-v3.*` (`TRIP.config.storageKey`). Do not rename them, or saved ticks are lost. The old `scot26.*` keys are migrated once on load.
+- Priorities: each waypoint in `TRIP.waypoints` has `prio` (`must` / `high` / `opt` / `skip`, or `null` for practical stops), `time`, `next`, `skip` and a Google Maps query `q`. Timeline items link to a waypoint with `wp:n`.
+- Saturday deadline logic reads `TRIP.config.deadline` (hard 17:00, green before 16:15, red after 16:40) and each Day 4 waypoint's `toGla` (driving minutes left to Glasgow) and `stopMin`.
+- Map lines come from `ROUTE`; each segment has a `day` and is drawn in that day's colour. The route is a loop — Saturday returns via Loch Ness, the A86 and the A9, never via Glencoe or Loch Lomond.
