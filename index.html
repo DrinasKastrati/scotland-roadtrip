@@ -1364,7 +1364,7 @@ body.road-open{overflow:hidden}
     <p class="disclaim">
       Driving times, ferry schedules, prices, campsite availability, opening hours and regulations can change. Always verify
       official information before travelling. Drive times are estimates for a campervan and do not include traffic or
-      roadworks. Sunset times are approximate for the west of Scotland in mid-September (BST). This page stores
+      roadworks. Sunrise and sunset times are approximate (BST), calculated for where you wake up and where you are in the evening each day. This page stores
       checklist and progress ticks in your browser only.
     </p>
   </div>
@@ -1494,7 +1494,8 @@ const TRIP = {
       titleEm:"Capital to wilderness in one afternoon",
       start:"Glasgow", end:"Bridge of Orchy",
       depart:"14:30", drive:"≈3.5 h", km:"≈220 km",
-      sunset:"≈19:40",
+      sunrise:"≈06:50", sunriseWhere:"Glasgow",
+      sunset:"≈19:36", sunsetWhere:"Bridge of Orchy",
       stops:["Edinburgh Old Town","Stirling area","Callander","Crianlarich"],
       overnight:"Bridge of Orchy — Stay the Night",
       overnightShort:"Bridge of Orchy",
@@ -1525,7 +1526,7 @@ const TRIP = {
         { time:"≈19:15", h:"Crianlarich and Tyndrum",
           p:"Join the A82 north. The last easy places for fuel and supplies before the moor." },
         { time:"≈19:45", key:true, h:"Arrive Bridge of Orchy", wp:4,
-          p:"Park, level the camper and settle in. Sunset is around 19:40, so you arrive at dusk — do not add extra stops on the way.",
+          p:"Park, level the camper and settle in. Sunset is around 19:36, so you arrive at dusk — do not add extra stops on the way.",
           backup:true }
       ],
       stay:{
@@ -1557,7 +1558,8 @@ const TRIP = {
       titleEm:"The ferry sets the pace",
       start:"Bridge of Orchy", end:"Broadford, Isle of Skye",
       depart:"07:15–07:30", drive:"≈4.5 h + ferry", km:"≈240 km",
-      sunset:"≈19:52",
+      sunrise:"≈06:53", sunriseWhere:"Bridge of Orchy",
+      sunset:"≈19:38", sunsetWhere:"Broadford",
       stops:["Rannoch Moor","Glencoe","Fort William","Glenfinnan","Mallaig","Fairy Pools","Sligachan"],
       overnight:"Camping Skye, Broadford",
       overnightShort:"Broadford",
@@ -1628,7 +1630,8 @@ const TRIP = {
       titleEm:"Storr, Trotternish and the Quiraing",
       start:"Broadford", end:"Broadford",
       depart:"07:15–07:30", drive:"≈4 h total", km:"≈200 km",
-      sunset:"≈19:49",
+      sunrise:"≈06:59", sunriseWhere:"Broadford",
+      sunset:"≈19:37", sunsetWhere:"North Skye",
       stops:["Old Man of Storr","Lealt Falls","Kilt Rock","Staffin","Duntulm","Fairy Glen","Quiraing","Portree"],
       overnight:"Broadford (not Portree)",
       overnightShort:"Broadford",
@@ -1692,7 +1695,8 @@ const TRIP = {
       titleEm:"Home by a completely different road",
       start:"Broadford", end:"Glasgow",
       depart:"07:00–07:15", drive:"≈6 h 20 min", km:"≈410 km",
-      sunset:"≈19:36",
+      sunrise:"≈07:02", sunriseWhere:"Broadford",
+      sunset:"≈19:25", sunsetWhere:"Glasgow",
       stops:["Skye Bridge","Eilean Donan","Glen Shiel","Fort Augustus","Spean Bridge","A86 · Loch Laggan","Dalwhinnie","A9","Pitlochry (if time)"],
       overnight:"Trip ends in Glasgow",
       overnightShort:"Glasgow · 17:00",
@@ -2423,7 +2427,8 @@ function dayHTML(d){
             '<div><span class="k">Driving</span><span class="v">' + esc(d.drive) + ' · ' + esc(d.km) + '</span></div>' +
             '<div><span class="k">Main stops</span><span class="v">' + d.stops.map(esc).join(" · ") + '</span></div>' +
             '<div><span class="k">Overnight</span><span class="v">' + esc(d.overnight) + '</span></div>' +
-            '<div><span class="k">Sunset</span><span class="v mono">' + esc(d.sunset) + '</span></div>' +
+            '<div><span class="k">Sunrise</span><span class="v mono">' + esc(d.sunrise) + ' · ' + esc(d.sunriseWhere) + '</span></div>' +
+            '<div><span class="k">Sunset</span><span class="v mono">' + esc(d.sunset) + ' · ' + esc(d.sunsetWhere) + '</span></div>' +
           '</div>' +
         '</div>' +
         '<div class="note"><h5>Fuel</h5><p>' + esc(d.fuel) + '</p></div>' +
@@ -2777,7 +2782,7 @@ function renderDash(){
     '<div class="dash-cell"><span>Tonight</span><b>' + esc(d.overnightShort) + '</b></div>' +
     '<div class="dash-cell' + (d.deadline ? ' is-deadline' : ' is-alert') + '"><span>' + (d.deadline ? 'Glasgow deadline' : 'Important booking') + '</span><b class="thin">' + esc(d.booking) + '</b></div>' +
     '<div class="dash-cell"><span>Weather</span><b class="thin"><a href="https://www.metoffice.gov.uk/weather/specialist-forecasts/mountain" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Check Met Office ↗</a></b></div>' +
-    '<div class="dash-cell"><span>Sunset (approx.)</span><b class="thin">' + esc(d.sunset) + '</b></div>';
+    '<div class="dash-cell"><span>Sunrise / sunset</span><b class="thin">↑ ' + esc(d.sunrise) + ' · ↓ ' + esc(d.sunset) + '</b></div>';
   $("#qbToday").setAttribute("href", "#day" + d.n);
   $("#qbNext").setAttribute("href", mapsSearch(nx.q));
 }
@@ -3050,7 +3055,7 @@ function renderRoad(){
 
     '<div class="road-block"><span class="lbl">Overnight</span><b>' + esc(d.overnight) + '</b>' +
       (d.stay ? '<p class="mono">' + esc(d.stay.type) + '</p>' : '<p class="mono">Return the camper in Glasgow by ' + esc(c.hard) + '</p>') +
-      '<p class="mono">Sunset ' + esc(d.sunset) + ' (approx.)</p></div>' +
+      '<p class="mono">Sunrise ' + esc(d.sunrise) + ' · sunset ' + esc(d.sunset) + ' (approx.)</p></div>' +
 
     '<div class="road-block"><span class="lbl">Weather</span><p>' + esc(d.weather) + '</p>' +
       '<a class="btn btn-line btn-sm" style="align-self:flex-start" href="https://www.metoffice.gov.uk/weather/specialist-forecasts/mountain" target="_blank" rel="noopener">Met Office forecast' + EXT + '</a></div>' +
