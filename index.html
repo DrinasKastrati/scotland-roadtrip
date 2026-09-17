@@ -1000,9 +1000,9 @@ body.road-open{overflow:hidden}
               </thead>
               <tbody>
                 <tr><td class="d">Day 1<br>Wed 16</td><td class="leg">Glasgow → Edinburgh → Callander → Crianlarich → Bridge of Orchy</td><td>Bridge of Orchy</td></tr>
-                <tr><td class="d">Day 2<br>Thu 17</td><td class="leg">Bridge of Orchy → Glencoe → Fort William → Glenfinnan → Mallaig → ferry → Fairy Pools → Sligachan</td><td>Broadford, Skye</td></tr>
-                <tr><td class="d">Day 3<br>Fri 18</td><td class="leg">North Skye loop — Storr, Lealt Falls, Kilt Rock, Staffin, Duntulm, Fairy Glen, Quiraing, Portree</td><td>Broadford, Skye</td></tr>
-                <tr><td class="d">Day 4<br>Sat 19</td><td class="leg">Broadford → Eilean Donan → Glen Shiel → Fort Augustus → A86 → Dalwhinnie → A9 → Glasgow</td><td>Trip ends · Glasgow by 17:00</td></tr>
+                <tr><td class="d">Day 2<br>Thu 17</td><td class="leg">Bridge of Orchy → Glencoe → Fort William → Glenfinnan → Mallaig → ferry → Fairy Pools → Sligachan</td><td>An Crùbh, Sleat</td></tr>
+                <tr><td class="d">Day 3<br>Fri 18</td><td class="leg">North Skye loop — Storr, Lealt Falls, Kilt Rock, Staffin, Duntulm, Fairy Glen, Quiraing, Portree</td><td>An Crùbh, Sleat</td></tr>
+                <tr><td class="d">Day 4<br>Sat 19</td><td class="leg">An Crùbh → Broadford → Eilean Donan → Glen Shiel → Fort Augustus → A86 → Dalwhinnie → A9 → Glasgow</td><td>Trip ends · Glasgow by 17:00</td></tr>
               </tbody>
             </table>
           </div>
@@ -1092,7 +1092,7 @@ body.road-open{overflow:hidden}
     <div class="section-head">
       <p class="eyebrow">Overnight stays</p>
       <h2 class="h-xl">Three nights, one strategy</h2>
-      <p class="lede">One scenic legal overnight at Bridge of Orchy, then two nights in Broadford. The first is the full-service night; the second is strategic — sleeping in the south of Skye shortens Saturday's drive to the 17:00 deadline.</p>
+      <p class="lede">One scenic legal overnight at Bridge of Orchy, then two nights on the same pitch at An Crùbh, on the Sleat peninsula — fifteen minutes off the Armadale ferry, and one set-up for both Skye nights.</p>
     </div>
     <div class="grid-3" id="staysGrid"></div>
     <p class="small muted" style="margin-top:22px;max-width:70ch">
@@ -1194,13 +1194,13 @@ body.road-open{overflow:hidden}
       </div>
       <div class="prio-row">
         <div class="rank">2</div>
-        <div class="what"><b>Camping Skye, Broadford</b><span class="mono">Thursday night · full-service night</span></div>
-        <a class="btn btn-line btn-sm" href="https://campingskye.com/" target="_blank" rel="noopener">Book</a>
+        <div class="what"><b>An Crùbh, Sleat</b><span class="mono">Thursday night · main service night</span></div>
+        <a class="btn btn-line btn-sm" href="https://www.ancrubh.com/" target="_blank" rel="noopener">Book</a>
       </div>
       <div class="prio-row">
         <div class="rank">3</div>
-        <div class="what"><b>Broadford accommodation</b><span class="mono">Friday night · confirm the second night</span></div>
-        <a class="btn btn-line btn-sm" href="https://campingskye.com/" target="_blank" rel="noopener">Book</a>
+        <div class="what"><b>An Crùbh, Sleat</b><span class="mono">Friday night · confirm the second night</span></div>
+        <a class="btn btn-line btn-sm" href="https://www.ancrubh.com/" target="_blank" rel="noopener">Book</a>
       </div>
       <div class="prio-row">
         <div class="rank">4</div>
@@ -1233,7 +1233,7 @@ body.road-open{overflow:hidden}
     <div class="section-head">
       <p class="eyebrow">Packing</p>
       <h2 class="h-xl">One small backpack, four seasons</h2>
-      <p class="lede">Everything fits in a 40 × 30 × 20 cm bag. Ticks are saved on this device — useful the night before, and again when you repack in Broadford on Friday evening.</p>
+      <p class="lede">Everything fits in a 40 × 30 × 20 cm bag. Ticks are saved on this device — useful the night before, and again when you repack at An Crùbh on Friday evening.</p>
     </div>
     <div class="grid-2" style="gap:18px;margin-bottom:18px;align-items:start">
       <div class="card" style="padding:22px">
@@ -1440,14 +1440,14 @@ const TRIP = {
       desc:"The Harry Potter viaduct at the head of Loch Shiel. Use legal parking only — never the road verges." },
     { n:8,  name:"Mallaig",             lat:57.0064, lon:-5.8290, day:2, kind:"ferry",   prio:"must", time:"Check in 40–45 min early", next:"Ferry 14:55 → Armadale 15:25", skip:"Never", q:"Mallaig Ferry Terminal",
       desc:"Ferry port. Preferred sailing 14:55 to Armadale; backup 17:20. Be at the terminal 40–45 minutes before departure." },
-    { n:9,  name:"Armadale",            lat:57.0640, lon:-5.8930, day:2, kind:"ferry",   prio:null,   time:"Landfall", next:"≈1 h 20 min · 65 km to Fairy Pools", skip:"On the 17:20 ferry: go straight to Broadford", q:"Armadale Ferry Terminal, Isle of Skye",
-      desc:"Landfall on Skye at 15:25 on the preferred sailing. North on the A851 past Broadford toward Sligachan and Glen Brittle." },
+    { n:9,  name:"Armadale",            lat:57.0640, lon:-5.8930, day:2, kind:"ferry",   prio:null,   time:"Landfall", next:"≈1 h 20 min · 65 km to Fairy Pools", skip:"On the 17:20 ferry: go straight to An Crùbh — only 15 minutes north", q:"Armadale Ferry Terminal, Isle of Skye",
+      desc:"Landfall on Skye at 15:25 on the preferred sailing. North on the A851 — you drive straight past tonight's pitch at An Crùbh on the way to Glen Brittle." },
     { n:10, name:"Fairy Pools",         lat:57.2500, lon:-6.2530, day:2, kind:"hike",    prio:"high", time:"60–75 min", next:"≈25 min · 12 km to Sligachan", skip:"Yes — always if on the 17:20 ferry", q:"Fairy Pools Car Park, Glenbrittle",
       desc:"Clear blue pools below the Black Cuillin. Do not force a long walk in poor weather, and never try to fit it in after dark." },
-    { n:11, name:"Sligachan",           lat:57.2900, lon:-6.1720, day:2, kind:"scenic",  prio:"high", time:"10–20 min", next:"≈25 min · 25 km to Broadford", skip:"Move to Friday morning", q:"Sligachan Old Bridge",
+    { n:11, name:"Sligachan",           lat:57.2900, lon:-6.1720, day:2, kind:"scenic",  prio:"high", time:"10–20 min", next:"≈50 min · 42 km to An Crùbh", skip:"Move to Friday morning — it saves 50 minutes of dusk driving", q:"Sligachan Old Bridge",
       desc:"The old bridge, the river and the Cuillin behind it. A short photo stop." },
-    { n:12, name:"Broadford",           lat:57.2400, lon:-5.9130, day:2, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h · 55 km to Old Man of Storr", skip:"—", q:"Camping Skye, Broadford",
-      desc:"Night 2 at Camping Skye — the main service night: showers, charging, water and waste." },
+    { n:12, name:"An Crùbh",            lat:57.1460, lon:-5.8190, day:2, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h 20 min · 72 km to Old Man of Storr", skip:"—", q:"An Crubh, Duisdale Beag, Isle of Skye",
+      desc:"Night 2 at South Skye Motorhome Park, An Crùbh — on the Sleat peninsula, 15 minutes north of the Armadale ferry." },
 
     { n:13, name:"Old Man of Storr",    lat:57.4960, lon:-6.1590, day:3, kind:"hike",    prio:"must", time:"1.5–2 h", next:"≈10 min · 6 km to Lealt Falls", skip:"Viewpoint only in bad weather", q:"Old Man of Storr Car Park",
       desc:"The first of the day's two main outdoor activities. Muddy, windy and weather-dependent — waterproof footwear and a rain jacket." },
@@ -1463,9 +1463,9 @@ const TRIP = {
       desc:"Miniature cone hills and grassy terraces above Uig. A landscape unlike anything else on Skye — keep it if possible." },
     { n:19, name:"Quiraing",            lat:57.6280, lon:-6.2920, day:3, kind:"hike",    prio:"must", time:"60–90 min", next:"≈45 min · 35 km to Portree", skip:"Main viewpoint only", q:"Quiraing Car Park",
       desc:"The second main outdoor activity. Main viewpoint, partial hike, or a longer walk only if schedule and weather allow." },
-    { n:20, name:"Portree",             lat:57.4130, lon:-6.1950, day:3, kind:"attract", prio:"high", time:"45–60 min", next:"≈50 min · 42 km to Broadford", skip:"Shorten to 20 min", q:"Portree Harbour",
+    { n:20, name:"Portree",             lat:57.4130, lon:-6.1950, day:3, kind:"attract", prio:"high", time:"45–60 min", next:"≈1 h 10 min · 59 km to An Crùbh", skip:"Shorten to 20 min", q:"Portree Harbour",
       desc:"The colourful harbour, food, coffee and groceries. Do not let it become a two-hour stop." },
-    { n:21, name:"Broadford",           lat:57.2400, lon:-5.9130, day:3, kind:"camp",    prio:null,   time:"Overnight", next:"≈45 min · 45 km to Eilean Donan", skip:"—", q:"Camping Skye, Broadford", toGla:380, stopMin:0,
+    { n:21, name:"An Crùbh",            lat:57.1460, lon:-5.8190, day:3, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h 5 min · 62 km to Eilean Donan", skip:"—", q:"An Crubh, Duisdale Beag, Isle of Skye", toGla:400, stopMin:0,
       desc:"Night 3 — deliberately not Portree. Sleeping in the south of Skye protects the Saturday deadline." },
 
     { n:22, name:"Eilean Donan Castle", lat:57.2740, lon:-5.5160, day:4, kind:"castle",  prio:"must", time:"30–40 min exterior", next:"≈25 min · 25 km to Glen Shiel", skip:"Photos only (10 min)", q:"Eilean Donan Castle", toGla:335, stopMin:35,
@@ -1556,21 +1556,21 @@ const TRIP = {
       n:2, dow:"Thursday", date:"17 September 2026",
       title:"Glencoe → Glenfinnan → Mallaig → Skye",
       titleEm:"The ferry sets the pace",
-      start:"Bridge of Orchy", end:"Broadford, Isle of Skye",
-      depart:"07:15–07:30", drive:"≈4.5 h + ferry", km:"≈240 km",
+      start:"Bridge of Orchy", end:"An Crùbh, Sleat",
+      depart:"07:15–07:30", drive:"≈5 h + ferry", km:"≈255 km",
       sunrise:"≈06:53", sunriseWhere:"Bridge of Orchy",
-      sunset:"≈19:38", sunsetWhere:"Broadford",
+      sunset:"≈19:38", sunsetWhere:"Sleat",
       stops:["Rannoch Moor","Glencoe","Fort William","Glenfinnan","Mallaig","Fairy Pools","Sligachan"],
-      overnight:"Camping Skye, Broadford",
-      overnightShort:"Broadford",
+      overnight:"South Skye Motorhome Park, An Crùbh",
+      overnightShort:"An Crùbh",
       booking:"Ferry 14:55 Mallaig → Armadale (backup 17:20)",
       fuel:"FUEL IN FORT WILLIAM — it is the last large town before the Road to the Isles and Skye.",
       weather:"Glencoe and Fairy Pools are short walks only. Poor weather: viewpoints instead. Check CalMac service status in the morning.",
       maps:"https://www.google.com/maps/dir/Bridge+of+Orchy,+UK/Three+Sisters+Viewpoint,+Glencoe,+UK/Fort+William,+UK/Glenfinnan+Viaduct,+UK/Mallaig+Ferry+Terminal,+UK",
       mapsLabel:"Open Day 2 in Google Maps",
-      mapsSkye:"https://www.google.com/maps/dir/Armadale+Ferry+Terminal,+Isle+of+Skye,+UK/Fairy+Pools+Car+Park,+Glenbrittle,+UK/Sligachan,+UK/Camping+Skye,+Broadford,+UK",
+      mapsSkye:"https://www.google.com/maps/dir/Armadale+Ferry+Terminal,+Isle+of+Skye,+UK/Fairy+Pools+Car+Park,+Glenbrittle,+UK/Sligachan,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
       seed:23, ridge:"glen",
-      notes:"Everything before 14:55 is paced by the ferry. If you are behind, cut Morar and Arisaig first, then shorten Glencoe — never miss the sailing.",
+      notes:"Everything before 14:55 is paced by the ferry. If you are behind, cut Morar and Arisaig first, then shorten Glencoe — never miss the sailing. Tonight's pitch is on Sleat, so the evening leg from Sligachan is about 50 minutes rather than 25: if the Fairy Pools run long, drop Sligachan and take it on Friday morning instead.",
       timeline:[
         { time:"07:15–07:30", key:true, h:"Leave Bridge of Orchy",
           p:"Breakfast early. Check the CalMac service status and the weather before you set off." },
@@ -1599,53 +1599,54 @@ const TRIP = {
           p:"Arrive 40–45 minutes before the 14:55 departure. Quick lunch in Mallaig if there is time.",
           ferry:true },
         { time:"15:25", key:true, h:"Arrive Armadale, Isle of Skye", wp:9,
-          p:"If you are on the 14:55 sailing: Armadale → Fairy Pools → Sligachan → Broadford. On the 17:20 backup: Armadale → Broadford, and skip the Fairy Pools.",
-          link:{ url:"https://www.google.com/maps/dir/Armadale+Ferry+Terminal,+Isle+of+Skye,+UK/Fairy+Pools+Car+Park,+Glenbrittle,+UK/Sligachan,+UK/Camping+Skye,+Broadford,+UK", label:"Skye afternoon in Maps" } },
+          p:"If you are on the 14:55 sailing: Armadale → Fairy Pools → Sligachan → An Crùbh. You pass the pitch on the A851 about fifteen minutes after landing. On the 17:20 backup: Armadale → An Crùbh, in by ≈18:05, and skip the Fairy Pools.",
+          link:{ url:"https://www.google.com/maps/dir/Armadale+Ferry+Terminal,+Isle+of+Skye,+UK/Fairy+Pools+Car+Park,+Glenbrittle,+UK/Sligachan,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK", label:"Skye afternoon in Maps" } },
         { time:"≈16:45", key:true, h:"Fairy Pools", wp:10,
           p:"Clear pools and waterfalls below the Black Cuillin. 60–75 minutes. Do not force a long walk if the weather is poor.",
-          note:{ warn:true, h:"On the 17:20 ferry?", t:"Skip the Fairy Pools entirely and go Armadale → Broadford. Do not try to fit them into darkness." } },
+          note:{ warn:true, h:"On the 17:20 ferry?", t:"Skip the Fairy Pools entirely and go Armadale → An Crùbh, which is only fifteen minutes from the terminal. Do not try to fit them into darkness." } },
         { time:"≈18:20", h:"Sligachan", wp:11,
-          p:"10–20 minutes at the old bridge.",
-          list:["Old bridge","River","Cuillin Mountains","Photographs"] },
-        { time:"≈19:00", key:true, h:"Arrive Broadford", wp:12,
-          p:"The main service night. Use it properly." }
+          p:"10–20 minutes at the old bridge, and no longer — An Crùbh is still 50 minutes away down the A87 and the A851.",
+          list:["Old bridge","River","Cuillin Mountains","Photographs"],
+          note:{ warn:true, h:"Running past 18:30?", t:"Skip Sligachan and drive on. Friday morning passes the same bridge with daylight to spare, and arriving at An Crùbh after sunset (19:38) means pitching in the dark." } },
+        { time:"≈19:25", key:true, h:"Arrive An Crùbh, Sleat", wp:12,
+          p:"The main service night, in just before sunset. Use it properly — this is the same base you come back to on Friday." }
       ],
       stay:{
-        name:"Camping Skye — Broadford",
-        type:"Full-service campsite",
-        operator:"Camping Skye",
+        name:"South Skye Motorhome Park — An Crùbh",
+        type:"Motorhome park at the An Crùbh community hub",
+        operator:"An Crùbh · Duisdale Beag, Sleat",
         price:"See site for current pitch rates",
         window:"Night 2 · main service night",
-        facilities:["Electric hookup","Toilets","Showers","Drinking water","Grey-water disposal","Chemical toilet disposal"],
-        important:"Book Thursday night now, and confirm Friday night in Broadford at the same time.",
-        link:"https://campingskye.com/",
-        linkLabel:"Book Camping Skye",
-        badges:["🚐 Campsite","⚡ Electricity","🚿 Shower","💧 Water","🗑 Waste disposal"],
-        checklist:["Shower","Charge phones","Charge power bank","Fill water","Empty waste if required","Check Friday weather","Prepare hiking clothes","Check North Skye road conditions"]
+        facilities:["Hardstanding motorhome pitches","Electric hookup","Drinking water","Grey-water disposal","Chemical toilet disposal","Community hub and café on site"],
+        important:"New site — confirm facilities, opening dates and whether showers are available when you book. Book both Thursday and Friday nights at the same time.",
+        link:"https://www.ancrubh.com/",
+        linkLabel:"Book An Crùbh",
+        badges:["🚐 Motorhome park","⚡ Electricity","💧 Water","🗑 Waste disposal"],
+        checklist:["Charge phones","Charge power bank","Fill water","Empty waste if required","Check Friday weather","Prepare hiking clothes","Check North Skye road conditions","Set an alarm for 06:30"]
       }
     },
     {
       n:3, dow:"Friday", date:"18 September 2026",
       title:"The full North Skye loop",
       titleEm:"Storr, Trotternish and the Quiraing",
-      start:"Broadford", end:"Broadford",
-      depart:"07:15–07:30", drive:"≈4 h total", km:"≈200 km",
-      sunrise:"≈06:59", sunriseWhere:"Broadford",
+      start:"An Crùbh", end:"An Crùbh",
+      depart:"07:00", drive:"≈4 h 40 total", km:"≈235 km",
+      sunrise:"≈06:59", sunriseWhere:"Sleat",
       sunset:"≈19:37", sunsetWhere:"North Skye",
       stops:["Old Man of Storr","Lealt Falls","Kilt Rock","Staffin","Duntulm","Fairy Glen","Quiraing","Portree"],
-      overnight:"Broadford (not Portree)",
-      overnightShort:"Broadford",
-      booking:"Confirm Friday night in Broadford",
-      fuel:"Fuel in Broadford or Portree. There is little on the Trotternish loop itself — do not start it below half a tank.",
+      overnight:"An Crùbh (not Portree)",
+      overnightShort:"An Crùbh",
+      booking:"Confirm Friday night at An Crùbh",
+      fuel:"Fuel in Broadford as you pass, or in Portree. There is little on the Trotternish loop itself — do not start it below half a tank.",
       weather:"Two hikes today. Good weather: full stops. Poor weather: shorter walks or viewpoints. Very strong winds: do not force exposed trails.",
-      maps:"https://www.google.com/maps/dir/Camping+Skye,+Broadford,+UK/Old+Man+of+Storr+Car+Park,+UK/Lealt+Falls,+UK/Kilt+Rock,+UK/Staffin,+UK/Duntulm+Castle,+UK/Fairy+Glen,+Uig,+UK/Quiraing,+UK/Portree,+UK/Camping+Skye,+Broadford,+UK",
+      maps:"https://www.google.com/maps/dir/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK/Old+Man+of+Storr+Car+Park,+UK/Lealt+Falls,+UK/Kilt+Rock,+UK/Staffin,+UK/Duntulm+Castle,+UK/Fairy+Glen,+Uig,+UK/Quiraing,+UK/Portree,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
       mapsLabel:"Open Day 3 in Google Maps",
       seed:37, ridge:"storr",
       weatherLogic:true,
-      notes:"If the day starts running late, drop Duntulm first, then Staffin, then shorten Portree. The Storr and the Quiraing are the two stops to protect.",
+      notes:"Basing on Sleat costs about 20 minutes at each end of today, which is why the start moves to 07:00. If the day runs late, drop Duntulm first, then Staffin, then shorten Portree. The Storr and the Quiraing are the two stops to protect.",
       timeline:[
-        { time:"07:15–07:30", key:true, h:"Leave Broadford",
-          p:"North on the A87 past Sligachan and through Portree. Arrive at the Storr before the car park fills. If Sligachan was skipped on Thursday, stop for ten minutes on the way." },
+        { time:"07:00", key:true, h:"Leave An Crùbh",
+          p:"Up the A851 to Broadford, then north on the A87 past Sligachan and through Portree. Arrive at the Storr before the car park fills. If Sligachan was skipped on Thursday, stop for ten minutes on the way." },
         { time:"≈08:15", key:true, h:"Old Man of Storr", wp:13,
           p:"The first of the day's two main outdoor activities. 1.5–2 hours for the walk up to the pinnacles and back.",
           feature:"storr",
@@ -1667,50 +1668,51 @@ const TRIP = {
           p:"Return to Uig and take the A87 south to Portree. This closes the loop around North Skye instead of backtracking along the east coast." },
         { time:"≈16:00", key:true, h:"Portree", wp:20,
           p:"Late afternoon: the harbour, the colourful waterfront, food, coffee and groceries. 45–60 minutes — do not let it turn into a 2–3 hour stop." },
-        { time:"≈17:50", key:true, h:"Back to Broadford", wp:21,
-          p:"Night 3. Repack tonight so Saturday morning is only breakfast and driving.",
+        { time:"≈18:15", key:true, h:"Back to An Crùbh", wp:21,
+          p:"Night 3, and the last one of the trip. Repack tonight so Saturday morning is only breakfast and driving.",
           whySleep:true }
       ],
       stay:{
-        name:"Broadford — Night 3",
-        type:"Strategic south-Skye overnight",
-        operator:"Camping Skye or confirmed Broadford accommodation",
+        name:"An Crùbh — Night 3",
+        type:"Motorhome park at the An Crùbh community hub",
+        operator:"An Crùbh · Duisdale Beag, Sleat",
         price:"See site for current pitch rates",
-        window:"Second night in Broadford",
-        facilities:["Electric hookup","Toilets","Showers","Drinking water","Grey-water disposal","Chemical toilet disposal"],
-        important:"Do NOT sleep in Portree. Broadford is closer to the Skye Bridge and protects Saturday's 17:00 deadline.",
-        link:"https://campingskye.com/",
-        linkLabel:"Camping Skye",
-        badges:["🚐 Campsite","⚡ Electricity","🚿 Shower","💧 Water","🗑 Waste disposal"],
-        checklist:["Shower","Charge phones and power bank","Fill water","Empty waste","Refuel if convenient","Check Saturday's route on Traffic Scotland","Repack for a 07:00 start"]
+        window:"Second night at An Crùbh",
+        facilities:["Hardstanding motorhome pitches","Electric hookup","Drinking water","Grey-water disposal","Chemical toilet disposal","Community hub and café on site"],
+        important:"Fill water and empty waste tonight, and refuel in Broadford or Portree on the way back. Saturday leaves at 06:45 and there is no time for site chores.",
+        link:"https://www.ancrubh.com/",
+        linkLabel:"An Crùbh",
+        badges:["🚐 Motorhome park","⚡ Electricity","💧 Water","🗑 Waste disposal"],
+        checklist:["Charge phones and power bank","Fill water","Empty waste","Refuel in Broadford or Portree","Check Saturday's route on Traffic Scotland","Repack for a 06:45 start"]
       },
       whySleep:{
-        title:"Why Broadford?",
-        body:"Sleeping farther south on Skye improves the safety margin for the Saturday Glasgow deadline. Broadford is roughly 45 minutes closer to the Skye Bridge than Portree, and Saturday is the longest driving day of the trip."
+        title:"Why An Crùbh?",
+        body:"One pitch for both Skye nights means setting up once, and Sleat is only fifteen minutes from the Armadale ferry. The cost is real, though: An Crùbh sits about 20 minutes further from the Skye Bridge than Broadford, so Saturday has to leave at 06:45 instead of 07:00–07:15. Portree would be worse again — it is a full hour further from the bridge and would put the 17:00 deadline at genuine risk."
       }
     },
     {
       n:4, dow:"Saturday", date:"19 September 2026",
       title:"Skye → Eilean Donan → Loch Ness → Eastern Highlands → Glasgow",
       titleEm:"Home by a completely different road",
-      start:"Broadford", end:"Glasgow",
-      depart:"07:00–07:15", drive:"≈6 h 20 min", km:"≈410 km",
-      sunrise:"≈07:02", sunriseWhere:"Broadford",
+      start:"An Crùbh", end:"Glasgow",
+      depart:"06:45", drive:"≈6 h 40 min", km:"≈425 km",
+      sunrise:"≈07:02", sunriseWhere:"Sleat",
       sunset:"≈19:25", sunsetWhere:"Glasgow",
       stops:["Skye Bridge","Eilean Donan","Glen Shiel","Fort Augustus","Spean Bridge","A86 · Loch Laggan","Dalwhinnie","A9","Pitlochry (if time)"],
       overnight:"Trip ends in Glasgow",
       overnightShort:"Glasgow · 17:00",
       booking:"Hard deadline — Glasgow by 17:00",
-      fuel:"Leave Skye with a good tank (Broadford or Kyle of Lochalsh). Check again at Fort Augustus, and refuel before returning the camper.",
+      fuel:"Leave Skye with a good tank — fill up on Friday evening, because nothing on Sleat is open at 06:45. Check again at Fort Augustus, and refuel before returning the camper.",
       weather:"No hikes today. Wind and rain only shorten viewpoint stops — the drive and the deadline stay fixed.",
-      maps:"https://www.google.com/maps/dir/Camping+Skye,+Broadford,+UK/Eilean+Donan+Castle,+UK/Fort+Augustus,+UK/Spean+Bridge,+UK/Laggan,+UK/Dalwhinnie,+UK/Pitlochry,+UK/Glasgow,+UK",
+      maps:"https://www.google.com/maps/dir/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK/Eilean+Donan+Castle,+UK/Fort+Augustus,+UK/Spean+Bridge,+UK/Laggan,+UK/Dalwhinnie,+UK/Pitlochry,+UK/Glasgow,+UK",
       mapsLabel:"Open Day 4 in Google Maps",
       seed:53, ridge:"castle",
       deadline:true,
-      notes:"DO NOT RETURN THROUGH GLENCOE OR LOCH LOMOND. After Fort Augustus, go south to Spean Bridge and turn east on the A86. Never sacrifice the 17:00 deadline.",
+      notes:"Leaving from Sleat adds about 20 minutes before the Skye Bridge, so today starts at 06:45 — before sunrise. DO NOT RETURN THROUGH GLENCOE OR LOCH LOMOND. After Fort Augustus, go south to Spean Bridge and turn east on the A86. Never sacrifice the 17:00 deadline.",
       timeline:[
-        { time:"07:00–07:15", key:true, h:"Leave Broadford",
-          p:"South-east on the A87 and across the Skye Bridge. The earlier start is what makes the loop possible.",
+        { time:"06:45", key:true, h:"Leave An Crùbh",
+          p:"North on the A851 to Broadford in the dark, then south-east on the A87 and across the Skye Bridge. The earlier start is what makes the loop possible.",
+          note:{ warn:true, h:"This is the hard one", t:"Sunrise is 07:02, so the first 20 minutes are unlit single-carriageway on Sleat. Leaving at 07:00 instead puts every stop 15 minutes later and eats the Glasgow buffer — if you want the lie-in, drop Pitlochry rather than the buffer." },
           loopStrip:true },
         { time:"≈07:45", key:true, h:"Eilean Donan Castle — exterior", wp:22,
           p:"The castle opens later than our schedule, so do not wait for opening. A 30–40 minute exterior visit: the bridge, the castle, the loch, the surrounding mountains and photographs.",
@@ -1771,8 +1773,8 @@ const TRIP = {
 
   overnights: [
     { night:1, name:"Bridge of Orchy",  where:"Wed · Rannoch approach", type:"Scenic legal camper overnight", ridge:"glen",  seed:301, badges:["🏔 Scenic","🌲 Nature","🗑 Waste disposal"], link:"https://forestryandland.gov.scot/visit/destinations/bridge-of-orchy/visitor-information", price:"≈£13 · first come" },
-    { night:2, name:"Broadford",        where:"Thu · Camping Skye",     type:"Full-service campsite",         ridge:"coast", seed:302, badges:["🚐 Campsite","⚡ Electricity","🚿 Shower","💧 Water","🗑 Waste"], link:"https://campingskye.com/", price:"Book ahead" },
-    { night:3, name:"Broadford",        where:"Fri · south Skye",       type:"Strategic south-Skye overnight", ridge:"storr", seed:303, badges:["🚐 Campsite","⚡ Electricity","🚿 Shower","💧 Water"], link:"https://campingskye.com/", price:"Confirm" }
+    { night:2, name:"An Crùbh",         where:"Thu · Sleat, Skye",      type:"Motorhome park",                ridge:"coast", seed:302, badges:["🚐 Motorhome park","⚡ Electricity","💧 Water","🗑 Waste"], link:"https://www.ancrubh.com/", price:"Book ahead" },
+    { night:3, name:"An Crùbh",         where:"Fri · Sleat, Skye",      type:"Second night at the same pitch", ridge:"storr", seed:303, badges:["🚐 Motorhome park","⚡ Electricity","💧 Water"], link:"https://www.ancrubh.com/", price:"Confirm" }
   ],
 
   packing: {
@@ -1825,8 +1827,8 @@ const TRIP = {
       { t:"Confirm insurance", p:"high" },
       { t:"Confirm Swedish driving licence accepted", p:"high" },
       { t:"Confirm driving licence record requirements", p:"high" },
-      { t:"Book Broadford campsite — Thursday", p:"medium" },
-      { t:"Confirm Friday night Broadford accommodation", p:"medium" }
+      { t:"Book An Crùbh — Thursday night", p:"medium" },
+      { t:"Confirm Friday night at An Crùbh", p:"medium" }
     ],
     "Before departure":[
       { t:"Download offline maps for the Highlands and Skye", p:"medium" },
@@ -1846,7 +1848,7 @@ const TRIP = {
     "On the road":[
       { t:"Refuel in Fort William before Mallaig", p:"high" },
       { t:"At Mallaig terminal 40–45 min before sailing", p:"high" },
-      { t:"Leave Broadford by 07:15 on Saturday", p:"high" },
+      { t:"Leave An Crùbh by 06:45 on Saturday", p:"high" },
       { t:"Refuel before returning the camper", p:"medium" }
     ]
   },
@@ -1872,7 +1874,7 @@ const TRIP = {
       { label:"Traffic Scotland — live road conditions", url:"https://www.traffic.gov.scot/" }
     ]},
     { h:"Overnights", items:[
-      { label:"Camping Skye, Broadford", url:"https://campingskye.com/" },
+      { label:"An Crùbh — South Skye Motorhome Park", url:"https://www.ancrubh.com/" },
       { label:"Bridge of Orchy — Stay the Night", url:"https://forestryandland.gov.scot/visit/destinations/bridge-of-orchy/visitor-information" },
       { label:"Forestry and Land Scotland — Stay the Night", url:"https://forestryandland.gov.scot/staythenight" },
       { label:"By The Way, Tyndrum — Day 1 backup", url:"https://www.tyndrumbytheway.com/" }
@@ -1893,7 +1895,7 @@ const TRIP = {
     { label:"Traffic Scotland — live road conditions", url:"https://www.traffic.gov.scot/" },
     { label:"CalMac — ferry status", url:"https://www.calmac.co.uk/route-information/mallaig-armadale/" },
     { label:"Met Office — mountain weather", url:"https://www.metoffice.gov.uk/weather/specialist-forecasts/mountain" },
-    { label:"Camping Skye, Broadford", url:"https://campingskye.com/" }
+    { label:"An Crùbh — South Skye Motorhome Park", url:"https://www.ancrubh.com/" }
   ],
 
   /* seed texts from the previous (v2) site — used once to carry over only the visitor's own added items */
@@ -2192,7 +2194,7 @@ function ferryHTML(){
         '<div><span>Operator</span><b>CalMac</b></div>' +
       '</div>' +
       '<div class="dl-strip"><span class="dl-label">Why 14:55</span><b>Strongly preferred over the 17:20</b>' +
-        '<span class="dl-sub">The earlier sailing gives Thursday afternoon on Skye: Fairy Pools and Sligachan before dark. On the 17:20 backup, skip the Fairy Pools and drive Armadale → Broadford.</span></div>' +
+        '<span class="dl-sub">The earlier sailing gives Thursday afternoon on Skye: Fairy Pools and Sligachan before dark. On the 17:20 backup, skip the Fairy Pools and drive Armadale → An Crùbh, fifteen minutes away.</span></div>' +
       '<div class="grid-2" style="gap:16px;align-items:start">' +
         '<div>' +
           '<p class="dash-label" style="margin-bottom:10px">Ferry checklist</p>' +
@@ -2260,7 +2262,7 @@ function easternHTML(){
 function loopStripHTML(){
   return '' +
   '<div class="dl-strip"><span class="dl-label">Return route</span><b>' + esc(TRIP.config.returnRoute) + '</b>' +
-    '<div class="loop-strip" style="margin-top:6px">Broadford<i>→</i>Skye Bridge<i>→</i>Eilean Donan<i>→</i>Glen Shiel<i>→</i>Fort Augustus<i>→</i>Spean Bridge<i>→</i>A86<i>→</i>Laggan<i>→</i>Dalwhinnie<i>→</i>A9<i>→</i><b>Glasgow</b></div>' +
+    '<div class="loop-strip" style="margin-top:6px">An Crùbh<i>→</i>Broadford<i>→</i>Skye Bridge<i>→</i>Eilean Donan<i>→</i>Glen Shiel<i>→</i>Fort Augustus<i>→</i>Spean Bridge<i>→</i>A86<i>→</i>Laggan<i>→</i>Dalwhinnie<i>→</i>A9<i>→</i><b>Glasgow</b></div>' +
     '<span class="dl-sub">Not via Glencoe, Fort William southbound or Loch Lomond.</span></div>';
 }
 
@@ -2498,21 +2500,21 @@ const ROUTE = [
   ]},
   { day:2, type:"ferry", pts:[[-5.8290,57.0064],[-5.8930,57.0640]] },
   { day:2, type:"road", pts:[
-    [-5.8930,57.0640],[-5.8500,57.1000],[-5.8080,57.1570],[-5.8600,57.2000],[-5.9130,57.2400],[-5.9800,57.2600],
+    [-5.8930,57.0640],[-5.8500,57.1000],[-5.8190,57.1460],[-5.8080,57.1570],[-5.8600,57.2000],[-5.9130,57.2400],[-5.9800,57.2600],
     [-6.0430,57.2780],[-6.1120,57.3130],[-6.1720,57.2900],[-6.2300,57.3000],[-6.2900,57.3000],[-6.3300,57.3000],
     [-6.3000,57.2700],[-6.2530,57.2500],[-6.3000,57.2700],[-6.3300,57.3000],[-6.2300,57.3000],[-6.1720,57.2900],
-    [-6.1120,57.3130],[-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400]
+    [-6.1120,57.3130],[-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400],[-5.8600,57.2000],[-5.8190,57.1460]
   ]},
   { day:3, type:"road", pts:[
-    [-5.9130,57.2400],[-5.9800,57.2600],[-6.0430,57.2780],[-6.1120,57.3130],[-6.1720,57.2900],[-6.1800,57.3400],
+    [-5.8190,57.1460],[-5.8600,57.2000],[-5.9130,57.2400],[-5.9800,57.2600],[-6.0430,57.2780],[-6.1120,57.3130],[-6.1720,57.2900],[-6.1800,57.3400],
     [-6.1950,57.4130],[-6.1700,57.4600],[-6.1590,57.4960],[-6.1395,57.5460],[-6.1710,57.6100],[-6.1900,57.6340],
     [-6.2400,57.6600],[-6.2900,57.6900],[-6.3440,57.6880],[-6.3700,57.6500],[-6.3620,57.5870],[-6.3380,57.5820],
     [-6.3300,57.6000],[-6.3000,57.6200],[-6.2920,57.6280],[-6.3000,57.6200],[-6.3300,57.6000],[-6.3620,57.5870],
     [-6.3300,57.5300],[-6.2600,57.4600],[-6.1950,57.4130],[-6.1800,57.3400],[-6.1720,57.2900],[-6.1120,57.3130],
-    [-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400]
+    [-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400],[-5.8600,57.2000],[-5.8190,57.1460]
   ]},
   { day:4, type:"road", pts:[
-    [-5.9130,57.2400],[-5.8200,57.2700],[-5.7400,57.2760],[-5.7140,57.2800],[-5.6200,57.2760],[-5.5160,57.2740],
+    [-5.8190,57.1460],[-5.8600,57.2000],[-5.9130,57.2400],[-5.8200,57.2700],[-5.7400,57.2760],[-5.7140,57.2800],[-5.6200,57.2760],[-5.5160,57.2740],
     [-5.4600,57.2400],[-5.4060,57.1830],[-5.3000,57.1500],[-5.1480,57.1330],[-5.0000,57.0900],[-4.8800,57.0600],
     [-4.8000,57.0650],[-4.7400,57.1000],[-4.6800,57.1450],[-4.7400,57.1000],[-4.8000,57.0650],[-4.8300,57.0200],
     [-4.8800,56.9600],[-4.9210,56.8900],[-4.8350,56.8880],[-4.7000,56.9000],[-4.6000,56.9250],[-4.5000,56.9500],
