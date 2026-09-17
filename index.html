@@ -933,8 +933,8 @@ body.road-open{overflow:hidden}
     <div class="hero-stats">
       <div><b>4</b><span>Days</span></div>
       <div><b>3</b><span>Nights</span></div>
-      <div><b>≈1,050 km</b><span>Total loop</span></div>
-      <div><b>1</b><span>Ferry · Mallaig → Skye</span></div>
+      <div><b>≈1,185 km</b><span>Total route</span></div>
+      <div><b>0</b><span>Ferries · bridge instead</span></div>
       <div><b>29</b><span>Waypoints</span></div>
       <div><b>A86 + A9</b><span>New return route</span></div>
       <div><b>Wed 14:00</b><span>Pickup · Glasgow</span></div>
@@ -968,7 +968,7 @@ body.road-open{overflow:hidden}
         <p class="muted" style="font-size:15.5px;margin-bottom:16px">
           The camper — a <b style="color:var(--text)">2018 Volkswagen California</b> — is collected in
           <b style="color:var(--text)">Glasgow on Wednesday at 14:00</b>. A short, high-impact walk through Edinburgh's
-          Old Town comes first, then the Trossachs, Bridge of Orchy, Glencoe, the Road to the Isles and the ferry to Skye.
+          Old Town comes first, then the Trossachs, Bridge of Orchy, Glencoe, Glenfinnan and the A87 to the Skye Bridge.
         </p>
         <p class="muted" style="font-size:15.5px;margin-bottom:16px">
           Friday is a full loop of North Skye. On Saturday the route <b style="color:var(--text)">does not go back through
@@ -981,7 +981,7 @@ body.road-open{overflow:hidden}
         <div class="tags">
           <span class="tag tag-accent">Pickup Glasgow · Wed 14:00</span>
           <span class="tag tag-accent">Return Larkhall · Sat by 17:00</span>
-          <span class="tag tag-slate">1 ferry crossing</span>
+          <span class="tag tag-slate">No ferry · Skye Bridge</span>
           <span class="tag tag-moss">2 proper hikes</span>
           <span class="tag">A real loop</span>
         </div>
@@ -1000,7 +1000,7 @@ body.road-open{overflow:hidden}
               </thead>
               <tbody>
                 <tr><td class="d">Day 1<br>Wed 16</td><td class="leg">Glasgow → Edinburgh → Callander → Crianlarich → Bridge of Orchy</td><td>Bridge of Orchy</td></tr>
-                <tr><td class="d">Day 2<br>Thu 17</td><td class="leg">Bridge of Orchy → Glencoe → Fort William → Glenfinnan → Mallaig → ferry → Fairy Pools → Sligachan</td><td>An Crùbh, Sleat</td></tr>
+                <tr><td class="d">Day 2<br>Thu 17</td><td class="leg">Bridge of Orchy → Glencoe → Fort William → Glenfinnan → A87 → Eilean Donan → Skye Bridge</td><td>An Crùbh, Sleat</td></tr>
                 <tr><td class="d">Day 3<br>Fri 18</td><td class="leg">North Skye loop — Storr, Lealt Falls, Kilt Rock, Staffin, Duntulm, Fairy Glen, Quiraing, Portree</td><td>An Crùbh, Sleat</td></tr>
                 <tr><td class="d">Day 4<br>Sat 19</td><td class="leg">An Crùbh → Broadford → Eilean Donan → Glen Shiel → Fort Augustus → A86 → Dalwhinnie → A9 → M74 → Larkhall</td><td>Trip ends · Glasgow by 17:00</td></tr>
               </tbody>
@@ -1048,16 +1048,15 @@ body.road-open{overflow:hidden}
         <div class="map-detail" id="mapDetail"></div>
         <div class="map-legend">
           <div><svg class="wide" viewBox="0 0 26 16" aria-hidden="true"><path d="M1 8h24" stroke="var(--d1)" stroke-width="3" stroke-linecap="round"/></svg> Day 1 · Glasgow → Edinburgh → Bridge of Orchy</div>
-          <div><svg class="wide" viewBox="0 0 26 16" aria-hidden="true"><path d="M1 8h24" stroke="var(--d2)" stroke-width="3" stroke-linecap="round"/></svg> Day 2 · Bridge of Orchy → Mallaig → Skye</div>
+          <div><svg class="wide" viewBox="0 0 26 16" aria-hidden="true"><path d="M1 8h24" stroke="var(--d2)" stroke-width="3" stroke-linecap="round"/></svg> Day 2 · Bridge of Orchy → Glenfinnan → Skye Bridge</div>
           <div><svg class="wide" viewBox="0 0 26 16" aria-hidden="true"><path d="M1 8h24" stroke="var(--d3)" stroke-width="3" stroke-linecap="round"/></svg> Day 3 · North Skye loop</div>
           <div><svg class="wide" viewBox="0 0 26 16" aria-hidden="true"><path d="M1 8h24" stroke="var(--d4)" stroke-width="3.4" stroke-linecap="round"/></svg> Day 4 · Loch Ness → A86 → A9 → Larkhall</div>
-          <div><svg class="wide" viewBox="0 0 26 16" aria-hidden="true"><path d="M1 8h24" stroke="var(--d2)" stroke-width="2" stroke-dasharray="4 4"/></svg> Ferry crossing</div>
           <div class="sep"></div>
           <div><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="2.4 2"/><path d="M8 2.5l3.6 5.5-3.6 5.5-3.6-5.5z" fill="var(--accent)"/></svg> Start &amp; finish · Glasgow · 17:00</div>
           <div><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 13.4V6.9h2.1V3.4h2v3.5h2.6V3.4h2v3.5h2.1v6.5z" fill="var(--text)"/></svg> Castle</div>
           <div><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.4 13.2l4.3-6.8 1.7 2.6L9.7 3l4.9 10.2z" fill="var(--ok)"/></svg> Hiking stop</div>
           <div><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="2" fill="var(--moss-lit)"/></svg> Overnight</div>
-          <div><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2l6 11H2z" fill="var(--accent)"/></svg> Ferry port</div>
+          <div><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2l6 11H2z" fill="var(--accent)"/></svg> Skye Bridge crossing</div>
           <div><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="var(--slate-lit)"/></svg> Attraction</div>
           <div><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4" fill="none" stroke="var(--text-3)" stroke-width="2"/></svg> Scenic or practical stop</div>
         </div>
@@ -1092,7 +1091,7 @@ body.road-open{overflow:hidden}
     <div class="section-head">
       <p class="eyebrow">Overnight stays</p>
       <h2 class="h-xl">Three nights, one strategy</h2>
-      <p class="lede">One scenic legal overnight at Bridge of Orchy, then two nights on the same pitch at An Crùbh, on the Sleat peninsula — fifteen minutes off the Armadale ferry, and one set-up for both Skye nights.</p>
+      <p class="lede">One scenic legal overnight at Bridge of Orchy, then two nights on the same pitch at An Crùbh, on the Sleat peninsula — about 35 minutes south of the Skye Bridge, and one set-up for both Skye nights.</p>
     </div>
     <div class="grid-3" id="staysGrid"></div>
     <p class="small muted" style="margin-top:22px;max-width:70ch">
@@ -1184,13 +1183,13 @@ body.road-open{overflow:hidden}
     <div class="section-head">
       <p class="eyebrow">Book these first</p>
       <h2 class="h-lg">Booking priority</h2>
-      <p class="lede">In this order. The 14:55 ferry decides how much of Skye you see on Thursday.</p>
+      <p class="lede">In this order. With the ferry out, nothing on Thursday needs booking — the road to Skye is just a road.</p>
     </div>
     <div class="prio">
       <div class="prio-row">
         <div class="rank">1</div>
-        <div class="what"><b>Mallaig → Armadale ferry</b><span class="mono">Thursday 17 September · preferred 14:55 · backup 17:20</span></div>
-        <a class="btn btn-primary btn-sm" href="https://www.calmac.co.uk/route-information/mallaig-armadale/" target="_blank" rel="noopener">Book ferry</a>
+        <div class="what"><b>Eilean Donan Castle</b><span class="mono">Thursday afternoon · check closing time before Invergarry</span></div>
+        <a class="btn btn-primary btn-sm" href="https://www.eileandonancastle.com/visit/opening-hours/" target="_blank" rel="noopener">Opening hours</a>
       </div>
       <div class="prio-row">
         <div class="rank">2</div>
@@ -1330,13 +1329,13 @@ body.road-open{overflow:hidden}
       <div><b>≈1,050</b>kilometres</div>
       <div><b>4</b>days</div>
       <div><b>3</b>nights</div>
-      <div><b>1</b>ferry crossing</div>
+      <div><b>0</b>ferry crossings</div>
       <div><b>29</b>waypoints</div>
       <div><b>17:00</b>Saturday · Larkhall</div>
     </div>
     <div class="final-hl" id="finalHighlights"></div>
     <p style="color:rgba(237,232,220,.78);max-width:56ch;line-height:1.8">
-      Start in Glasgow. Walk through historic Edinburgh. Cross the western Highlands. Take the ferry to Skye.
+      Start in Glasgow. Walk through historic Edinburgh. Cross the western Highlands. Drive the A87 over the Skye Bridge.
       Explore the dramatic north of the island. Leave Skye through Eilean Donan and Glen Shiel. Reach Loch Ness.
       Then turn east and cross a completely different part of the Highlands before finishing at Larkhall, south-east of Glasgow.
       Avoid retracing the same roads whenever practical.
@@ -1355,7 +1354,7 @@ body.road-open{overflow:hidden}
       </div>
       <div class="foot-links">
         <a href="#route">Route</a>
-        <a href="#day2">Ferry</a>
+        <a href="#day2">Skye Bridge</a>
         <a href="#stays">Campsites</a>
         <a href="https://www.traffic.gov.scot/" target="_blank" rel="noopener">Road Conditions</a>
         <a href="#rules">Campervan Rules</a>
@@ -1436,18 +1435,18 @@ const TRIP = {
       desc:"The Three Sisters and the Pass of Glencoe. Viewpoints, photography and short walks — no long hike today, the ferry comes first." },
     { n:6,  name:"Fort William",        lat:56.8198, lon:-5.1052, day:2, kind:"scenic",  prio:null,   time:"30–40 min", next:"≈30 min · 27 km to Glenfinnan", skip:"Never skip fuel", q:"Fort William",
       desc:"Practical stop: refuel, food, toilet, drinking water and camper supplies. Fuel here before the Road to the Isles." },
-    { n:7,  name:"Glenfinnan Viaduct",  lat:56.8763, lon:-5.4318, day:2, kind:"attract", prio:"must", time:"60–75 min", next:"≈50 min · 43 km to Mallaig", skip:"Shorten to 45 min", q:"Glenfinnan Viaduct Viewpoint",
-      desc:"The Harry Potter viaduct at the head of Loch Shiel. Use legal parking only — never the road verges." },
-    { n:8,  name:"Mallaig",             lat:57.0064, lon:-5.8290, day:2, kind:"ferry",   prio:"must", time:"Check in 40–45 min early", next:"Ferry 14:55 → Armadale 15:25", skip:"Never", q:"Mallaig Ferry Terminal",
-      desc:"Ferry port. Preferred sailing 14:55 to Armadale; backup 17:20. Be at the terminal 40–45 minutes before departure." },
-    { n:9,  name:"Armadale",            lat:57.0640, lon:-5.8930, day:2, kind:"ferry",   prio:null,   time:"Landfall", next:"≈1 h 20 min · 65 km to Fairy Pools", skip:"On the 17:20 ferry: go straight to An Crùbh — only 15 minutes north", q:"Armadale Ferry Terminal, Isle of Skye",
-      desc:"Landfall on Skye at 15:25 on the preferred sailing. North on the A851 — you drive straight past tonight's pitch at An Crùbh on the way to Glen Brittle." },
-    { n:10, name:"Fairy Pools",         lat:57.2500, lon:-6.2530, day:2, kind:"hike",    prio:"high", time:"60–75 min", next:"≈25 min · 12 km to Sligachan", skip:"Yes — always if on the 17:20 ferry", q:"Fairy Pools Car Park, Glenbrittle",
-      desc:"Clear blue pools below the Black Cuillin. Do not force a long walk in poor weather, and never try to fit it in after dark." },
-    { n:11, name:"Sligachan",           lat:57.2900, lon:-6.1720, day:2, kind:"scenic",  prio:"high", time:"10–20 min", next:"≈50 min · 42 km to An Crùbh", skip:"Move to Friday morning — it saves 50 minutes of dusk driving", q:"Sligachan Old Bridge",
+    { n:7,  name:"Glenfinnan Viaduct",  lat:56.8763, lon:-5.4318, day:2, kind:"attract", prio:"must", time:"60–75 min", next:"≈30 min · 30 km back to Fort William", skip:"Shorten to 45 min", q:"Glenfinnan Viaduct Viewpoint",
+      desc:"The Harry Potter viaduct at the head of Loch Shiel. With no ferry, this is an out-and-back from Fort William rather than a stop on the way to Mallaig. Use legal parking only — never the road verges." },
+    { n:8,  name:"Loch Garry",          lat:57.0750, lon:-4.9700, day:2, kind:"scenic",  prio:"opt",  time:"10–15 min", next:"≈1 h · 65 km to Eilean Donan", skip:"Yes — drive past", q:"Loch Garry Viewpoint, A87",
+      desc:"The layby on the A87 above Loch Garry, where the loch happens to look like a map of Scotland. A two-minute walk from the parking area." },
+    { n:9,  name:"Eilean Donan Castle", lat:57.2740, lon:-5.5160, day:2, kind:"castle",  prio:"must", time:"45–60 min", next:"≈20 min · 13 km to the Skye Bridge", skip:"Exterior only, 20 min", q:"Eilean Donan Castle",
+      desc:"The bridge route hands you the castle a day early — and in the afternoon, while it is still open, instead of before opening on Saturday. Do the full visit today and Saturday can drive straight past." },
+    { n:10, name:"Skye Bridge",         lat:57.2760, lon:-5.7150, day:2, kind:"ferry",   prio:null,   time:"Drive across", next:"≈15 min · 13 km to Broadford", skip:"—", q:"Skye Bridge",
+      desc:"The crossing the ferry was meant to replace. Toll-free since 2004, and a good view down Loch Alsh on the way over. Landfall at Kyleakin." },
+    { n:11, name:"Broadford",           lat:57.2400, lon:-5.9130, day:2, kind:"scenic",  prio:null,   time:"≈20 min · fuel and shop", next:"≈20 min · 17 km to An Crùbh", skip:"Only if the tank and the cupboards are full", q:"Broadford, Isle of Skye",
       desc:"The old bridge, the river and the Cuillin behind it. A short photo stop." },
     { n:12, name:"An Crùbh",            lat:57.1460, lon:-5.8190, day:2, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h 20 min · 72 km to Old Man of Storr", skip:"—", q:"An Crubh, Duisdale Beag, Isle of Skye",
-      desc:"Night 2 at South Skye Motorhome Park, An Crùbh — on the Sleat peninsula, 15 minutes north of the Armadale ferry." },
+      desc:"Night 2 at South Skye Motorhome Park, An Crùbh — on the Sleat peninsula, about 35 minutes south of the Skye Bridge." },
 
     { n:13, name:"Old Man of Storr",    lat:57.4960, lon:-6.1590, day:3, kind:"hike",    prio:"must", time:"1.5–2 h", next:"≈10 min · 6 km to Lealt Falls", skip:"Viewpoint only in bad weather", q:"Old Man of Storr Car Park",
       desc:"The first of the day's two main outdoor activities. Muddy, windy and weather-dependent — waterproof footwear and a rain jacket." },
@@ -1554,62 +1553,69 @@ const TRIP = {
     },
     {
       n:2, dow:"Thursday", date:"17 September 2026",
-      title:"Glencoe → Glenfinnan → Mallaig → Skye",
-      titleEm:"The ferry sets the pace",
+      title:"Glencoe → Glenfinnan → Skye Bridge",
+      titleEm:"No ferry — the long way round",
       start:"Bridge of Orchy", end:"An Crùbh, Sleat",
-      depart:"07:15–07:30", drive:"≈5 h + ferry", km:"≈255 km",
+      depart:"07:15–07:30", drive:"≈5 h", km:"≈290 km",
       sunrise:"≈06:53", sunriseWhere:"Bridge of Orchy",
       sunset:"≈19:38", sunsetWhere:"Sleat",
-      stops:["Rannoch Moor","Glencoe","Fort William","Glenfinnan","Mallaig","Fairy Pools","Sligachan"],
+      stops:["Rannoch Moor","Glencoe","Fort William","Glenfinnan","Loch Garry","Eilean Donan","Skye Bridge","Broadford"],
       overnight:"South Skye Motorhome Park, An Crùbh",
       overnightShort:"An Crùbh",
-      booking:"Ferry 14:55 Mallaig → Armadale (backup 17:20)",
+      booking:"No ferry — A87 and the Skye Bridge, toll-free",
       fuel:"FUEL IN FORT WILLIAM — it is the last large town before the Road to the Isles and Skye.",
-      weather:"Glencoe and Fairy Pools are short walks only. Poor weather: viewpoints instead. Check CalMac service status in the morning.",
-      maps:"https://www.google.com/maps/dir/Bridge+of+Orchy,+UK/Three+Sisters+Viewpoint,+Glencoe,+UK/Fort+William,+UK/Glenfinnan+Viaduct,+UK/Mallaig+Ferry+Terminal,+UK",
+      weather:"Glencoe is short walks only. Poor weather: viewpoints instead. The A87 through Glen Shiel is exposed — high winds can make the Skye Bridge uncomfortable in a high-sided camper, so check Traffic Scotland before Invergarry.",
+      maps:"https://www.google.com/maps/dir/Bridge+of+Orchy,+UK/Three+Sisters+Viewpoint,+Glencoe,+UK/Fort+William,+UK/Glenfinnan+Viaduct+Viewpoint,+UK/Fort+William,+UK/Invergarry,+UK/Eilean+Donan+Castle,+UK/Skye+Bridge,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
       mapsLabel:"Open Day 2 in Google Maps",
-      mapsSkye:"https://www.google.com/maps/dir/Armadale+Ferry+Terminal,+Isle+of+Skye,+UK/Fairy+Pools+Car+Park,+Glenbrittle,+UK/Sligachan,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
+      mapsSkye:"https://www.google.com/maps/dir/Fort+William,+UK/Invergarry,+UK/Eilean+Donan+Castle,+UK/Skye+Bridge,+UK/Broadford,+Isle+of+Skye,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
       seed:23, ridge:"glen",
-      notes:"Everything before 14:55 is paced by the ferry. If you are behind, cut Morar and Arisaig first, then shorten Glencoe — never miss the sailing. Tonight's pitch is on Sleat, so the evening leg from Sligachan is about 50 minutes rather than 25: if the Fairy Pools run long, drop Sligachan and take it on Friday morning instead.",
+      notes:"No ferry, so Skye is reached by road: north on the A82 from Fort William to Invergarry, west on the A87 through Glen Shiel, over the Skye Bridge at Kyle of Lochalsh. Glenfinnan is now an out-and-back from Fort William rather than a stop on the way — worth the hour, because the viaduct is a must and the afternoon is no longer hostage to a sailing time. The Fairy Pools do not fit today; they become Friday's bad-weather alternative to Trotternish. Times below assume leaving Fort William at 11:00 — if you leave later, shift everything by the same amount, and if it is past 13:30 skip Glenfinnan and go straight north.",
       timeline:[
         { time:"07:15–07:30", key:true, h:"Leave Bridge of Orchy",
-          p:"Breakfast early. Check the CalMac service status and the weather before you set off." },
+          p:"Breakfast early. Check Traffic Scotland and the weather before you set off." },
         { time:"07:30", h:"Rannoch Moor",
           p:"A wide, empty plateau of lochans and weather. Not a fixed stop — pull into a proper roadside viewpoint whenever the light is worth it.",
           badge:"Scenic drive" },
         { time:"≈08:00", key:true, h:"Glencoe — the Three Sisters", wp:5,
           p:"Viewpoints, photography and short walking. 45–60 minutes.",
           list:["Viewpoints","Photography","Short walking only"],
-          note:{ h:"No multi-hour hike today", t:"The ferry schedule has priority. Glencoe is not repeated on Saturday, so enjoy it now — but keep it short." } },
+          note:{ h:"No multi-hour hike today", t:"It is a long drive to Skye by road. Glencoe is not repeated on Saturday, so enjoy it now — but keep it short." } },
         { time:"≈09:30", key:true, h:"Fort William — service stop", wp:6,
           p:"The practical stop of the day.",
           list:["Refuel","Buy food","Toilet","Drinking water","Camper supplies"],
-          badge:"Fuel before Road to the Isles" },
-        { time:"10:15", h:"The Road to the Isles",
-          p:"Fort William → Glenfinnan → Arisaig and Morar → Mallaig on the A830. Sea lochs, birch woods, white sand and the Small Isles offshore — the road itself is one of the attractions.",
-          roadToIsles:true },
-        { time:"≈10:45", key:true, h:"Glenfinnan Viaduct", wp:7,
+          badge:"Fuel here — and again before the A87" },
+        { time:"11:00", key:true, h:"Out and back to Glenfinnan",
+          p:"West on the A830 for 30 km, then the same 30 km back. With no sailing to catch, the viaduct costs about two hours in total instead of being free on the way past — and it is still worth it.",
+          roadToIsles:true,
+          note:{ warn:true, h:"The cut-off", t:"If it is already past 13:30 when you are ready to leave Fort William, skip Glenfinnan and go straight north on the A82. Arriving at An Crùbh after dark is the one thing worth avoiding tonight." } },
+        { time:"≈11:30", key:true, h:"Glenfinnan Viaduct", wp:7,
           p:"The viaduct from the Harry Potter films, with Loch Shiel and the Highland hills around it. Walk up to the viaduct viewpoint. 60–75 minutes.",
           note:{ warn:true, h:"Camper parking", t:"Use legal parking only. The National Trust visitor-centre car park does not accommodate motorhomes. Do not park on road verges." },
           link:{ url:"https://www.nts.org.uk/visit/places/glenfinnan-monument/planning-your-visit", label:"Visitor Information" } },
-        { time:"≈12:30", h:"Morar / Arisaig coast", prioOnly:"opt",
-          p:"Only if running ahead of schedule: the white sands of Morar or the Arisaig shore. Maximum 20–30 minutes.",
-          note:{ warn:true, h:"Do not risk the ferry", t:"If it is later than 13:15, drive straight on to Mallaig." } },
-        { time:"14:10–14:15", key:true, h:"Mallaig ferry terminal", wp:8,
-          p:"Arrive 40–45 minutes before the 14:55 departure. Quick lunch in Mallaig if there is time.",
+        { time:"≈13:15", h:"Back through Fort William",
+          p:"Straight through and north on the A82 past Spean Bridge and the Commando Memorial. Top the tank up here if you did not this morning — the A87 is thin on fuel.",
+          badge:"Last easy fuel before Skye" },
+        { time:"≈14:20", key:true, h:"Invergarry — turn west on the A87",
+          p:"This is the junction the whole afternoon turns on. West from here it is Loch Garry, Glen Shiel and the sea.",
           ferry:true },
-        { time:"15:25", key:true, h:"Arrive Armadale, Isle of Skye", wp:9,
-          p:"If you are on the 14:55 sailing: Armadale → Fairy Pools → Sligachan → An Crùbh. You pass the pitch on the A851 about fifteen minutes after landing. On the 17:20 backup: Armadale → An Crùbh, in by ≈18:05, and skip the Fairy Pools.",
-          link:{ url:"https://www.google.com/maps/dir/Armadale+Ferry+Terminal,+Isle+of+Skye,+UK/Fairy+Pools+Car+Park,+Glenbrittle,+UK/Sligachan,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK", label:"Skye afternoon in Maps" } },
-        { time:"≈16:45", key:true, h:"Fairy Pools", wp:10,
-          p:"Clear pools and waterfalls below the Black Cuillin. 60–75 minutes. Do not force a long walk if the weather is poor.",
-          note:{ warn:true, h:"On the 17:20 ferry?", t:"Skip the Fairy Pools entirely and go Armadale → An Crùbh, which is only fifteen minutes from the terminal. Do not try to fit them into darkness." } },
-        { time:"≈18:20", h:"Sligachan", wp:11,
-          p:"10–20 minutes at the old bridge, and no longer — An Crùbh is still 50 minutes away down the A87 and the A851.",
-          list:["Old bridge","River","Cuillin Mountains","Photographs"],
-          note:{ warn:true, h:"Running past 18:30?", t:"Skip Sligachan and drive on. Friday morning passes the same bridge with daylight to spare, and arriving at An Crùbh after sunset (19:38) means pitching in the dark." } },
-        { time:"≈19:25", key:true, h:"Arrive An Crùbh, Sleat", wp:12,
-          p:"The main service night, in just before sunset. Use it properly — this is the same base you come back to on Friday." }
+        { time:"≈14:35", h:"Loch Garry viewpoint", wp:8, prioOnly:"opt",
+          p:"A layby with a two-minute walk to the view, where the loch looks like a map of Scotland. 10–15 minutes, and easy to skip.",
+          list:["Layby parking","Short walk","Photographs"] },
+        { time:"≈15:35", key:true, h:"Eilean Donan Castle", wp:9,
+          p:"The bridge route hands you the trip's main castle a day early, and this time in the afternoon while it is still open — Saturday's slot was always before opening. Do the full visit now, interior included, and Saturday can drive straight past and bank the time against the Larkhall deadline.",
+          priority:"Very high",
+          links:[
+            { url:"https://www.eileandonancastle.com/", label:"Eilean Donan" },
+            { url:"https://www.eileandonancastle.com/visit/opening-hours/", label:"Opening hours" }
+          ] },
+        { time:"≈16:35", key:true, h:"Over the Skye Bridge", wp:10,
+          p:"Through Kyle of Lochalsh and across to Kyleakin. Toll-free, and the view down Loch Alsh is worth the slow lane.",
+          note:{ warn:true, h:"Wind", t:"The bridge is exposed and the camper is high-sided. In a strong westerly, cross slowly and keep both hands on the wheel." } },
+        { time:"≈16:50", h:"Broadford — fuel and shop", wp:11,
+          p:"The last proper supermarket and filling station before Sleat, and you will pass it again on Friday morning. 20 minutes.",
+          list:["Refuel","Groceries for two nights","Cash if you want it"] },
+        { time:"≈17:30", key:true, h:"Arrive An Crùbh, Sleat", wp:12,
+          p:"South on the A851 down the Sleat coast. In with two hours of daylight to spare — far better than the ferry plan would have managed. Set up properly: this is the same base you come back to on Friday." }
       ],
       stay:{
         name:"South Skye Motorhome Park — An Crùbh",
@@ -1638,7 +1644,7 @@ const TRIP = {
       overnightShort:"An Crùbh",
       booking:"Confirm Friday night at An Crùbh",
       fuel:"Fuel in Broadford as you pass, or in Portree. There is little on the Trotternish loop itself — do not start it below half a tank.",
-      weather:"Two hikes today. Good weather: full stops. Poor weather: shorter walks or viewpoints. Very strong winds: do not force exposed trails.",
+      weather:"Two hikes today. Good weather: full stops. Poor weather: shorter walks or viewpoints. Very strong winds: do not force exposed trails. If Trotternish is socked in, the Fairy Pools below the Black Cuillin are the alternative — they lost their slot when the ferry did, they sit on the other side of the island and they often catch different weather.",
       maps:"https://www.google.com/maps/dir/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK/Old+Man+of+Storr+Car+Park,+UK/Lealt+Falls,+UK/Kilt+Rock,+UK/Staffin,+UK/Duntulm+Castle,+UK/Fairy+Glen,+Uig,+UK/Quiraing,+UK/Portree,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
       mapsLabel:"Open Day 3 in Google Maps",
       seed:37, ridge:"storr",
@@ -1687,7 +1693,7 @@ const TRIP = {
       },
       whySleep:{
         title:"Why An Crùbh?",
-        body:"One pitch for both Skye nights means setting up once, and Sleat is only fifteen minutes from the Armadale ferry. The cost is real, though: An Crùbh sits about 20 minutes further from the Skye Bridge than Broadford, so Saturday has to leave at 06:45 instead of 07:00–07:15. Portree would be worse again — it is a full hour further from the bridge and would put the 17:00 deadline at genuine risk."
+        body:"One pitch for both Skye nights means setting up once. With the ferry gone the original argument for Sleat has gone with it — you now arrive over the bridge from the north, so An Crùbh is about 35 minutes further on rather than fifteen minutes away. It stays because the booking is made and the pitch is held, and the cost is contained: Saturday leaves at 06:45 instead of 07:00–07:15. Portree would still be worse — a full hour further from the bridge, and a real risk to the 17:00 deadline."
       }
     },
     {
@@ -1715,7 +1721,7 @@ const TRIP = {
           note:{ warn:true, h:"This is the hard one", t:"Sunrise is 07:02, so the first 20 minutes are unlit single-carriageway on Sleat. Leaving at 07:00 instead puts every stop 15 minutes later and eats the Glasgow buffer — if you want the lie-in, drop Pitlochry rather than the buffer." },
           loopStrip:true },
         { time:"≈07:45", key:true, h:"Eilean Donan Castle — exterior", wp:22,
-          p:"The castle opens later than our schedule, so do not wait for opening. A 30–40 minute exterior visit: the bridge, the castle, the loch, the surrounding mountains and photographs.",
+          p:"The castle opens later than our schedule, so do not wait for opening. A 30–40 minute exterior visit: the bridge, the castle, the loch, the surrounding mountains and photographs. If you already visited properly on Thursday, drive straight past and bank the 35 minutes against the Larkhall deadline.",
           links:[
             { url:"https://www.eileandonancastle.com/", label:"Eilean Donan" },
             { url:"https://www.eileandonancastle.com/visit/opening-hours/", label:"Opening hours" }
@@ -1782,7 +1788,7 @@ const TRIP = {
     "In the bag · 40 × 30 × 20 cm":["Lightweight PVC rain jacket","Rain trousers","T-shirts","Hiking socks","Underwear","Hat and gloves","Toiletries","Sleepwear"],
     "Hiking":["Small day bag","Water bottle","Offline maps downloaded","Snacks","Blister plasters"],
     "Electronics":["Phone","Charging cable","Power bank","Car charger"],
-    "Documents":["Driving licence","Rental documents","Ferry booking (offline)","Campsite bookings","Insurance documents","Bank card"]
+    "Documents":["Driving licence","Rental documents","Campsite bookings","Insurance documents","Bank card"]
   },
 
   toBuy: {
@@ -1821,7 +1827,7 @@ const TRIP = {
 
   todo: {
     "Bookings":[
-      { t:"Book Mallaig → Armadale ferry (14:55)", p:"high" },
+      { t:"Check Traffic Scotland for A87 and Skye Bridge closures", p:"high" },
       { t:"Confirm Glasgow camper pickup — Wed 14:00", p:"high" },
       { t:"Confirm camper return requirements", p:"high" },
       { t:"Confirm insurance", p:"high" },
@@ -1832,8 +1838,8 @@ const TRIP = {
     ],
     "Before departure":[
       { t:"Download offline maps for the Highlands and Skye", p:"medium" },
-      { t:"Enter correct camper dimensions in the ferry booking", p:"medium" },
-      { t:"Save ferry ticket and bookings offline", p:"medium" },
+      { t:"Check the wind forecast for the Skye Bridge", p:"medium" },
+      { t:"Save bookings offline", p:"medium" },
       { t:"Check Met Office mountain forecast", p:"medium" },
       { t:"Check Traffic Scotland for closures", p:"medium" }
     ],
@@ -1846,8 +1852,8 @@ const TRIP = {
       { t:"Check emergency equipment", p:"medium" }
     ],
     "On the road":[
-      { t:"Refuel in Fort William before Mallaig", p:"high" },
-      { t:"At Mallaig terminal 40–45 min before sailing", p:"high" },
+      { t:"Refuel in Fort William before the A87", p:"high" },
+      { t:"Turn west on the A87 at Invergarry", p:"high" },
       { t:"Leave An Crùbh by 06:45 on Saturday", p:"high" },
       { t:"Confirm the Larkhall return address and 17:00 handover", p:"high" },
       { t:"Refuel before returning the camper", p:"medium" }
@@ -1859,19 +1865,19 @@ const TRIP = {
     { name:"Glencoe",            sub:"Day 2 · the Three Sisters",   seed:102, ridge:"glen",     cls:"wide" },
     { name:"Glenfinnan Viaduct", sub:"Day 2 · Loch Shiel",          seed:103, ridge:"viaduct",  cls:"" },
     { name:"Road to the Isles",  sub:"Day 2 · the A830",            seed:104, ridge:"coast",    cls:"" },
-    { name:"Fairy Pools",        sub:"Day 2 · below the Cuillin",   seed:105, ridge:"glen",     cls:"" },
+    { name:"Eilean Donan",       sub:"Day 2 · three sea lochs",     seed:105, ridge:"castle",   cls:"" },
     { name:"Old Man of Storr",   sub:"Day 3 · the pinnacle",        seed:106, ridge:"storr",    cls:"wide" },
     { name:"Quiraing",           sub:"Day 3 · the landslip",        seed:107, ridge:"quiraing", cls:"tall" },
-    { name:"Eilean Donan",       sub:"Day 4 · three sea lochs",     seed:109, ridge:"castle",   cls:"" },
+    { name:"Skye Bridge",        sub:"Day 2 · Kyle to Kyleakin",    seed:109, ridge:"coast",    cls:"" },
     { name:"Loch Ness",          sub:"Day 4 · Fort Augustus",       seed:110, ridge:"loch",     cls:"" },
     { name:"Loch Laggan",        sub:"Day 4 · the Eastern Highlands", seed:111, ridge:"loch",   cls:"" }
   ],
 
-  highlights: ["Edinburgh Old Town","Bridge of Orchy","Rannoch Moor","Glencoe","Road to the Isles","Glenfinnan Viaduct","Mallaig","Skye ferry","Fairy Pools","Sligachan","Old Man of Storr","Lealt Falls","Kilt Rock","Staffin","Fairy Glen","Quiraing","Portree","Eilean Donan Castle","Glen Shiel","Loch Ness","Fort Augustus","Loch Laggan","Eastern Highlands","A9 Highland drive"],
+  highlights: ["Edinburgh Old Town","Bridge of Orchy","Rannoch Moor","Glencoe","Road to the Isles","Glenfinnan Viaduct","Loch Garry","Eilean Donan","Skye Bridge","Old Man of Storr","Lealt Falls","Kilt Rock","Staffin","Fairy Glen","Quiraing","Portree","Eilean Donan Castle","Glen Shiel","Loch Ness","Fort Augustus","Loch Laggan","Eastern Highlands","A9 Highland drive"],
 
   usefulLinks: [
-    { h:"Ferry & roads", items:[
-      { label:"CalMac — Mallaig to Armadale", url:"https://www.calmac.co.uk/route-information/mallaig-armadale/" },
+    { h:"Roads", items:[
+      { label:"Eilean Donan Castle — opening hours", url:"https://www.eileandonancastle.com/visit/opening-hours/" },
       { label:"Traffic Scotland — live road conditions", url:"https://www.traffic.gov.scot/" }
     ]},
     { h:"Overnights", items:[
@@ -1894,7 +1900,7 @@ const TRIP = {
   emergency: [
     { label:"Emergency services — 999 or 112", url:"tel:999" },
     { label:"Traffic Scotland — live road conditions", url:"https://www.traffic.gov.scot/" },
-    { label:"CalMac — ferry status", url:"https://www.calmac.co.uk/route-information/mallaig-armadale/" },
+    
     { label:"Met Office — mountain weather", url:"https://www.metoffice.gov.uk/weather/specialist-forecasts/mountain" },
     { label:"An Crùbh — South Skye Motorhome Park", url:"https://www.ancrubh.com/" }
   ],
@@ -2179,28 +2185,28 @@ function ferryHTML(){
   '<div class="ferry" style="margin:26px 0">' +
     '<div class="ferry-in">' +
       '<div class="ferry-top">' +
-        '<div><p class="eyebrow" style="margin-bottom:8px">Crossing to Skye · ferry priority very high</p>' +
-        '<h3>Mallaig → Armadale<em>Thursday 17 September 2026 · CalMac</em></h3></div>' +
-        '<span class="tag tag-accent">Book this first</span>' +
+        '<div><p class="eyebrow" style="margin-bottom:8px">Crossing to Skye · by road</p>' +
+        '<h3>Invergarry → Skye Bridge<em>Thursday 17 September 2026 · A87, no booking needed</em></h3></div>' +
+        '<span class="tag tag-accent">Ferry unavailable</span>' +
       '</div>' +
       '<div class="crossing">' +
-        '<div class="port"><b>Mallaig</b><span>DEP 14:55</span></div>' +
+        '<div class="port"><b>Invergarry</b><span>A87 WEST ≈14:20</span></div>' +
         '<div class="track"><span class="boat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 17c1.5 1.4 3 1.4 4.5 0S10.5 15.6 12 17s3 1.4 4.5 0S19.5 15.6 21 17"/><path d="M5 13l1.6-5.2A1.5 1.5 0 0 1 8 6.7h8a1.5 1.5 0 0 1 1.4 1.1L19 13"/><path d="M12 6.5V3"/></svg></span></div>' +
-        '<div class="port to"><b>Armadale</b><span>ARR 15:25</span></div>' +
+        '<div class="port to"><b>Skye Bridge</b><span>ACROSS ≈16:35</span></div>' +
       '</div>' +
       '<div class="ferry-grid">' +
-        '<div><span>Preferred sailing</span><b>14:55 → 15:25</b></div>' +
-        '<div><span>Backup sailing</span><b>17:20 → 17:50</b></div>' +
-        '<div><span>Be at terminal</span><b>40–45 min early</b></div>' +
-        '<div><span>Operator</span><b>CalMac</b></div>' +
+        '<div><span>Fort William → Skye</span><b>≈110 km · 2 h</b></div>' +
+        '<div><span>Road</span><b>A82 then A87</b></div>' +
+        '<div><span>Bridge toll</span><b>None since 2004</b></div>' +
+        '<div><span>On the way</span><b>Eilean Donan</b></div>' +
       '</div>' +
-      '<div class="dl-strip"><span class="dl-label">Why 14:55</span><b>Strongly preferred over the 17:20</b>' +
-        '<span class="dl-sub">The earlier sailing gives Thursday afternoon on Skye: Fairy Pools and Sligachan before dark. On the 17:20 backup, skip the Fairy Pools and drive Armadale → An Crùbh, fifteen minutes away.</span></div>' +
+      '<div class="dl-strip"><span class="dl-label">The upside</span><b>No sailing time to be hostage to</b>' +
+        '<span class="dl-sub">The road route reaches An Crùbh around 17:30 with daylight to spare, and it passes Eilean Donan while the castle is still open — a stop Saturday could only ever do from the outside.</span></div>' +
       '<div class="grid-2" style="gap:16px;align-items:start">' +
         '<div>' +
-          '<p class="dash-label" style="margin-bottom:10px">Ferry checklist</p>' +
+          '<p class="dash-label" style="margin-bottom:10px">Before Invergarry</p>' +
           '<ul class="list list-check">' +
-            ["Ferry booked","Camper dimensions entered correctly","Passengers included","Ticket downloaded offline","Service status checked","Arrive early","Fuel sufficient"]
+            ["Tank topped up in Fort William","Traffic Scotland checked for A87 closures","Wind forecast checked for the bridge","Eilean Donan opening hours checked","Food for tonight bought","Offline maps downloaded","An Crùbh arrival before sunset"]
               .map(x => '<li>' + x + '</li>').join("") +
           '</ul>' +
         '</div>' +
@@ -2208,13 +2214,13 @@ function ferryHTML(){
           '<p class="dash-label" style="margin-bottom:10px">Vehicle</p>' +
           '<div class="kv">' +
             '<div><span class="k">Camper</span><span class="v"><b>2018 Volkswagen California</b></span></div>' +
-            '<div><span class="k">Size</span><span class="v">Under 6 m long, roughly 2 m tall — check against the booking</span></div>' +
-            '<div><span class="k">Booking</span><span class="v">Book as a vehicle, not as foot passengers</span></div>' +
+            '<div><span class="k">Size</span><span class="v">Under 6 m long, roughly 2 m tall — high-sided on an exposed bridge</span></div>' +
+            '<div><span class="k">Road</span><span class="v">A87 is two-lane throughout; no single-track on this route</span></div>' +
           '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="note warn"><h5>Verify on Thursday morning</h5><p>This route can cancel in heavy weather. Check the CalMac service status before leaving Bridge of Orchy, not on the pier.</p></div>' +
-      '<div>' + linkBtn("https://www.calmac.co.uk/route-information/mallaig-armadale/", "Check status & book", true) + '</div>' +
+      '<div class="note warn"><h5>The one real risk</h5><p>The A87 through Glen Shiel is high and exposed, and the Skye Bridge closes to high-sided vehicles in severe gales. Check Traffic Scotland before Invergarry — if the bridge is shut there is no ferry to fall back on tonight.</p></div>' +
+      '<div>' + linkBtn("https://www.traffic.gov.scot/", "Traffic Scotland — check the A87", true) + '</div>' +
     '</div>' +
   '</div>';
 }
@@ -2241,9 +2247,9 @@ function roadToIslesHTML(){
   return '' +
   '<div class="card" style="margin:16px 0 4px;padding:22px">' +
     '<p class="eyebrow" style="margin-bottom:10px">Scenic route card</p>' +
-    '<h3 class="h-md" style="margin-bottom:10px">Road to the Isles</h3>' +
-    '<div class="loop-strip" style="margin-bottom:12px"><b>Fort William</b><i>→</i>Glenfinnan<i>→</i>Arisaig / Morar<i>→</i><b>Mallaig</b></div>' +
-    '<p class="muted small">The A830 is not just the way to the ferry — the road itself is one of the attractions. Drive it slowly and let the scenery be the stop.</p>' +
+    '<h3 class="h-md" style="margin-bottom:10px">Road to the Isles — out and back</h3>' +
+    '<div class="loop-strip" style="margin-bottom:12px"><b>Fort William</b><i>→</i>Glenfinnan<i>→</i><b>Fort William</b></div>' +
+    '<p class="muted small">Without the ferry the A830 is a spur rather than a through route, so the viaduct costs the drive twice — about an hour of driving for a 60–75 minute stop. It is still one of the best roads in Scotland, and Glenfinnan is the only <em>must</em> on the western half of today.</p>' +
   '</div>';
 }
 
@@ -2496,15 +2502,10 @@ const ROUTE = [
   { day:2, type:"road", pts:[
     [-4.7690,56.5200],[-4.8300,56.5900],[-4.9050,56.6450],[-4.9950,56.6690],[-5.0530,56.6700],[-5.1010,56.6800],
     [-5.1830,56.6870],[-5.2210,56.7000],[-5.2430,56.7260],[-5.1900,56.7800],[-5.1052,56.8198],[-5.1300,56.8430],
-    [-5.3150,56.8550],[-5.4318,56.8763],[-5.5600,56.8800],[-5.6670,56.8790],[-5.7700,56.8950],[-5.8430,56.9110],
-    [-5.8260,56.9630],[-5.8290,57.0064]
-  ]},
-  { day:2, type:"ferry", pts:[[-5.8290,57.0064],[-5.8930,57.0640]] },
-  { day:2, type:"road", pts:[
-    [-5.8930,57.0640],[-5.8500,57.1000],[-5.8190,57.1460],[-5.8080,57.1570],[-5.8600,57.2000],[-5.9130,57.2400],[-5.9800,57.2600],
-    [-6.0430,57.2780],[-6.1120,57.3130],[-6.1720,57.2900],[-6.2300,57.3000],[-6.2900,57.3000],[-6.3300,57.3000],
-    [-6.3000,57.2700],[-6.2530,57.2500],[-6.3000,57.2700],[-6.3300,57.3000],[-6.2300,57.3000],[-6.1720,57.2900],
-    [-6.1120,57.3130],[-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400],[-5.8600,57.2000],[-5.8190,57.1460]
+    [-5.3150,56.8550],[-5.4318,56.8763],[-5.3150,56.8550],[-5.1300,56.8430],[-5.1052,56.8198],[-5.0300,56.8500],
+    [-4.9210,56.8900],[-4.8700,56.9600],[-4.8400,57.0100],[-4.8000,57.0650],[-4.9700,57.0750],[-5.0000,57.0900],
+    [-5.1480,57.1330],[-5.3000,57.1500],[-5.4060,57.1830],[-5.4600,57.2400],[-5.5160,57.2740],[-5.6200,57.2760],
+    [-5.7140,57.2800],[-5.7400,57.2760],[-5.8200,57.2700],[-5.9130,57.2400],[-5.8600,57.2000],[-5.8190,57.1460]
   ]},
   { day:3, type:"road", pts:[
     [-5.8190,57.1460],[-5.8600,57.2000],[-5.9130,57.2400],[-5.9800,57.2600],[-6.0430,57.2780],[-6.1120,57.3130],[-6.1720,57.2900],[-6.1800,57.3400],
@@ -2686,7 +2687,7 @@ const MAP_VIEWS = [
     selected = n;
     const g = GROUPS.find(v => v.ns.includes(n));
     const w = g.wps.find(v => v.n === n) || g.wps[0];
-    const kindLabel = { start:"Start", finish:"Start or finish · return by " + TRIP.config.deadline.hard, ferry:"Ferry port", camp:"Overnight", castle:"Castle", hike:"Hiking stop", attract:"Attraction", scenic:"Scenic or practical stop" }[g.kind] || "Scenic stop";
+    const kindLabel = { start:"Start", finish:"Start or finish · return by " + TRIP.config.deadline.hard, ferry:"Crossing to Skye", camp:"Overnight", castle:"Castle", hike:"Hiking stop", attract:"Attraction", scenic:"Scenic or practical stop" }[g.kind] || "Scenic stop";
     const days = g.wps.map(v => "Day " + v.day).join(" & ");
     const other = g.wps.filter(v => v !== w);
     const repeat = other.length
