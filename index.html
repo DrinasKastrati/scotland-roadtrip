@@ -2292,7 +2292,7 @@ function skipOrderHTML(d){
     '<p class="eyebrow" style="margin-bottom:12px">Saturday skip order</p>' +
     '<p class="muted small" style="margin-bottom:12px">If delayed, remove stops in this order:</p>' +
     '<ol class="prio-num">' + d.skipOrder.map(s => '<li>' + esc(s) + '</li>').join("") + '</ol>' +
-    '<div class="note warn" style="margin-top:14px"><h5>The rule for today</h5><p>Never sacrifice the ' + esc(c.where) + ' deadline. Whenever a stop and the schedule disagree, the schedule wins.</p></div>' +
+    '<div class="note warn" style="margin-top:14px"><h5>The rule for today</h5><p>Never sacrifice the ' + esc(TRIP.config.deadline.where) + ' deadline. Whenever a stop and the schedule disagree, the schedule wins.</p></div>' +
   '</div>';
 }
 
