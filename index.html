@@ -935,7 +935,7 @@ body.road-open{overflow:hidden}
       <div><b>3</b><span>Nights</span></div>
       <div><b>≈1,185 km</b><span>Total route</span></div>
       <div><b>0</b><span>Ferries · bridge instead</span></div>
-      <div><b>29</b><span>Waypoints</span></div>
+      <div><b>30</b><span>Waypoints</span></div>
       <div><b>A86 + A9</b><span>New return route</span></div>
       <div><b>Wed 14:00</b><span>Pickup · Glasgow</span></div>
       <div class="is-deadline"><b>17:00</b><span>Sat · Larkhall deadline</span></div>
@@ -1042,7 +1042,7 @@ body.road-open{overflow:hidden}
           <span class="dash-label">Scale view</span>
           <div id="mapViews" role="group" aria-label="Map view"></div>
         </div>
-        <svg id="mapSvg" role="img" aria-label="Chart of Scotland showing the route from Glasgow via Edinburgh and the western Highlands to the Isle of Skye, then back via Loch Ness, the A86 and the A9 to Larkhall in South Lanarkshire, with 29 numbered waypoints"></svg>
+        <svg id="mapSvg" role="img" aria-label="Chart of Scotland showing the route from Glasgow via Edinburgh and the western Highlands to the Isle of Skye, then back via Loch Ness, the A86 and the A9 to Larkhall in South Lanarkshire, with 30 numbered waypoints"></svg>
       </div>
       <div class="map-side">
         <div class="map-detail" id="mapDetail"></div>
@@ -1330,7 +1330,7 @@ body.road-open{overflow:hidden}
       <div><b>4</b>days</div>
       <div><b>3</b>nights</div>
       <div><b>0</b>ferry crossings</div>
-      <div><b>29</b>waypoints</div>
+      <div><b>30</b>waypoints</div>
       <div><b>17:00</b>Saturday · Larkhall</div>
     </div>
     <div class="final-hl" id="finalHighlights"></div>
@@ -1448,40 +1448,42 @@ const TRIP = {
     { n:12, name:"An Crùbh",            lat:57.1460, lon:-5.8190, day:2, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h 20 min · 72 km to Old Man of Storr", skip:"—", q:"An Crubh, Duisdale Beag, Isle of Skye",
       desc:"Night 2 at South Skye Motorhome Park, An Crùbh — on the Sleat peninsula, about 35 minutes south of the Skye Bridge." },
 
-    { n:13, name:"Old Man of Storr",    lat:57.4960, lon:-6.1590, day:3, kind:"hike",    prio:"must", time:"1.5–2 h", next:"≈10 min · 6 km to Lealt Falls", skip:"Viewpoint only in bad weather", q:"Old Man of Storr Car Park",
+    { n:13, name:"Old Man of Storr",    lat:57.4960, lon:-6.1590, day:3, kind:"hike",    prio:"must", time:"1.5–2 h", next:"≈20 min · 11 km to Kilt Rock", skip:"Viewpoint only in bad weather", q:"Old Man of Storr Car Park",
       desc:"The first of the day's two main outdoor activities. Muddy, windy and weather-dependent — waterproof footwear and a rain jacket." },
-    { n:14, name:"Lealt Falls",         lat:57.5460, lon:-6.1395, day:3, kind:"scenic",  prio:"high", time:"20–30 min", next:"≈5 min · 5 km to Kilt Rock", skip:"Shorten to 10 min", q:"Lealt Falls Viewpoint",
+    { n:14, name:"Lealt Falls",         lat:57.5460, lon:-6.1395, day:3, kind:"scenic",  prio:"skip", time:"20–30 min", next:"≈5 min · 5 km to Kilt Rock", skip:"Yes — cut to make room for Neist Point", q:"Lealt Falls Viewpoint",
       desc:"A gorge and waterfall a short walk from the road. Scenic stop, not a hike." },
-    { n:15, name:"Kilt Rock",           lat:57.6100, lon:-6.1710, day:3, kind:"scenic",  prio:"high", time:"≈20 min", next:"≈10 min · 5 km to Staffin", skip:"Shorten to 10 min", q:"Kilt Rock and Mealt Falls Viewpoint",
+    { n:15, name:"Kilt Rock",           lat:57.6100, lon:-6.1710, day:3, kind:"scenic",  prio:"high", time:"≈20 min", next:"≈25 min · 15 km to the Quiraing", skip:"Shorten to 10 min", q:"Kilt Rock and Mealt Falls Viewpoint",
       desc:"Mealt Falls drops straight into the sea beside pleated basalt cliffs. Quick roadside viewpoint." },
-    { n:16, name:"Staffin / An Corran", lat:57.6340, lon:-6.1900, day:3, kind:"scenic",  prio:"opt",  time:"20–30 min", next:"≈25 min · 20 km to Duntulm", skip:"Yes", q:"An Corran Beach, Staffin",
+    { n:16, name:"Staffin / An Corran", lat:57.6340, lon:-6.1900, day:3, kind:"scenic",  prio:"skip", time:"20–30 min", next:"≈15 min · 10 km to the Quiraing", skip:"Yes — cut for Neist Point", q:"An Corran Beach, Staffin",
       desc:"Staffin bay and An Corran beach, with dinosaur footprints at low tide. Keep only if the schedule is healthy." },
-    { n:17, name:"Duntulm Castle",      lat:57.6880, lon:-6.3440, day:3, kind:"castle",  prio:"opt",  time:"15–20 min", next:"≈20 min · 18 km to Fairy Glen", skip:"Yes — first to go", q:"Duntulm Castle",
+    { n:17, name:"Duntulm Castle",      lat:57.6880, lon:-6.3440, day:3, kind:"castle",  prio:"skip", time:"15–20 min", next:"≈20 min · 18 km to Fairy Glen", skip:"Yes — the northern tip is out of reach today", q:"Duntulm Castle",
       desc:"Ruined MacDonald castle on the northern cliffs. A bonus — one of the first things to drop if Friday runs late." },
-    { n:18, name:"Fairy Glen",          lat:57.5820, lon:-6.3380, day:3, kind:"attract", prio:"high", time:"30–45 min", next:"≈20 min · 10 km to Quiraing", skip:"Shorten to 20 min", q:"Fairy Glen, Uig",
+    { n:18, name:"Fairy Glen",          lat:57.5820, lon:-6.3380, day:3, kind:"attract", prio:"opt",  time:"30–45 min", next:"≈25 min · 25 km to Portree", skip:"Yes if the Quiraing ran long", q:"Fairy Glen, Uig",
       desc:"Miniature cone hills and grassy terraces above Uig. A landscape unlike anything else on Skye — keep it if possible." },
-    { n:19, name:"Quiraing",            lat:57.6280, lon:-6.2920, day:3, kind:"hike",    prio:"must", time:"60–90 min", next:"≈45 min · 35 km to Portree", skip:"Main viewpoint only", q:"Quiraing Car Park",
+    { n:19, name:"Quiraing",            lat:57.6280, lon:-6.2920, day:3, kind:"hike",    prio:"must", time:"60–90 min", next:"≈30 min · 20 km down to Uig", skip:"Main viewpoint only", q:"Quiraing Car Park",
       desc:"The second main outdoor activity. Main viewpoint, partial hike, or a longer walk only if schedule and weather allow." },
-    { n:20, name:"Portree",             lat:57.4130, lon:-6.1950, day:3, kind:"attract", prio:"high", time:"45–60 min", next:"≈1 h 10 min · 59 km to An Crùbh", skip:"Shorten to 20 min", q:"Portree Harbour",
+    { n:20, name:"Portree",             lat:57.4130, lon:-6.1950, day:3, kind:"attract", prio:"high", time:"30–40 min", next:"≈1 h 20 min · 55 km to Neist Point", skip:"Shorten to 20 min — fuel and food only", q:"Portree Harbour",
       desc:"The colourful harbour, food, coffee and groceries. Do not let it become a two-hour stop." },
-    { n:21, name:"An Crùbh",            lat:57.1460, lon:-5.8190, day:3, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h 5 min · 62 km to Eilean Donan", skip:"—", q:"An Crubh, Duisdale Beag, Isle of Skye", toGla:400, stopMin:0,
+    { n:21, name:"Neist Point",         lat:57.4233, lon:-6.7867, day:3, kind:"hike",    prio:"high", time:"60–75 min", next:"≈2 h · 110 km to An Crùbh", skip:"Clifftop viewpoint only, 25 min", q:"Neist Point Lighthouse",
+      desc:"The westernmost point of Skye: a lighthouse on a long green finger of cliff, with the Outer Hebrides across the Minch. The last road is single-track through Glendale and the car park is small. A steep concrete path drops to the lighthouse — the walk back up is the hard part." },
+    { n:22, name:"An Crùbh",            lat:57.1460, lon:-5.8190, day:3, kind:"camp",    prio:null,   time:"Overnight", next:"≈1 h 5 min · 62 km to Eilean Donan", skip:"—", q:"An Crubh, Duisdale Beag, Isle of Skye", toGla:400, stopMin:0,
       desc:"Night 3 — deliberately not Portree. Sleeping in the south of Skye protects the Saturday deadline." },
 
-    { n:22, name:"Eilean Donan Castle", lat:57.2740, lon:-5.5160, day:4, kind:"castle",  prio:"must", time:"30–40 min exterior", next:"≈25 min · 25 km to Glen Shiel", skip:"Photos only (10 min)", q:"Eilean Donan Castle", toGla:345, stopMin:35,
+    { n:23, name:"Eilean Donan Castle", lat:57.2740, lon:-5.5160, day:4, kind:"castle",  prio:"must", time:"30–40 min exterior", next:"≈25 min · 25 km to Glen Shiel", skip:"Photos only (10 min)", q:"Eilean Donan Castle", toGla:345, stopMin:35,
       desc:"Exterior visit only — the castle opens later than we pass. The bridge, the loch and the mountains are the point." },
-    { n:23, name:"Glen Shiel",          lat:57.1500, lon:-5.3000, day:4, kind:"scenic",  prio:"high", time:"15–20 min", next:"≈55 min · 60 km to Fort Augustus", skip:"Drive through without stopping", q:"Glen Shiel", toGla:320, stopMin:15,
+    { n:24, name:"Glen Shiel",          lat:57.1500, lon:-5.3000, day:4, kind:"scenic",  prio:"high", time:"15–20 min", next:"≈55 min · 60 km to Fort Augustus", skip:"Drive through without stopping", q:"Glen Shiel", toGla:320, stopMin:15,
       desc:"Scenic drive below the Five Sisters of Kintail. Stop at one good viewpoint, not several." },
-    { n:24, name:"Fort Augustus",       lat:57.1450, lon:-4.6800, day:4, kind:"attract", prio:"high", time:"30–45 min", next:"≈35 min · 37 km to Spean Bridge", skip:"Shorten to 15 min", q:"Fort Augustus Locks", toGla:265, stopMin:40,
+    { n:25, name:"Fort Augustus",       lat:57.1450, lon:-4.6800, day:4, kind:"attract", prio:"high", time:"30–45 min", next:"≈35 min · 37 km to Spean Bridge", skip:"Shorten to 15 min", q:"Fort Augustus Locks", toGla:265, stopMin:40,
       desc:"Loch Ness, the Caledonian Canal locks and the village. The northernmost point of the loop — turn south here, not toward Inverness." },
-    { n:25, name:"Spean Bridge",        lat:56.8900, lon:-4.9210, day:4, kind:"scenic",  prio:null,   time:"Drive through", next:"≈35 min · 40 km to Loch Laggan", skip:"—", q:"Spean Bridge", toGla:230, stopMin:0,
+    { n:26, name:"Spean Bridge",        lat:56.8900, lon:-4.9210, day:4, kind:"scenic",  prio:null,   time:"Drive through", next:"≈35 min · 40 km to Loch Laggan", skip:"—", q:"Spean Bridge", toGla:230, stopMin:0,
       desc:"Turn east here onto the A86. From now on every road is new." },
-    { n:26, name:"Loch Laggan",         lat:56.9500, lon:-4.5000, day:4, kind:"scenic",  prio:"opt",  time:"≈10 min viewpoint", next:"≈30 min · 30 km to Dalwhinnie", skip:"Yes", q:"Loch Laggan", toGla:195, stopMin:10,
+    { n:27, name:"Loch Laggan",         lat:56.9500, lon:-4.5000, day:4, kind:"scenic",  prio:"opt",  time:"≈10 min viewpoint", next:"≈30 min · 30 km to Dalwhinnie", skip:"Yes", q:"Loch Laggan", toGla:195, stopMin:10,
       desc:"The A86 along Loch Laggan — quiet inland Highland scenery on the edge of the Cairngorms." },
-    { n:27, name:"Dalwhinnie",          lat:56.9360, lon:-4.2400, day:4, kind:"scenic",  prio:null,   time:"≈30 min · lunch, toilets", next:"≈50 min · 55 km to Pitlochry", skip:"Shorten to 15 min", q:"Dalwhinnie", toGla:165, stopMin:30,
+    { n:28, name:"Dalwhinnie",          lat:56.9360, lon:-4.2400, day:4, kind:"scenic",  prio:null,   time:"≈30 min · lunch, toilets", next:"≈50 min · 55 km to Pitlochry", skip:"Shorten to 15 min", q:"Dalwhinnie", toGla:165, stopMin:30,
       desc:"Join the A9 south. The faster return segment starts here, over the Drumochter Pass." },
-    { n:28, name:"Pitlochry",           lat:56.7040, lon:-3.7340, day:4, kind:"attract", prio:"skip", time:"20–30 min max", next:"≈1 h 55 min · 135 km to Larkhall", skip:"Yes — stop only if the ETA is before 16:15", q:"Pitlochry", toGla:115, stopMin:25,
+    { n:29, name:"Pitlochry",           lat:56.7040, lon:-3.7340, day:4, kind:"attract", prio:"skip", time:"20–30 min max", next:"≈1 h 55 min · 135 km to Larkhall", skip:"Yes — stop only if the ETA is before 16:15", q:"Pitlochry", toGla:115, stopMin:25,
       desc:"Optional coffee and a leg-stretch. Only stop if the Larkhall ETA is before 16:15." },
-    { n:29, name:"Larkhall",            lat:55.7370, lon:-3.9690, day:4, kind:"finish",  prio:"must", time:"Return by 17:00", next:"Road trip complete", skip:"Never", q:"Larkhall, South Lanarkshire", toGla:0, stopMin:0,
+    { n:30, name:"Larkhall",            lat:55.7370, lon:-3.9690, day:4, kind:"finish",  prio:"must", time:"Return by 17:00", next:"Road trip complete", skip:"Never", q:"Larkhall, South Lanarkshire", toGla:0, stopMin:0,
       desc:"Finish, in South Lanarkshire off the M74 at junction 7 — south-east of Glasgow, so the M73 and M74 take you round the city rather than through it. Target arrival 16:00–16:30. The 17:00 deadline is never sacrificed." }
   ],
   ferryLeg: [8, 9],
@@ -1633,48 +1635,53 @@ const TRIP = {
     },
     {
       n:3, dow:"Friday", date:"18 September 2026",
-      title:"The full North Skye loop",
-      titleEm:"Storr, Trotternish and the Quiraing",
+      title:"Trotternish, then west to Neist Point",
+      titleEm:"Both ends of Skye in one day",
       start:"An Crùbh", end:"An Crùbh",
-      depart:"07:00", drive:"≈4 h 40 total", km:"≈235 km",
+      depart:"06:45", drive:"≈6 h total", km:"≈320 km",
       sunrise:"≈06:59", sunriseWhere:"Sleat",
-      sunset:"≈19:37", sunsetWhere:"North Skye",
-      stops:["Old Man of Storr","Lealt Falls","Kilt Rock","Staffin","Duntulm","Fairy Glen","Quiraing","Portree"],
+      sunset:"≈19:37", sunsetWhere:"the road back from Neist Point",
+      stops:["Old Man of Storr","Kilt Rock","Quiraing","Fairy Glen (if ahead)","Portree","Neist Point"],
       overnight:"An Crùbh (not Portree)",
       overnightShort:"An Crùbh",
       booking:"Confirm Friday night at An Crùbh",
-      fuel:"Fuel in Broadford as you pass, or in Portree. There is little on the Trotternish loop itself — do not start it below half a tank.",
-      weather:"Two hikes today. Good weather: full stops. Poor weather: shorter walks or viewpoints. Very strong winds: do not force exposed trails. If Trotternish is socked in, the Fairy Pools below the Black Cuillin are the alternative — they lost their slot when the ferry did, they sit on the other side of the island and they often catch different weather.",
-      maps:"https://www.google.com/maps/dir/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK/Old+Man+of+Storr+Car+Park,+UK/Lealt+Falls,+UK/Kilt+Rock,+UK/Staffin,+UK/Duntulm+Castle,+UK/Fairy+Glen,+Uig,+UK/Quiraing,+UK/Portree,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
+      fuel:"Fuel in Portree before turning west. There is nothing between Dunvegan and Neist Point, and today is 320 km — do not leave Portree below half a tank.",
+      weather:"Three exposed walks today, and Neist Point is the most exposed place on Skye — a clifftop with nothing between it and the Atlantic. In strong wind stay well back from the edge and take the view from the top of the path. Good weather: full stops. Poor weather: viewpoints instead. If Trotternish is socked in, the Fairy Pools below the Black Cuillin sit on the way back from Neist Point and often catch different weather.",
+      maps:"https://www.google.com/maps/dir/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK/Old+Man+of+Storr+Car+Park,+UK/Kilt+Rock,+UK/Quiraing+Car+Park,+UK/Fairy+Glen,+Uig,+UK/Portree,+UK/Neist+Point+Lighthouse,+UK/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK",
       mapsLabel:"Open Day 3 in Google Maps",
       seed:37, ridge:"storr",
       weatherLogic:true,
-      notes:"Basing on Sleat costs about 20 minutes at each end of today, which is why the start moves to 07:00. If the day runs late, drop Duntulm first, then Staffin, then shorten Portree. The Storr and the Quiraing are the two stops to protect.",
+      notes:"Neist Point is on the far west of Skye and Trotternish is on the far north-east — roughly 90 minutes apart. Fitting both means the minor Trotternish stops go: Lealt Falls, Staffin and Duntulm are cut, and Fairy Glen only survives if the Quiraing finishes on time. The three to protect are the Storr, the Quiraing and Neist Point. Times below assume leaving An Crùbh at 06:45; if you start later, take it out of Portree, not out of Neist Point.",
       timeline:[
-        { time:"07:00", key:true, h:"Leave An Crùbh",
+        { time:"06:45", key:true, h:"Leave An Crùbh",
           p:"Up the A851 to Broadford, then north on the A87 past Sligachan and through Portree. Arrive at the Storr before the car park fills. If Sligachan was skipped on Thursday, stop for ten minutes on the way." },
         { time:"≈08:15", key:true, h:"Old Man of Storr", wp:13,
           p:"The first of the day's two main outdoor activities. 1.5–2 hours for the walk up to the pinnacles and back.",
           feature:"storr",
           hikeInfo:["Muddy terrain possible","Strong winds possible","Waterproof footwear","Rain jacket","Weather-dependent"] },
-        { time:"≈10:15", h:"Lealt Falls", wp:14,
-          p:"A short scenic stop above the gorge. 20–30 minutes — not a hike." },
-        { time:"≈10:45", h:"Kilt Rock & Mealt Falls", wp:15,
-          p:"Quick viewpoint: the waterfall drops straight into the sea beside the pleated cliffs. About 20 minutes." },
-        { time:"≈11:15", h:"Staffin / An Corran", wp:16,
-          p:"Staffin bay and An Corran beach. 20–30 minutes, and only if the schedule is healthy." },
-        { time:"≈12:05", h:"Duntulm Castle", wp:17,
-          p:"A ruined castle on the northern cliffs. 15–20 minutes. This is a bonus — one of the first things to remove if the day runs late." },
-        { time:"≈12:45", key:true, h:"Fairy Glen", wp:18,
-          p:"Grassy cone hills and terraces above Uig — very different from the rest of Skye. 30–45 minutes. Good place for a camper lunch." },
-        { time:"≈13:50", key:true, h:"The Quiraing", wp:19,
-          p:"From Uig, take the single-track road up to the Quiraing car park. The second main outdoor activity: 60–90 minutes.",
+        { time:"≈10:15", h:"Kilt Rock & Mealt Falls", wp:15,
+          p:"Quick roadside viewpoint: the waterfall drops straight into the sea beside the pleated cliffs. 20 minutes, no more.",
+          note:{ h:"Driven past, not stopped at", t:"Lealt Falls, Staffin and Duntulm are all cut today. They are pleasant, but each one costs 20–30 minutes and Neist Point needs every one of them." } },
+        { time:"≈11:00", key:true, h:"The Quiraing", wp:19,
+          p:"Up the single-track road from the Staffin side — shorter than coming round via Uig. The second main outdoor activity: 60–90 minutes. Leave by 12:45 whatever happens.",
           feature:"quiraing" },
-        { time:"≈15:15", h:"Back via Uig and the A87",
-          p:"Return to Uig and take the A87 south to Portree. This closes the loop around North Skye instead of backtracking along the east coast." },
-        { time:"≈16:00", key:true, h:"Portree", wp:20,
-          p:"Late afternoon: the harbour, the colourful waterfront, food, coffee and groceries. 45–60 minutes — do not let it turn into a 2–3 hour stop." },
-        { time:"≈18:15", key:true, h:"Back to An Crùbh", wp:21,
+        { time:"≈12:45", h:"Down to Uig — Fairy Glen if you are ahead", wp:18, prioOnly:"opt",
+          p:"Over the top and down to Uig. If the Quiraing finished on time there is room for 30 minutes in the Fairy Glen; if it did not, drive straight through. This is the one stop today that is genuinely optional.",
+          note:{ warn:true, h:"The gate on the day", t:"You need to be leaving Portree by 14:15. Work backwards from that and let Fairy Glen take whatever is left over." } },
+        { time:"≈13:40", key:true, h:"Portree — fuel, food, go", wp:20,
+          p:"A working stop, not an afternoon: refuel, buy something to eat in the van, and turn west. 30 minutes. The harbour will still be there on a future trip; Neist Point will not be.",
+          list:["Refuel — nothing open west of Dunvegan","Food to eat later","Toilets"] },
+        { time:"≈14:15", h:"West on the A850 to Dunvegan",
+          p:"Across the middle of the island to Dunvegan, then the Glendale road out to the point. The last 10 km are single-track with passing places — allow more time than the map suggests." },
+        { time:"≈15:35", key:true, h:"Neist Point Lighthouse", wp:21,
+          p:"The westernmost point of Skye. A steep concrete path drops from the car park towards the lighthouse, with the cliff face of An t-Aigeach on your right and the Outer Hebrides across the Minch. Allow 60–75 minutes for the walk down and back.",
+          priority:"Very high",
+          hikeInfo:["Steep descent, steeper climb back","Exposed clifftop — stay well back in wind","Small car park, often full","No facilities at the point"],
+          note:{ h:"You do not have to reach the lighthouse", t:"The best view of the cliffs and the lighthouse is from the clifftop near the top of the path. If the climb back looks like too much after the Storr and the Quiraing, take the view from up there and save an hour." } },
+        { time:"≈16:50", key:true, h:"Leave Neist Point",
+          p:"Back through Glendale and Dunvegan, then south on the A863 past Bracadale to Sligachan and home down the A87 and A851. Two hours, and the light on the way is usually the best of the day.",
+          note:{ warn:true, h:"Staying for sunset?", t:"Sunset is 19:37 and Neist Point faces due west, so it is the best sunset on Skye. But it puts you back at An Crùbh around 22:00, and Saturday leaves at 06:45 with a 17:00 deadline in Larkhall. Only do it if someone else is driving tomorrow." } },
+        { time:"≈18:55", key:true, h:"Back to An Crùbh", wp:22,
           p:"Night 3, and the last one of the trip. Repack tonight so Saturday morning is only breakfast and driving.",
           whySleep:true }
       ],
@@ -1720,29 +1727,29 @@ const TRIP = {
           p:"North on the A851 to Broadford in the dark, then south-east on the A87 and across the Skye Bridge. The earlier start is what makes the loop possible.",
           note:{ warn:true, h:"This is the hard one", t:"Sunrise is 07:02, so the first 20 minutes are unlit single-carriageway on Sleat. Leaving at 07:00 instead puts every stop 15 minutes later and eats the Glasgow buffer — if you want the lie-in, drop Pitlochry rather than the buffer." },
           loopStrip:true },
-        { time:"≈07:45", key:true, h:"Eilean Donan Castle — exterior", wp:22,
+        { time:"≈07:45", key:true, h:"Eilean Donan Castle — exterior", wp:23,
           p:"The castle opens later than our schedule, so do not wait for opening. A 30–40 minute exterior visit: the bridge, the castle, the loch, the surrounding mountains and photographs. If you already visited properly on Thursday, drive straight past and bank the 35 minutes against the Larkhall deadline.",
           links:[
             { url:"https://www.eileandonancastle.com/", label:"Eilean Donan" },
             { url:"https://www.eileandonancastle.com/visit/opening-hours/", label:"Opening hours" }
           ] },
-        { time:"≈08:45", h:"Glen Shiel", wp:23,
+        { time:"≈08:45", h:"Glen Shiel", wp:24,
           p:"The A87 runs through Glen Shiel below the Five Sisters of Kintail. Treat it as a scenic drive and stop at one good viewpoint for 15–20 minutes — not several.",
           badge:"Scenic drive" },
-        { time:"≈09:55", key:true, h:"Fort Augustus / Loch Ness", wp:24,
+        { time:"≈09:55", key:true, h:"Fort Augustus / Loch Ness", wp:25,
           p:"30–45 minutes for Loch Ness, the Caledonian Canal locks and the village. This is the northernmost major destination of the trip.",
           note:{ warn:true, h:"Turn south here", t:"Do not continue north toward Inverness or Urquhart Castle. The route turns south and then east from Fort Augustus." } },
-        { time:"≈11:10", h:"Spean Bridge — turn east", wp:25,
+        { time:"≈11:10", h:"Spean Bridge — turn east", wp:26,
           p:"South along Loch Oich and Loch Lochy to Spean Bridge, then turn EAST onto the A86.",
           eastern:true },
-        { time:"≈11:45", h:"Loch Laggan", wp:26,
+        { time:"≈11:45", h:"Loch Laggan", wp:27,
           p:"One short viewpoint along the loch if the schedule allows — about 10 minutes." },
-        { time:"≈12:25", key:true, h:"Dalwhinnie — join the A9", wp:27,
+        { time:"≈12:25", key:true, h:"Dalwhinnie — join the A9", wp:28,
           p:"Lunch, toilets and a fuel check, about 30 minutes. From here: Dalwhinnie → Blair Atholl area → Pitlochry area → Perth direction → M80 → M73 → M74 → Larkhall. This is the faster return segment." },
-        { time:"≈13:45", h:"Pitlochry — only if time allows", wp:28,
+        { time:"≈13:45", h:"Pitlochry — only if time allows", wp:29,
           p:"Quick coffee, a short village walk or a leg-stretch. Maximum 20–30 minutes.",
           note:{ warn:true, h:"The rule", t:"Only stop if the Larkhall ETA is before 16:15. If it is later than 16:15, skip Pitlochry. Use the ETA calculator in Road Mode." } },
-        { time:"≈16:10", key:true, h:"Arrive Larkhall — target 16:00–16:30", wp:29,
+        { time:"≈16:10", key:true, h:"Arrive Larkhall — target 16:00–16:30", wp:30,
           p:"The arrival time the whole day is built around. It leaves a real buffer for fuel, emptying tanks and the handover. Refuel before the M74 — do not leave it until Larkhall.",
           statusKey:true,
           skipOrder:true,
@@ -1854,6 +1861,7 @@ const TRIP = {
     "On the road":[
       { t:"Refuel in Fort William before the A87", p:"high" },
       { t:"Turn west on the A87 at Invergarry", p:"high" },
+      { t:"Leave Portree by 14:15 on Friday for Neist Point", p:"high" },
       { t:"Leave An Crùbh by 06:45 on Saturday", p:"high" },
       { t:"Confirm the Larkhall return address and 17:00 handover", p:"high" },
       { t:"Refuel before returning the camper", p:"medium" }
@@ -1868,12 +1876,12 @@ const TRIP = {
     { name:"Eilean Donan",       sub:"Day 2 · three sea lochs",     seed:105, ridge:"castle",   cls:"" },
     { name:"Old Man of Storr",   sub:"Day 3 · the pinnacle",        seed:106, ridge:"storr",    cls:"wide" },
     { name:"Quiraing",           sub:"Day 3 · the landslip",        seed:107, ridge:"quiraing", cls:"tall" },
-    { name:"Skye Bridge",        sub:"Day 2 · Kyle to Kyleakin",    seed:109, ridge:"coast",    cls:"" },
+    { name:"Neist Point",        sub:"Day 3 · the far west",        seed:109, ridge:"coast",    cls:"" },
     { name:"Loch Ness",          sub:"Day 4 · Fort Augustus",       seed:110, ridge:"loch",     cls:"" },
     { name:"Loch Laggan",        sub:"Day 4 · the Eastern Highlands", seed:111, ridge:"loch",   cls:"" }
   ],
 
-  highlights: ["Edinburgh Old Town","Bridge of Orchy","Rannoch Moor","Glencoe","Road to the Isles","Glenfinnan Viaduct","Loch Garry","Eilean Donan","Skye Bridge","Old Man of Storr","Lealt Falls","Kilt Rock","Staffin","Fairy Glen","Quiraing","Portree","Eilean Donan Castle","Glen Shiel","Loch Ness","Fort Augustus","Loch Laggan","Eastern Highlands","A9 Highland drive"],
+  highlights: ["Edinburgh Old Town","Bridge of Orchy","Rannoch Moor","Glencoe","Road to the Isles","Glenfinnan Viaduct","Loch Garry","Eilean Donan","Skye Bridge","Old Man of Storr","Kilt Rock","Quiraing","Portree","Neist Point Lighthouse","Eilean Donan Castle","Glen Shiel","Loch Ness","Fort Augustus","Loch Laggan","Eastern Highlands","A9 Highland drive"],
 
   usefulLinks: [
     { h:"Roads", items:[
@@ -2510,10 +2518,11 @@ const ROUTE = [
   { day:3, type:"road", pts:[
     [-5.8190,57.1460],[-5.8600,57.2000],[-5.9130,57.2400],[-5.9800,57.2600],[-6.0430,57.2780],[-6.1120,57.3130],[-6.1720,57.2900],[-6.1800,57.3400],
     [-6.1950,57.4130],[-6.1700,57.4600],[-6.1590,57.4960],[-6.1395,57.5460],[-6.1710,57.6100],[-6.1900,57.6340],
-    [-6.2400,57.6600],[-6.2900,57.6900],[-6.3440,57.6880],[-6.3700,57.6500],[-6.3620,57.5870],[-6.3380,57.5820],
-    [-6.3300,57.6000],[-6.3000,57.6200],[-6.2920,57.6280],[-6.3000,57.6200],[-6.3300,57.6000],[-6.3620,57.5870],
-    [-6.3300,57.5300],[-6.2600,57.4600],[-6.1950,57.4130],[-6.1800,57.3400],[-6.1720,57.2900],[-6.1120,57.3130],
-    [-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400],[-5.8600,57.2000],[-5.8190,57.1460]
+    [-6.2400,57.6480],[-6.2920,57.6280],[-6.3300,57.6000],[-6.3620,57.5870],[-6.3380,57.5820],[-6.3620,57.5870],
+    [-6.3300,57.5300],[-6.2600,57.4600],[-6.1950,57.4130],[-6.2800,57.4220],[-6.4000,57.4300],[-6.5000,57.4420],
+    [-6.5800,57.4400],[-6.6400,57.4150],[-6.7200,57.4200],[-6.7867,57.4233],[-6.7200,57.4200],[-6.6400,57.4150],
+    [-6.5800,57.4400],[-6.5300,57.3900],[-6.4500,57.3560],[-6.3500,57.3300],[-6.2500,57.3080],[-6.1720,57.2900],
+    [-6.1120,57.3130],[-6.0430,57.2780],[-5.9800,57.2600],[-5.9130,57.2400],[-5.8600,57.2000],[-5.8190,57.1460]
   ]},
   { day:4, type:"road", pts:[
     [-5.8190,57.1460],[-5.8600,57.2000],[-5.9130,57.2400],[-5.8200,57.2700],[-5.7400,57.2760],[-5.7140,57.2800],[-5.6200,57.2760],[-5.5160,57.2740],
@@ -2542,7 +2551,7 @@ const MAP_VIEWS = [
       { t:"Firth of Clyde", lon:-5.00, lat:55.72, a:"middle", sea:true }
     ] },
   { id:"skye", label:"Isle of Skye", grat:.25,
-    bb:{ w:-6.62, e:-5.42, s:57.00, n:57.76 },
+    bb:{ w:-6.90, e:-5.42, s:57.00, n:57.76 },
     places:[
       { t:"Trotternish", lon:-6.30, lat:57.50, a:"start", sea:false },
       { t:"The Cuillin", lon:-6.24, lat:57.20, a:"start", sea:false },
@@ -2770,7 +2779,8 @@ dashTabs.innerHTML = TRIP.days.map(d =>
 const dayWps = d => TRIP.waypoints.filter(w => w.day === d.n);
 function nextStop(d){
   const w = dayWps(d);
-  return w.find(v => !done.includes(v.n)) || w[w.length - 1];
+  return w.find(v => !done.includes(v.n) && v.prio !== "skip") ||
+         w.find(v => !done.includes(v.n)) || w[w.length - 1];
 }
 function nextMajor(d, after){
   return dayWps(d).find(v => v.n > after.n && v.prio === "must" && !done.includes(v.n)) || null;
