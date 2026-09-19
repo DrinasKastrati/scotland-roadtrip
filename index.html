@@ -938,7 +938,7 @@ body.road-open{overflow:hidden}
       <div><b>30</b><span>Waypoints</span></div>
       <div><b>Kilchurn</b><span>Saturday detour</span></div>
       <div><b>Wed 14:00</b><span>Pickup · Glasgow</span></div>
-      <div class="is-deadline"><b>17:00</b><span>Sat · Larkhall deadline</span></div>
+      <div class="is-deadline"><b>17:15</b><span>Sat · Larkhall deadline</span></div>
     </div>
   </div>
 </header>
@@ -980,14 +980,14 @@ body.road-open{overflow:hidden}
         </div>
         <div class="tags">
           <span class="tag tag-accent">Pickup Glasgow · Wed 14:00</span>
-          <span class="tag tag-accent">Return Larkhall · Sat by 17:00</span>
+          <span class="tag tag-accent">Return Larkhall · Sat by 17:15</span>
           <span class="tag tag-slate">No ferry · Skye Bridge</span>
           <span class="tag tag-moss">2 proper hikes</span>
           <span class="tag">A real loop</span>
         </div>
         <div class="deadline-band" style="margin-top:22px">
           <span class="dl-label">Hard deadline</span>
-          <b>Larkhall · 17:00 Saturday</b>
+          <b>Larkhall · 17:15 Saturday</b>
           <span class="dl-sub">Target arrival 16:00–16:30 · the extra 30–60 minutes is the safety margin</span>
         </div>
       </div>
@@ -1203,7 +1203,7 @@ body.road-open{overflow:hidden}
       </div>
       <div class="prio-row">
         <div class="rank">4</div>
-        <div class="what"><b>Campervan pickup and return</b><span class="mono">Glasgow Wednesday 14:00 · Larkhall Saturday by 17:00</span></div>
+        <div class="what"><b>Campervan pickup and return</b><span class="mono">Glasgow Wednesday 14:00 · Larkhall Saturday by 17:15</span></div>
         <a class="btn btn-line btn-sm" href="#todo">To-Do list</a>
       </div>
     </div>
@@ -1331,7 +1331,7 @@ body.road-open{overflow:hidden}
       <div><b>3</b>nights</div>
       <div><b>0</b>ferry crossings</div>
       <div><b>30</b>waypoints</div>
-      <div><b>17:00</b>Saturday · Larkhall</div>
+      <div><b>17:15</b>Saturday · Larkhall</div>
     </div>
     <div class="final-hl" id="finalHighlights"></div>
     <p style="color:rgba(237,232,220,.78);max-width:56ch;line-height:1.8">
@@ -1340,7 +1340,7 @@ body.road-open{overflow:hidden}
       Then turn east and cross a completely different part of the Highlands before finishing at Larkhall, south-east of Glasgow.
       Avoid retracing the same roads whenever practical.
     </p>
-    <p class="creed">Drive slowly.<br>Stay flexible.<br>Stop when the view deserves it.<br>Skip optional stops when the schedule demands it.<br>Be back in Larkhall before 17:00.</p>
+    <p class="creed">Drive slowly.<br>Stay flexible.<br>Stop when the view deserves it.<br>Skip optional stops when the schedule demands it.<br>Be back in Larkhall before 17:15.</p>
   </div>
 </section>
 
@@ -1413,8 +1413,8 @@ const TRIP = {
     storageKey: "scotland-roadtrip-v3",
     camper: "2018 Volkswagen California",
     pickup: { where: "Glasgow", when: "Wednesday 16 September · 14:00" },
-    dropoff: { where: "Larkhall, South Lanarkshire", when: "Saturday 19 September · by 17:00" },
-    deadline: { where: "Larkhall", hard: "17:00", target: "16:00–16:30", greenBefore: "16:15", redAfter: "16:40", day: "Saturday 19 September" },
+    dropoff: { where: "Larkhall, South Lanarkshire", when: "Saturday 19 September · by 17:15" },
+    deadline: { where: "Larkhall", hard: "17:15", target: "16:45–17:00", greenBefore: "17:00", redAfter: "17:10", day: "Saturday 19 September" },
     returnRoute: "Glencoe → Tyndrum → Kilchurn → Loch Lomond → Larkhall"
   },
 
@@ -1423,7 +1423,7 @@ const TRIP = {
      toGla / stopMin (Day 4 only) feed the Saturday ETA calculator, in minutes */
   waypoints: [
     { n:1,  name:"Glasgow",             lat:55.8642, lon:-4.2518, day:1, kind:"finish",  prio:"must", time:"30 min handover", next:"≈1 h 15 min · 75 km to Edinburgh", skip:"Never", q:"Glasgow",
-      desc:"Pick up the 2018 Volkswagen California at 14:00. Allow 30 minutes for the handover, then leave by 14:30. The loop ends here on Saturday — by 17:00." },
+      desc:"Pick up the 2018 Volkswagen California at 14:00. Allow 30 minutes for the handover, then leave by 14:30. The loop ends here on Saturday — by 17:15." },
     { n:2,  name:"Edinburgh Old Town",  lat:55.9500, lon:-3.1900, day:1, kind:"attract", prio:"must", time:"60–90 min", next:"≈1 h 15 min · 85 km to Callander", skip:"Shorten to 60 min", q:"Royal Mile, Edinburgh",
       desc:"A fast but worthwhile walk: Royal Mile, St Giles', Victoria Street, Grassmarket and the Castle Esplanade. High impact, short visit." },
     { n:3,  name:"Callander",           lat:56.2450, lon:-4.2140, day:1, kind:"scenic",  prio:"opt",  time:"10–20 min", next:"≈1 h · 60 km to Bridge of Orchy", skip:"Yes", q:"Callander",
@@ -1479,12 +1479,12 @@ const TRIP = {
       desc:"The one stop the day genuinely needs: fuel, toilets and something to eat in the van. Nothing after this is a reliable service stop until Loch Lomond." },
     { n:27, name:"Glencoe",             lat:56.6800, lon:-5.1010, day:4, kind:"scenic",  prio:"opt",  time:"Drive through", next:"≈50 min · 52 km to Kilchurn", skip:"Yes — seen on Thursday", q:"Three Sisters Viewpoint, Glencoe", toGla:217, stopMin:0,
       desc:"The second pass through the glen, and the only repeated road of the day. Different light, different weather — but no time for the layby today." },
-    { n:28, name:"Kilchurn Castle",     lat:56.4033, lon:-5.0281, day:4, kind:"castle",  prio:"high", time:"15 min from the layby", next:"≈2 h 25 min · 139 km to Larkhall", skip:"Layby photo only, 5 min", q:"Kilchurn Castle", toGla:145, stopMin:15,
-      desc:"The ruined Campbell stronghold at the head of Loch Awe, and the reason today goes west. The classic view is from the A85 layby — no walk needed. The car park and the 15-minute walk to the castle itself cost half an hour more." },
+    { n:28, name:"Kilchurn Castle",     lat:56.4033, lon:-5.0281, day:4, kind:"castle",  prio:"high", time:"45 min · car park and walk", next:"≈2 h 25 min · 139 km to Larkhall", skip:"Layby view instead, 15 min", q:"Kilchurn Castle", toGla:145, stopMin:45,
+      desc:"The ruined Campbell stronghold at the head of Loch Awe, and the reason today goes west. Park off the A85 and walk out to the castle — about fifteen minutes each way. If the clock or the ground is against you, the A85 layby gives the classic view with no walking at all." },
     { n:29, name:"Loch Lomond",         lat:56.2050, lon:-4.7100, day:4, kind:"scenic",  prio:"opt",  time:"≈10 min at Tarbet", next:"≈1 h 20 min · 75 km to Larkhall", skip:"Yes — stop only if the ETA is before 16:15", q:"Tarbet, Loch Lomond", toGla:80, stopMin:0,
       desc:"The A82 down the west shore — new road, since Wednesday came up through Callander and Crianlarich. Stop at Tarbet or Firkin Point only if the ETA is comfortable." },
-    { n:30, name:"Larkhall",            lat:55.7370, lon:-3.9690, day:4, kind:"finish",  prio:"must", time:"Return by 17:00", next:"Road trip complete", skip:"Never", q:"Larkhall, South Lanarkshire", toGla:0, stopMin:0,
-      desc:"Finish, in South Lanarkshire off the M74 at junction 7. Coming down the A82 you skirt Glasgow on the M8 and M74 rather than crossing it. Target arrival 16:00–16:30. The 17:00 deadline is never sacrificed." }
+    { n:30, name:"Larkhall",            lat:55.7370, lon:-3.9690, day:4, kind:"finish",  prio:"must", time:"Return by 17:15", next:"Road trip complete", skip:"Never", q:"Larkhall, South Lanarkshire", toGla:0, stopMin:0,
+      desc:"Finish, in South Lanarkshire off the M74 at junction 7. Coming down the A82 you skirt Glasgow on the M8 and M74 rather than crossing it. Target arrival 16:45–17:00. The 17:15 deadline is never sacrificed." }
   ],
   ferryLeg: [8, 9],
 
@@ -1680,7 +1680,7 @@ const TRIP = {
           note:{ h:"You do not have to reach the lighthouse", t:"The best view of the cliffs and the lighthouse is from the clifftop near the top of the path. If the climb back looks like too much after the Storr and the Quiraing, take the view from up there and save an hour." } },
         { time:"≈16:50", key:true, h:"Leave Neist Point",
           p:"Back through Glendale and Dunvegan, then south on the A863 past Bracadale to Sligachan and home down the A87 and A851. Two hours, and the light on the way is usually the best of the day.",
-          note:{ warn:true, h:"Staying for sunset?", t:"Sunset is 19:37 and Neist Point faces due west, so it is the best sunset on Skye. But it puts you back at An Crùbh around 22:00, and Saturday leaves at 06:45 with a 17:00 deadline in Larkhall. Only do it if someone else is driving tomorrow." } },
+          note:{ warn:true, h:"Staying for sunset?", t:"Sunset is 19:37 and Neist Point faces due west, so it is the best sunset on Skye. But it puts you back at An Crùbh around 22:00, and Saturday leaves at 09:00 with a 17:15 deadline in Larkhall. Only do it if someone else is driving tomorrow." } },
         { time:"≈18:55", key:true, h:"Back to An Crùbh", wp:22,
           p:"Night 3, and the last one of the trip. Repack tonight so Saturday morning is only breakfast and driving.",
           whySleep:true }
@@ -1713,19 +1713,19 @@ const TRIP = {
       sunset:"≈19:25", sunsetWhere:"Larkhall",
       stops:["Skye Bridge","Glen Shiel","Invergarry","Fort William","Glencoe","Tyndrum","Kilchurn Castle","Loch Lomond","M74 · Larkhall"],
       overnight:"Trip ends in Larkhall",
-      overnightShort:"Larkhall · 17:00",
-      booking:"Hard deadline — Larkhall by 17:00",
+      overnightShort:"Larkhall · 17:15",
+      booking:"Hard deadline — Larkhall by 17:15",
       fuel:"Fort William is the fuel stop, and it is not optional — after it there is nothing dependable until Loch Lomond. Refuel again before the M74 rather than leaving it until Larkhall.",
       weather:"No hikes today. Rain matters in one place only: the walk to Kilchurn floods after heavy rain, which is another reason to take the view from the A85 layby instead.",
       maps:"https://www.google.com/maps/dir/An+Crubh,+Duisdale+Beag,+Isle+of+Skye,+UK/Invergarry,+UK/Fort+William,+UK/Glencoe,+UK/Tyndrum,+UK/Kilchurn+Castle,+UK/Tarbet,+Loch+Lomond,+UK/Larkhall,+South+Lanarkshire,+UK",
       mapsLabel:"Open Day 4 in Google Maps",
       seed:53, ridge:"castle",
       deadline:true,
-      notes:"The route now goes WEST for Kilchurn Castle instead of east via Loch Ness and the A9. The two are within about ten minutes of each other in total driving time, so the castle is nearly free — what is not free is the 09:00 start, which leaves roughly 70 minutes of stop budget for the whole day. At Invergarry turn SOUTH toward Fort William, not north to Fort Augustus. One real stop at Fort William for fuel, one short stop at Kilchurn, and everything else only if the ETA calculator says green. Never sacrifice the 17:00 deadline.",
+      notes:"The route now goes WEST for Kilchurn Castle instead of east via Loch Ness and the A9. The two are within about ten minutes of each other in total driving time, so the castle is nearly free. The 09:00 start costs more than the detour does: with the handover pushed to 17:15 there are about 83 minutes of stop budget, and the plan spends 65 of them on fuel at Fort William and the walk out to Kilchurn. At Invergarry turn SOUTH toward Fort William, not north to Fort Augustus. One real stop at Fort William for fuel, one short stop at Kilchurn, and everything else only if the ETA calculator says green. Never sacrifice the 17:00 deadline.",
       timeline:[
         { time:"09:00", key:true, h:"Leave An Crùbh",
           p:"North on the A851 to Broadford, then south-east on the A87 and across the Skye Bridge. Daylight the whole way today — but the late start is the story of this day.",
-          note:{ warn:true, h:"The budget, honestly", t:"Driving alone is about 6 h 50 min, so a 09:00 start puts you in Larkhall around 15:50 with no stops at all. That leaves roughly 70 minutes for everything: fuel, food and Kilchurn. Every fifteen minutes you leave earlier is fifteen minutes of buffer you keep." },
+          note:{ warn:true, h:"The budget, honestly", t:"Driving alone is about 6 h 50 min, so a 09:00 start puts you in Larkhall around 15:50 with no stops at all. Against a 17:15 handover that is roughly 83 minutes for everything, and 65 are already spoken for: 20 at Fort William and 45 at Kilchurn. Every fifteen minutes you leave earlier is fifteen minutes you get back." },
           loopStrip:true },
         { time:"≈09:55", h:"Eilean Donan — drive past", wp:23,
           p:"Visited properly on Thursday, so today it is a wave from the A87. That decision alone buys back 35 minutes, and today needs every one of them.",
@@ -1749,26 +1749,26 @@ const TRIP = {
           note:{ h:"The only repeated road", t:"Fort William to Tyndrum is the one stretch today you have already driven. Everything from Tyndrum onward is new." } },
         { time:"≈13:25", h:"Tyndrum — the decision point",
           p:"The Green Welly if you need it, but keep it to ten minutes. This is where you decide how much Kilchurn you get.",
-          note:{ warn:true, h:"Check the clock here", t:"Through Tyndrum by 13:30 and the A85 layby view of Kilchurn fits comfortably. After 14:15, take the photo from the road without stopping properly. The car park and the fifteen-minute walk to the castle itself needs you through Tyndrum by 13:00 — unlikely today." } },
-        { time:"≈13:50", key:true, h:"Kilchurn Castle", wp:28,
-          p:"The ruined Campbell stronghold at the head of Loch Awe, with Ben Cruachan behind it. The classic view is from the A85 layby on the north shore and needs no walking at all — fifteen minutes, and it is the shot everybody comes for.",
+          note:{ warn:true, h:"Check the clock here", t:"Through Tyndrum by 13:30 and the full walk to Kilchurn fits with room to spare. Between 13:30 and 14:15, do the walk but skip everything after it. Past 14:15, drop to the A85 layby view and keep moving — the handover still has to happen." } },
+        { time:"≈13:50", key:true, h:"Kilchurn Castle — the walk", wp:28,
+          p:"The ruined Campbell stronghold at the head of Loch Awe, with Ben Cruachan behind it. Park off the A85 and walk out to the castle: about fifteen minutes each way, plus time under the walls. 45 minutes all in, and the reason the whole day went west.",
           priority:"High",
           links:[
             { url:"https://www.historicenvironment.scot/visit-a-place/places/kilchurn-castle/", label:"Kilchurn — access and opening" }
           ],
-          note:{ warn:true, h:"Before you commit to the walk", t:"Reaching the castle itself means a small car park off the A85 and about fifteen minutes each way across ground that floods after rain, under a railway underpass. Access to the castle has been restricted at times for masonry work — check the Historic Environment Scotland page. With a 09:00 start, take the layby." } },
-        { time:"≈14:10", h:"St Conan's Kirk — only if you are ahead", prioOnly:"opt",
-          p:"Three minutes further along the A85 at Lochawe village: an extraordinary church built between 1881 and 1930 in whatever style its builder fancied that decade, with a Robert the Bruce effigy inside. Free, and almost nobody stops. Fifteen minutes.",
-          note:{ warn:true, h:"The gate", t:"Only if you are leaving Loch Awe by 14:15. After that, drive." } },
-        { time:"≈14:20", key:true, h:"South down Loch Lomond", wp:29,
-          p:"Back through Tyndrum and Crianlarich, then the A82 down the west shore of Loch Lomond — new road, because Wednesday came north through Callander. Tarbet and Firkin Point are the laybys, but only stop if the ETA is green.",
+          note:{ warn:true, h:"Boots, not trainers", t:"The path crosses ground that floods after rain and goes under a railway underpass. Access to the castle has been restricted at times for masonry work — check the Historic Environment Scotland page before you commit. If it is shut or the ground is a swamp, the A85 layby still gives you the photo in fifteen minutes." } },
+        { time:"≈14:40", h:"St Conan's Kirk — not in today's plan", prioOnly:"opt",
+          p:"Three minutes further along the A85 at Lochawe village: an extraordinary church built between 1881 and 1930 in whatever style its builder fancied that decade, with a Robert the Bruce effigy inside. Free, and almost nobody stops.",
+          note:{ warn:true, h:"Only if Kilchurn was quick", t:"The walk to Kilchurn is what the extra time bought, so the kirk is out unless you are leaving Loch Awe by 14:40. Fifteen minutes here pushes the arrival to about 17:20 and leaves almost nothing for the handover." } },
+        { time:"≈15:45", h:"Loch Lomond — Tarbet", wp:29,
+          p:"Leave Loch Awe about 14:35, back through Tyndrum and Crianlarich, then the A82 down the west shore — new road, because Wednesday came north through Callander. Tarbet and Firkin Point are the laybys, but only stop if the ETA calculator is still green.",
           note:{ h:"Falls of Falloch", t:"A ten-minute waterfall in a layby between Crianlarich and Ardlui, if the clock is kind." } },
-        { time:"≈16:30", key:true, h:"Arrive Larkhall — target 16:00–16:30", wp:30,
-          p:"The arrival time the whole day is built around. It leaves a real buffer for fuel, emptying tanks and the handover. Refuel before the M74 — do not leave it until Larkhall.",
+        { time:"≈16:55", key:true, h:"Arrive Larkhall — target 16:45–17:00", wp:30,
+          p:"Rolling in just before 17:00 leaves a genuine half hour for fuel, emptying tanks and walking the camper round with the hire company. Refuel before the M74 — do not leave it until Larkhall.",
           statusKey:true,
           skipOrder:true,
           checklist:["Refuel","Empty toilet if required","Empty grey water if required","Remove rubbish","Pack personal belongings","Check cupboards","Photograph camper condition"] },
-        { time:"17:00", key:true, h:"Hard deadline — Larkhall", p:"Road trip complete.", finale:true }
+        { time:"17:15", key:true, h:"Hard deadline — Larkhall", p:"Road trip complete.", finale:true }
       ],
       stay:null,
       skipOrder:["St Conan's Kirk","Loch Lomond laybys and the Falls of Falloch","The walk to Kilchurn — take the layby view","Tyndrum beyond ten minutes","Kilchurn down to a photo from the road"]
@@ -1877,7 +1877,7 @@ const TRIP = {
       { t:"Turn west on the A87 at Invergarry", p:"high" },
       { t:"Leave Portree by 14:15 on Friday for Neist Point", p:"high" },
       { t:"Leave An Crùbh by 06:45 on Saturday", p:"high" },
-      { t:"Confirm the Larkhall return address and 17:00 handover", p:"high" },
+      { t:"Confirm the Larkhall return address and 17:15 handover", p:"high" },
       { t:"Refuel before returning the camper", p:"medium" }
     ]
   },
