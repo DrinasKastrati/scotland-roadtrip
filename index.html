@@ -643,6 +643,19 @@ img,canvas,svg{max-width:100%}
 .ph-q span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--text-3)}
 .ph-q span b{color:var(--text)}
 .ph-q input{width:100%;accent-color:var(--accent)}
+.ph-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ph-chip{
+  appearance:none;border:1px solid var(--line);background:transparent;color:var(--text-2);cursor:pointer;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;padding:7px 12px;border-radius:999px;
+  transition:background .15s,color .15s,border-color .15s;white-space:nowrap
+}
+.ph-chip:hover{border-color:var(--text-3);color:var(--text)}
+.ph-chip.is-on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ph-row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;margin-top:14px}
+.ph-row>div{display:flex;flex-direction:column;gap:7px}
+.ph-row .dash-label{margin:0}
+.ph-out{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--text-3);margin-top:10px}
+.ph-out b{color:var(--text-2);font-weight:500}
 .ph-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
 .ph-strip{display:flex;flex-direction:column;gap:5px;margin-top:8px}
 .ph-strip div{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:11px;color:var(--text-3)}
@@ -1385,6 +1398,36 @@ body.road-open{overflow:hidden}
           <div>
             <p class="dash-label" style="margin-bottom:10px">What you gave me</p>
             <div class="kv" id="phMeta"></div>
+
+            <p class="dash-label" style="margin:20px 0 10px">Instagram format</p>
+            <div class="ph-chips" id="phIg" role="group" aria-label="Instagram format">
+              <button type="button" class="ph-chip is-on" data-ig="none" aria-pressed="true">Original</button>
+              <button type="button" class="ph-chip" data-ig="sq" aria-pressed="false">1:1 square</button>
+              <button type="button" class="ph-chip" data-ig="por" aria-pressed="false">4:5 portrait</button>
+              <button type="button" class="ph-chip" data-ig="story" aria-pressed="false">9:16 story</button>
+              <button type="button" class="ph-chip" data-ig="land" aria-pressed="false">1.91:1 wide</button>
+            </div>
+
+            <div id="phIgOpts" hidden>
+              <div class="ph-row">
+                <div>
+                  <p class="dash-label">Framing</p>
+                  <div class="ph-chips" id="phFit" role="group" aria-label="Framing">
+                    <button type="button" class="ph-chip is-on" data-fit="fill" aria-pressed="true">Fill · crop</button>
+                    <button type="button" class="ph-chip" data-fit="fit" aria-pressed="false">Fit · whole image</button>
+                  </div>
+                </div>
+                <div id="phBgWrap" hidden>
+                  <p class="dash-label">Padding</p>
+                  <div class="ph-chips" id="phBg" role="group" aria-label="Padding">
+                    <button type="button" class="ph-chip is-on" data-bg="blur" aria-pressed="true">Blur</button>
+                    <button type="button" class="ph-chip" data-bg="white" aria-pressed="false">White</button>
+                    <button type="button" class="ph-chip" data-bg="black" aria-pressed="false">Black</button>
+                  </div>
+                </div>
+              </div>
+              <p class="ph-out" id="phOutSize"></p>
+            </div>
 
             <p class="dash-label" style="margin:20px 0 10px">Download as</p>
             <div class="ph-fmt" role="group" aria-label="Output format">
@@ -3368,7 +3411,17 @@ if ("IntersectionObserver" in window && spyTargets.length){
   const input = $("#phFile"), stage = $("#phStage"), prevImg = $("#phImg"),
         metaEl = $("#phMeta"), outEl = $("#phOut"), noteEl = $("#phNote"),
         dlBtn = $("#phDownload"), clearBtn = $("#phReset"),
-        qWrap = $("#phQualityWrap"), qIn = $("#phQuality"), qVal = $("#phQualityVal");
+        qWrap = $("#phQualityWrap"), qIn = $("#phQuality"), qVal = $("#phQualityVal"),
+        igOpts = $("#phIgOpts"), bgWrap = $("#phBgWrap"), outSizeEl = $("#phOutSize");
+
+  /* Instagram's accepted frames. 1080 wide is what the app targets;
+     anything smaller is never upscaled to reach it. */
+  const IG = {
+    sq:    { label:"1:1 square",   w:1080, h:1080, suffix:"1x1" },
+    por:   { label:"4:5 portrait", w:1080, h:1350, suffix:"4x5" },
+    story: { label:"9:16 story",   w:1080, h:1920, suffix:"9x16" },
+    land:  { label:"1.91:1 wide",  w:1080, h:566,  suffix:"191x1" }
+  };
 
   const JPG_NAMES = {
     0xE0:"APP0 · JFIF", 0xE1:"APP1 · EXIF / XMP", 0xE2:"APP2 · ICC profile",
@@ -3386,7 +3439,8 @@ if ("IntersectionObserver" in window && spyTargets.length){
     hIST:"hIST · histogram", dSIG:"dSIG · signature", bKGD:"bKGD · background"
   };
 
-  let file = null, buf = null, scan = null, prevUrl = null, fmt = "png", built = null;
+  let file = null, buf = null, scan = null, prevUrl = null, fmt = "png", built = null,
+      srcImg = null, ig = "none", fitMode = "fill", bg = "blur";
 
   const bytes = n => n < 1024 ? n + " B"
     : n < 1048576 ? (n/1024).toFixed(1) + " KB" : (n/1048576).toFixed(2) + " MB";
@@ -3502,6 +3556,54 @@ if ("IntersectionObserver" in window && spyTargets.length){
     return blob;
   }
 
+  /* ---------- Instagram framing ---------- */
+  /* Output size for a frame, never upscaling past what the source can fill. */
+  function outSize(im, spec){
+    const a = spec.w / spec.h, sw = im.naturalWidth, sh = im.naturalHeight;
+    const natural = fitMode === "fill"
+      ? ((sw / sh > a) ? sh * a : sw)          /* the crop the source can give */
+      : Math.max(sw, sh * a);                  /* canvas big enough to hold it */
+    const w = Math.max(1, Math.round(Math.min(spec.w, natural)));
+    return { w: w, h: Math.max(1, Math.round(w / a)) };
+  }
+
+  function compose(im, W, H){
+    const c = document.createElement("canvas");
+    c.width = W; c.height = H;
+    const ctx = c.getContext("2d");
+    const sw = im.naturalWidth, sh = im.naturalHeight;
+    const cover = Math.max(W / sw, H / sh), contain = Math.min(W / sw, H / sh);
+    if (fitMode === "fit") {
+      if (bg === "blur" && "filter" in ctx) {
+        /* a blown-up, blurred copy behind the picture — the usual Instagram look */
+        ctx.filter = "blur(" + Math.max(8, Math.round(W / 20)) + "px)";
+        const bw = sw * cover * 1.15, bh = sh * cover * 1.15;
+        ctx.drawImage(im, (W - bw) / 2, (H - bh) / 2, bw, bh);
+        ctx.filter = "none";
+        ctx.fillStyle = "rgba(0,0,0,.10)";
+        ctx.fillRect(0, 0, W, H);
+      } else {
+        ctx.fillStyle = bg === "black" ? "#000000" : "#ffffff";
+        ctx.fillRect(0, 0, W, H);
+      }
+      const dw = sw * contain, dh = sh * contain;
+      ctx.drawImage(im, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    } else {
+      const dw = sw * cover, dh = sh * cover;
+      ctx.drawImage(im, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    }
+    return c;
+  }
+
+  function refreshPreview(){
+    if (!srcImg) return;
+    if (ig === "none") { if (prevUrl) prevImg.src = prevUrl; return; }
+    const full = outSize(srcImg, IG[ig]);
+    const pw = Math.min(640, full.w), ph = Math.max(1, Math.round(pw * full.h / full.w));
+    try { prevImg.src = compose(srcImg, pw, ph).toDataURL("image/png"); }
+    catch (err) { if (prevUrl) prevImg.src = prevUrl; }
+  }
+
   /* ---------- UI ---------- */
   function setNote(kind, head, body){
     noteEl.innerHTML = '<div class="note' + (kind === "warn" ? " warn" : "") +
@@ -3510,7 +3612,7 @@ if ("IntersectionObserver" in window && spyTargets.length){
 
   /* is this a straight copy, with only the metadata removed? */
   function canCopy(){
-    if (!scan) return false;
+    if (!scan || ig !== "none") return false;
     if (fmt === "png") return scan.kind === "png";
     return scan.kind === "jpeg" && scan.orientation <= 1;
   }
@@ -3543,6 +3645,25 @@ if ("IntersectionObserver" in window && spyTargets.length){
 
   function plan(){
     qWrap.hidden = fmt !== "jpg" || canCopy();
+    igOpts.hidden = ig === "none";
+    bgWrap.hidden = fitMode !== "fit";
+    if (ig !== "none" && srcImg) {
+      const o = outSize(srcImg, IG[ig]);
+      const under = o.w < IG[ig].w;
+      outSizeEl.innerHTML = "Output <b>" + o.w + " × " + o.h + "</b>" +
+        (under ? " — smaller than Instagram's " + IG[ig].w + " × " + IG[ig].h +
+                 ", because the source is not big enough to fill it without upscaling."
+               : " — Instagram's own size.");
+    }
+    if (ig !== "none") {
+      setNote(fmt === "png" ? "" : "warn",
+        "Reframed for " + IG[ig].label + (fmt === "png" ? "" : " · re-encoded"),
+        (fitMode === "fill"
+          ? "The picture is cropped from the centre to fill the frame, so the edges are lost."
+          : "The whole picture is kept and the frame is padded" + (bg === "blur" ? " with a blurred copy of it." : " with a flat " + bg + " background.")) +
+        " Changing the shape means redrawing the image, so this can never be a straight copy — but the metadata still goes, and PNG keeps every redrawn pixel exact.");
+      return;
+    }
     if (canCopy() && fmt === "png")
       setNote("", "PNG → PNG · nothing re-encoded",
         "The compressed image data is copied through byte for byte and only the metadata blocks are dropped. Bit depth, palette and any animation frames survive exactly as they were.");
@@ -3561,6 +3682,19 @@ if ("IntersectionObserver" in window && spyTargets.length){
   }
 
   async function makeBlob(){
+    if (ig !== "none" && srcImg) {
+      const o = outSize(srcImg, IG[ig]);
+      const c = compose(srcImg, o.w, o.h);
+      const type = fmt === "png" ? "image/png" : "image/jpeg";
+      let blob = await new Promise(r => c.toBlob(r, type, fmt === "png" ? undefined : (+qIn.value) / 100));
+      c.width = c.height = 0;
+      if (!blob) throw new Error("The browser refused to encode this one — it is probably too large.");
+      if (fmt === "jpg") {
+        const ab = await blob.arrayBuffer(), s2 = scanJpeg(ab);
+        if (s2 && s2.dropped.length) blob = join(ab, s2.keep, "image/jpeg");
+      }
+      return { blob: blob, lossless: fmt === "png", copied: false, framed: true, dims: o };
+    }
     if (canCopy())
       return { blob: join(buf, scan.keep, fmt === "png" ? "image/png" : "image/jpeg"),
                lossless: true, copied: true };
@@ -3584,7 +3718,8 @@ if ("IntersectionObserver" in window && spyTargets.length){
       const delta = built.blob.size - file.size;
       outEl.innerHTML =
         '<div class="note" style="margin-top:16px"><h5>Ready · ' +
-          (built.copied ? 'copied, not re-encoded'
+          (built.framed ? IG[ig].label + ' · ' + built.dims.w + ' × ' + built.dims.h
+            : built.copied ? 'copied, not re-encoded'
             : built.lossless ? 'pixels unchanged'
             : 're-encoded at quality ' + qIn.value) + '</h5>' +
           '<p class="mono small">' + bytes(file.size) + ' → <b>' + bytes(built.blob.size) + '</b>' +
@@ -3593,7 +3728,8 @@ if ("IntersectionObserver" in window && spyTargets.length){
         '</div>';
       const a = document.createElement("a");
       a.href = URL.createObjectURL(built.blob);
-      a.download = baseName(file.name) + "-clean." + (fmt === "png" ? "png" : "jpg");
+      a.download = baseName(file.name) + (ig === "none" ? "-clean" : "-" + IG[ig].suffix) +
+                   "." + (fmt === "png" ? "png" : "jpg");
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 8000);
     } catch (err) {
@@ -3616,7 +3752,9 @@ if ("IntersectionObserver" in window && spyTargets.length){
     scan = isJpeg() ? scanJpeg(buf) : isPng() ? scanPng(buf) : null;
     if (prevUrl) URL.revokeObjectURL(prevUrl);
     prevUrl = URL.createObjectURL(f);
-    prevImg.onload = () => { stage.hidden = false; describe(); };
+    try { srcImg = await loadImg(f); } catch (err) { srcImg = null; }
+    prevImg.onload = () => { stage.hidden = false; };
+    stage.hidden = false; describe(); refreshPreview();
     prevImg.onerror = () => {
       stage.hidden = true;
       noteEl.innerHTML = '<div class="note warn" style="margin-top:16px"><h5>Could not open it</h5><p>The browser could not decode that file as an image.</p></div>';
@@ -3625,7 +3763,7 @@ if ("IntersectionObserver" in window && spyTargets.length){
   }
 
   function reset(){
-    file = null; buf = null; scan = null; built = null;
+    file = null; buf = null; scan = null; built = null; srcImg = null;
     if (prevUrl) { URL.revokeObjectURL(prevUrl); prevUrl = null; }
     prevImg.removeAttribute("src");
     stage.hidden = true; outEl.innerHTML = ""; noteEl.innerHTML = ""; metaEl.innerHTML = "";
@@ -3656,6 +3794,21 @@ if ("IntersectionObserver" in window && spyTargets.length){
     built = null; outEl.innerHTML = "";
     if (file) plan();
   }));
+  function chips(sel, set){
+    $$(sel).forEach(b => b.addEventListener("click", () => {
+      set(b);
+      $$(sel).forEach(x => {
+        const on = x === b;
+        x.classList.toggle("is-on", on);
+        x.setAttribute("aria-pressed", String(on));
+      });
+      built = null; outEl.innerHTML = "";
+      if (file) { plan(); refreshPreview(); }
+    }));
+  }
+  chips("[data-ig]",  b => { ig = b.dataset.ig; });
+  chips("[data-fit]", b => { fitMode = b.dataset.fit; });
+  chips("[data-bg]",  b => { bg = b.dataset.bg; });
   qIn.addEventListener("input", () => { qVal.textContent = qIn.value; built = null; outEl.innerHTML = ""; });
   dlBtn.addEventListener("click", run);
   clearBtn.addEventListener("click", reset);
