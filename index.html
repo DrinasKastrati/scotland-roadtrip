@@ -603,6 +603,40 @@ img,canvas,svg{max-width:100%}
 .newroute i{width:1px;height:11px;background:rgba(199,154,74,.55);display:block}
 .newroute span{color:rgba(237,232,220,.9)}
 
+/* --- photo scrubber --- */
+.ph-drop{
+  display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;
+  padding:38px 22px;border:1.5px dashed var(--line);border-radius:var(--r);
+  background:var(--glass);cursor:pointer;transition:border-color .18s,background .18s
+}
+.ph-drop:hover,.ph-drop:focus-visible,.ph-drop.is-over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.ph-drop svg{width:26px;height:26px;color:var(--text-3);margin-bottom:2px}
+.ph-drop b{font-size:15px}
+.ph-drop span{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;color:var(--text-3)}
+.ph-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;align-items:start}
+@media (max-width:760px){ .ph-grid{grid-template-columns:1fr;gap:20px} }
+.ph-prev{
+  border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden;
+  background:repeating-conic-gradient(var(--glass) 0% 25%,transparent 0% 50%) 50%/18px 18px;
+  display:flex;align-items:center;justify-content:center;min-height:170px
+}
+.ph-prev img{max-width:100%;max-height:440px;display:block}
+.ph-fmt{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.ph-seg{
+  appearance:none;border:0;background:transparent;color:var(--text-2);cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;padding:8px 18px;transition:background .15s,color .15s
+}
+.ph-seg.is-on{background:var(--accent);color:var(--accent-ink)}
+.ph-q{display:flex;flex-direction:column;gap:7px}
+.ph-q span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--text-3)}
+.ph-q span b{color:var(--text)}
+.ph-q input{width:100%;accent-color:var(--accent)}
+.ph-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.ph-strip{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.ph-strip div{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:11px;color:var(--text-3)}
+.ph-strip div b{color:var(--text-2);font-weight:500}
+.ph-ok{color:var(--ok)}
+
 /* --- deadline treatment --- */
 .hero-stats .is-deadline{background:rgba(199,154,74,.2)}
 .hero-stats .is-deadline b{color:#F0CC8C}
@@ -888,6 +922,7 @@ body.road-open{overflow:hidden}
       <a href="#stays">Overnight</a>
       <a href="#todo">To-Do</a>
       <a href="#tobuy">To Buy</a>
+      <a href="#photo">Photo Tool</a>
       <a href="#packing">Packing</a>
       <a href="#rules">Camper Rules</a>
       <a href="#links">Useful Links</a>
@@ -1307,6 +1342,56 @@ body.road-open{overflow:hidden}
 </section>
 
 <!-- ============================================================ LINKS -->
+<!-- ============================================================ PHOTO TOOL -->
+<section class="section" id="photo" style="padding-top:0">
+  <div class="wrap">
+    <div class="card">
+      <div class="section-head" style="margin-bottom:22px">
+        <p class="eyebrow">Photo tool</p>
+        <h2 class="h-md">Strip a photo back to its pixels</h2>
+        <p class="lede">Drop in a picture and get back a clean copy with the metadata gone — GPS coordinates, camera, serial number, timestamps, editing history. The image itself is untouched; only the invisible baggage is removed. Everything happens on your device, nothing is uploaded anywhere.</p>
+      </div>
+
+      <div class="ph-drop" id="phDrop" tabindex="0" role="button" aria-label="Choose an image to clean">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        <b>Drop an image here</b>
+        <span>or tap to choose · JPG · PNG · WEBP · GIF · AVIF</span>
+        <input type="file" id="phFile" accept="image/*" hidden>
+      </div>
+
+      <div id="phStage" hidden style="margin-top:24px">
+        <div class="ph-grid">
+          <div class="ph-prev"><img id="phImg" alt="Preview of the image you chose"></div>
+          <div>
+            <p class="dash-label" style="margin-bottom:10px">What you gave me</p>
+            <div class="kv" id="phMeta"></div>
+
+            <p class="dash-label" style="margin:20px 0 10px">Download as</p>
+            <div class="ph-fmt" role="group" aria-label="Output format">
+              <button type="button" class="ph-seg is-on" data-fmt="png" aria-pressed="true">PNG</button>
+              <button type="button" class="ph-seg" data-fmt="jpg" aria-pressed="false">JPG</button>
+            </div>
+
+            <div id="phQualityWrap" hidden style="margin-top:14px">
+              <label class="ph-q"><span>JPEG quality · <b id="phQualityVal">95</b></span>
+                <input type="range" id="phQuality" min="60" max="100" value="95" step="1"></label>
+            </div>
+
+            <div id="phNote"></div>
+
+            <div class="ph-actions">
+              <button class="btn btn-primary btn-sm" id="phDownload" type="button">Download clean copy</button>
+              <button class="btn btn-line btn-sm" id="phReset" type="button">Clear</button>
+            </div>
+
+            <div id="phOut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="links" style="padding-top:0">
   <div class="wrap">
     <div class="card">
@@ -3145,4 +3230,267 @@ if ("IntersectionObserver" in window && spyTargets.length){
   }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
   spyTargets.forEach(t => io.observe(t));
 }
+
+/* ==============================================================
+   PHOTO SCRUBBER — hand back the pixels, drop everything else.
+
+   PNG out   : canvas re-encode. Pixels are bit-exact, metadata cannot
+               survive because a canvas only ever holds pixels.
+   JPG out   : if the source is already JPEG, the compressed scan data
+               is copied through untouched and only the metadata
+               segments are dropped — no re-encode, so no generation
+               loss. Anything else has to be encoded, which is lossy.
+   ============================================================== */
+(function(){
+  const drop = $("#phDrop"); if (!drop) return;
+  const input = $("#phFile"), stage = $("#phStage"), prevImg = $("#phImg"),
+        metaEl = $("#phMeta"), outEl = $("#phOut"), noteEl = $("#phNote"),
+        dlBtn = $("#phDownload"), clearBtn = $("#phReset"),
+        qWrap = $("#phQualityWrap"), qIn = $("#phQuality"), qVal = $("#phQualityVal");
+
+  const SEG_NAMES = {
+    0xE0:"APP0 · JFIF", 0xE1:"APP1 · EXIF / XMP", 0xE2:"APP2 · ICC profile",
+    0xE3:"APP3", 0xE4:"APP4", 0xE5:"APP5", 0xE6:"APP6", 0xE7:"APP7",
+    0xE8:"APP8", 0xE9:"APP9", 0xEA:"APP10", 0xEB:"APP11", 0xEC:"APP12",
+    0xED:"APP13 · IPTC / Photoshop", 0xEF:"APP15", 0xFE:"COM · comment"
+  };
+
+  let file = null, buf = null, scan = null, prevUrl = null, fmt = "png", built = null;
+
+  const bytes = n => n < 1024 ? n + " B"
+    : n < 1048576 ? (n/1024).toFixed(1) + " KB" : (n/1048576).toFixed(2) + " MB";
+  const baseName = n => n.replace(/\.[^.]+$/, "") || "image";
+
+  /* ---------- JPEG segment walk ---------- */
+  function readOrientation(d, off, len){
+    try {
+      if (len < 14) return 0;
+      for (let i = 0; i < 4; i++) if (d.getUint8(off+i) !== "Exif".charCodeAt(i)) return 0;
+      const t = off + 6, le = d.getUint16(t) === 0x4949;
+      if ((le ? d.getUint16(t+2, true) : d.getUint16(t+2)) !== 42) return 0;
+      const ifd = le ? d.getUint32(t+4, true) : d.getUint32(t+4);
+      const n = le ? d.getUint16(t+ifd, true) : d.getUint16(t+ifd);
+      for (let i = 0; i < n; i++){
+        const e = t + ifd + 2 + i*12;
+        if ((le ? d.getUint16(e, true) : d.getUint16(e)) === 0x0112)
+          return le ? d.getUint16(e+8, true) : d.getUint16(e+8);
+      }
+    } catch(err){}
+    return 0;
+  }
+
+  function scanJpeg(ab){
+    const d = new DataView(ab);
+    if (d.byteLength < 4 || d.getUint16(0) !== 0xFFD8) return null;
+    const keep = [[0, 2]], dropped = [];
+    let p = 2, orientation = 1;
+    while (p < d.byteLength - 1) {
+      if (d.getUint8(p) !== 0xFF) return null;
+      let q = p;
+      while (q < d.byteLength && d.getUint8(q) === 0xFF) q++;
+      if (q >= d.byteLength) return null;
+      const m = d.getUint8(q), segStart = q - 1;
+      if (m === 0xD9) { keep.push([segStart, d.byteLength]); break; }
+      if (m === 0xDA) { keep.push([segStart, d.byteLength]); break; }   /* scan to EOF */
+      if (m === 0x01 || (m >= 0xD0 && m <= 0xD7)) { p = q + 1; continue; }
+      if (q + 3 > d.byteLength) return null;
+      const len = d.getUint16(q + 1), end = q + 1 + len;
+      if (len < 2 || end > d.byteLength) return null;
+      if (m === 0xE1) { const o = readOrientation(d, q + 3, len - 2); if (o) orientation = o; }
+      /* APP14 (Adobe) carries the colour transform, not personal data — keep it */
+      if ((m >= 0xE0 && m <= 0xEF && m !== 0xEE) || m === 0xFE)
+        dropped.push({ m: m, bytes: end - segStart });
+      else keep.push([segStart, end]);
+      p = end;
+    }
+    return { keep: keep, dropped: dropped, orientation: orientation };
+  }
+
+  function joinSegs(ab, segs){
+    let total = 0; segs.forEach(s => total += s[1] - s[0]);
+    const o = new Uint8Array(total), src = new Uint8Array(ab);
+    let at = 0;
+    segs.forEach(s => { o.set(src.subarray(s[0], s[1]), at); at += s[1] - s[0]; });
+    return new Blob([o], { type: "image/jpeg" });
+  }
+
+  /* ---------- canvas route ---------- */
+  function loadImg(f){
+    return new Promise((res, rej) => {
+      const im = new Image(), u = URL.createObjectURL(f);
+      im.onload = () => { URL.revokeObjectURL(u); res(im); };
+      im.onerror = () => { URL.revokeObjectURL(u); rej(new Error("The browser could not decode that file as an image.")); };
+      im.src = u;
+    });
+  }
+
+  async function viaCanvas(f, type, quality){
+    const im = await loadImg(f);
+    const w = im.naturalWidth, h = im.naturalHeight;
+    if (!w || !h) throw new Error("That image reports no dimensions.");
+    const c = document.createElement("canvas");
+    c.width = w; c.height = h;
+    const ctx = c.getContext("2d", { alpha: type === "image/png" });
+    if (type === "image/jpeg") { ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h); }
+    ctx.drawImage(im, 0, 0, w, h);
+    const blob = await new Promise(r => c.toBlob(r, type, quality));
+    c.width = c.height = 0;
+    if (!blob) throw new Error("The browser refused to encode this one — it is probably too large.");
+    return { blob: blob, w: w, h: h };
+  }
+
+  /* ---------- UI ---------- */
+  function setNote(kind, head, body){
+    noteEl.innerHTML = body
+      ? '<div class="note' + (kind === "warn" ? " warn" : "") + '" style="margin-top:16px"><h5>' +
+        esc(head) + '</h5><p>' + esc(body) + '</p></div>'
+      : "";
+  }
+
+  function describe(){
+    const rows = [];
+    rows.push(['File', esc(file.name)]);
+    rows.push(['Type', esc(file.type || "unknown")]);
+    rows.push(['Size', bytes(file.size)]);
+    if (prevImg.naturalWidth) rows.push(['Pixels', prevImg.naturalWidth + " × " + prevImg.naturalHeight]);
+    if (scan) {
+      const total = scan.dropped.reduce((a, s) => a + s.bytes, 0);
+      rows.push(['Metadata', scan.dropped.length
+        ? '<b>' + bytes(total) + '</b> in ' + scan.dropped.length + ' segment' + (scan.dropped.length > 1 ? 's' : '')
+        : 'none found']);
+      if (scan.orientation > 1) rows.push(['Orientation', 'EXIF rotation ' + scan.orientation]);
+    }
+    metaEl.innerHTML = rows.map(r =>
+      '<div><span class="k">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>').join("");
+
+    if (scan && scan.dropped.length) {
+      metaEl.innerHTML += '<div class="ph-strip">' + scan.dropped.map(s =>
+        '<div><span>' + esc(SEG_NAMES[s.m] || ("marker 0x" + s.m.toString(16).toUpperCase())) +
+        '</span><b>' + bytes(s.bytes) + '</b></div>').join("") + '</div>';
+    }
+    plan();
+  }
+
+  function plan(){
+    qWrap.hidden = fmt !== "jpg";
+    const isJpeg = file && file.type === "image/jpeg" && scan;
+    if (fmt === "png") {
+      setNote("", "Lossless", "Every pixel is preserved exactly and PNG carries no camera metadata, so the download is nothing but the image. Expect a much larger file than a JPEG — that is what lossless costs.");
+    } else if (isJpeg && scan.orientation <= 1) {
+      qWrap.hidden = true;
+      setNote("", "Lossless", "The source is already JPEG, so the compressed image data is copied through byte for byte and only the metadata segments are dropped. No re-encoding, no quality loss.");
+    } else if (isJpeg) {
+      setNote("warn", "This one has to be re-encoded", "The file carries an EXIF rotation flag. Removing the metadata would leave the picture lying on its side, so the rotation is baked into the pixels instead — which means a JPEG re-encode and a small quality loss. Choose PNG to avoid it.");
+    } else {
+      setNote("warn", "JPEG is a lossy format", "This file is not a JPEG, so making one means compressing it. At quality 100 the loss is hard to see, but it is not zero. Choose PNG if the pixels must stay exact.");
+    }
+  }
+
+  async function makeBlob(){
+    if (fmt === "jpg" && file.type === "image/jpeg" && scan && scan.orientation <= 1)
+      return { blob: joinSegs(buf, scan.keep), lossless: true };
+    const r = await viaCanvas(file,
+      fmt === "png" ? "image/png" : "image/jpeg",
+      fmt === "png" ? undefined : (+qIn.value) / 100);
+    if (fmt === "jpg") {
+      /* the browser's own encoder writes a JFIF header and an sRGB ICC
+         profile of its own. Nothing from the original, but not nothing
+         either — take those out too so the file really is bare pixels. */
+      const ab = await r.blob.arrayBuffer(), s2 = scanJpeg(ab);
+      if (s2 && s2.dropped.length) return { blob: joinSegs(ab, s2.keep), lossless: false };
+    }
+    return { blob: r.blob, lossless: fmt === "png" };
+  }
+
+  async function run(){
+    if (!file) return;
+    dlBtn.disabled = true;
+    outEl.innerHTML = '<p class="mono small" style="margin-top:14px;color:var(--text-3)">Working…</p>';
+    try {
+      built = await makeBlob();
+      /* re-read our own output and prove nothing came along */
+      let left = null;
+      if (built.blob.type === "image/jpeg") {
+        const s2 = scanJpeg(await built.blob.arrayBuffer());
+        left = s2 ? s2.dropped.length : null;
+      }
+      const delta = built.blob.size - file.size;
+      outEl.innerHTML =
+        '<div class="note" style="margin-top:16px"><h5>Ready · ' +
+          (built.lossless ? 'pixels unchanged' : 're-encoded at quality ' + qIn.value) + '</h5>' +
+          '<p class="mono small">' + bytes(file.size) + ' → <b>' + bytes(built.blob.size) + '</b>' +
+          (delta ? ' (' + (delta > 0 ? '+' : '−') + bytes(Math.abs(delta)) + ')' : '') + '</p>' +
+          (left === 0 ? '<p class="mono small ph-ok">Checked the result: 0 metadata segments left.</p>' : '') +
+        '</div>';
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(built.blob);
+      a.download = baseName(file.name) + "-clean." + (fmt === "png" ? "png" : "jpg");
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 8000);
+    } catch (err) {
+      outEl.innerHTML = '<div class="note warn" style="margin-top:16px"><h5>That did not work</h5><p>' +
+        esc(err && err.message ? err.message : String(err)) + '</p></div>';
+    }
+    dlBtn.disabled = false;
+  }
+
+  async function accept(f){
+    if (!f) return;
+    if (!/^image\//.test(f.type || "")) {
+      stage.hidden = true;
+      outEl.innerHTML = "";
+      noteEl.innerHTML = '<div class="note warn" style="margin-top:16px"><h5>Not an image</h5><p>' +
+        esc(f.name) + ' does not look like an image file.</p></div>';
+      return;
+    }
+    file = f; built = null; outEl.innerHTML = "";
+    buf = await f.arrayBuffer();
+    scan = f.type === "image/jpeg" ? scanJpeg(buf) : null;
+    if (prevUrl) URL.revokeObjectURL(prevUrl);
+    prevUrl = URL.createObjectURL(f);
+    prevImg.onload = () => { stage.hidden = false; describe(); };
+    prevImg.onerror = () => {
+      stage.hidden = true;
+      noteEl.innerHTML = '<div class="note warn" style="margin-top:16px"><h5>Could not open it</h5><p>The browser could not decode that file as an image.</p></div>';
+    };
+    prevImg.src = prevUrl;
+  }
+
+  function reset(){
+    file = null; buf = null; scan = null; built = null;
+    if (prevUrl) { URL.revokeObjectURL(prevUrl); prevUrl = null; }
+    prevImg.removeAttribute("src");
+    stage.hidden = true; outEl.innerHTML = ""; noteEl.innerHTML = ""; metaEl.innerHTML = "";
+    input.value = "";
+  }
+
+  drop.addEventListener("click", () => input.click());
+  drop.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); }
+  });
+  input.addEventListener("change", e => accept(e.target.files && e.target.files[0]));
+  ["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); drop.classList.add("is-over");
+  }));
+  ["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); drop.classList.remove("is-over");
+  }));
+  drop.addEventListener("drop", e => {
+    const dt = e.dataTransfer;
+    accept(dt && dt.files && dt.files[0]);
+  });
+  $$("[data-fmt]").forEach(b => b.addEventListener("click", () => {
+    fmt = b.dataset.fmt;
+    $$("[data-fmt]").forEach(x => {
+      const on = x === b;
+      x.classList.toggle("is-on", on);
+      x.setAttribute("aria-pressed", String(on));
+    });
+    built = null; outEl.innerHTML = "";
+    if (file) plan();
+  }));
+  qIn.addEventListener("input", () => { qVal.textContent = qIn.value; built = null; outEl.innerHTML = ""; });
+  dlBtn.addEventListener("click", run);
+  clearBtn.addEventListener("click", reset);
+})();
 </script>
