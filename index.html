@@ -3234,12 +3234,14 @@ if ("IntersectionObserver" in window && spyTargets.length){
 /* ==============================================================
    PHOTO SCRUBBER — hand back the pixels, drop everything else.
 
-   PNG out   : canvas re-encode. Pixels are bit-exact, metadata cannot
-               survive because a canvas only ever holds pixels.
-   JPG out   : if the source is already JPEG, the compressed scan data
-               is copied through untouched and only the metadata
-               segments are dropped — no re-encode, so no generation
-               loss. Anything else has to be encoded, which is lossy.
+   Same format in and out is the good case: the compressed image data
+   is copied through byte for byte and only the metadata is dropped,
+   so there is no re-encode and no generation loss at all.
+     JPEG -> JPEG : keep the entropy-coded scan, drop APPn and COM.
+     PNG  -> PNG  : keep IHDR/PLTE/IDAT/IEND, drop tEXt, eXIf, iCCP…
+                    Bit depth, palette and APNG frames all survive.
+   Changing format means a canvas. PNG out is still pixel-exact; JPEG
+   out is lossy, and the UI says so rather than degrading quietly.
    ============================================================== */
 (function(){
   const drop = $("#phDrop"); if (!drop) return;
@@ -3248,11 +3250,20 @@ if ("IntersectionObserver" in window && spyTargets.length){
         dlBtn = $("#phDownload"), clearBtn = $("#phReset"),
         qWrap = $("#phQualityWrap"), qIn = $("#phQuality"), qVal = $("#phQualityVal");
 
-  const SEG_NAMES = {
+  const JPG_NAMES = {
     0xE0:"APP0 · JFIF", 0xE1:"APP1 · EXIF / XMP", 0xE2:"APP2 · ICC profile",
     0xE3:"APP3", 0xE4:"APP4", 0xE5:"APP5", 0xE6:"APP6", 0xE7:"APP7",
     0xE8:"APP8", 0xE9:"APP9", 0xEA:"APP10", 0xEB:"APP11", 0xEC:"APP12",
     0xED:"APP13 · IPTC / Photoshop", 0xEF:"APP15", 0xFE:"COM · comment"
+  };
+  const PNG_SIG = [137,80,78,71,13,10,26,10];
+  /* metadata chunks. Everything else — IHDR, PLTE, tRNS, IDAT, IEND,
+     gAMA/cHRM/sRGB, sBIT and the APNG chunks — is image, so it stays. */
+  const PNG_NAMES = {
+    tEXt:"tEXt · text", zTXt:"zTXt · compressed text", iTXt:"iTXt · XMP / text",
+    eXIf:"eXIf · EXIF", tIME:"tIME · timestamp", iCCP:"iCCP · ICC profile",
+    pHYs:"pHYs · print density", sPLT:"sPLT · suggested palette",
+    hIST:"hIST · histogram", dSIG:"dSIG · signature", bKGD:"bKGD · background"
   };
 
   let file = null, buf = null, scan = null, prevUrl = null, fmt = "png", built = null;
@@ -3260,8 +3271,10 @@ if ("IntersectionObserver" in window && spyTargets.length){
   const bytes = n => n < 1024 ? n + " B"
     : n < 1048576 ? (n/1024).toFixed(1) + " KB" : (n/1048576).toFixed(2) + " MB";
   const baseName = n => n.replace(/\.[^.]+$/, "") || "image";
+  const isJpeg = () => !!(file && file.type === "image/jpeg");
+  const isPng  = () => !!(file && file.type === "image/png");
 
-  /* ---------- JPEG segment walk ---------- */
+  /* ---------- JPEG ---------- */
   function readOrientation(d, off, len){
     try {
       if (len < 14) return 0;
@@ -3290,8 +3303,7 @@ if ("IntersectionObserver" in window && spyTargets.length){
       while (q < d.byteLength && d.getUint8(q) === 0xFF) q++;
       if (q >= d.byteLength) return null;
       const m = d.getUint8(q), segStart = q - 1;
-      if (m === 0xD9) { keep.push([segStart, d.byteLength]); break; }
-      if (m === 0xDA) { keep.push([segStart, d.byteLength]); break; }   /* scan to EOF */
+      if (m === 0xD9 || m === 0xDA) { keep.push([segStart, d.byteLength]); break; }
       if (m === 0x01 || (m >= 0xD0 && m <= 0xD7)) { p = q + 1; continue; }
       if (q + 3 > d.byteLength) return null;
       const len = d.getUint16(q + 1), end = q + 1 + len;
@@ -3299,22 +3311,53 @@ if ("IntersectionObserver" in window && spyTargets.length){
       if (m === 0xE1) { const o = readOrientation(d, q + 3, len - 2); if (o) orientation = o; }
       /* APP14 (Adobe) carries the colour transform, not personal data — keep it */
       if ((m >= 0xE0 && m <= 0xEF && m !== 0xEE) || m === 0xFE)
-        dropped.push({ m: m, bytes: end - segStart });
+        dropped.push({ name: JPG_NAMES[m] || ("marker 0x" + m.toString(16).toUpperCase()), bytes: end - segStart });
       else keep.push([segStart, end]);
       p = end;
     }
-    return { keep: keep, dropped: dropped, orientation: orientation };
+    return { kind: "jpeg", keep: keep, dropped: dropped, orientation: orientation };
   }
 
-  function joinSegs(ab, segs){
+  /* ---------- PNG ---------- */
+  function scanPng(ab){
+    const d = new DataView(ab), u = new Uint8Array(ab);
+    if (u.length < 12) return null;
+    for (let i = 0; i < 8; i++) if (u[i] !== PNG_SIG[i]) return null;
+    const keep = [[0, 8]], dropped = [];
+    let p = 8, depth = 0, colour = -1, apng = false, sawIHDR = false;
+    while (p + 8 <= u.length) {
+      const len = d.getUint32(p);
+      const type = String.fromCharCode(u[p+4], u[p+5], u[p+6], u[p+7]);
+      const end = p + 12 + len;
+      if (len < 0 || end > u.length) return null;
+      if (type === "IHDR") { sawIHDR = true; depth = u[p+16]; colour = u[p+17]; }
+      if (type === "acTL") apng = true;
+      if (PNG_NAMES[type]) dropped.push({ name: PNG_NAMES[type], bytes: end - p });
+      else keep.push([p, end]);
+      p = end;
+      if (type === "IEND") break;
+    }
+    if (!sawIHDR) return null;
+    return { kind: "png", keep: keep, dropped: dropped, depth: depth, colour: colour, apng: apng };
+  }
+
+  function join(ab, segs, type){
     let total = 0; segs.forEach(s => total += s[1] - s[0]);
     const o = new Uint8Array(total), src = new Uint8Array(ab);
     let at = 0;
     segs.forEach(s => { o.set(src.subarray(s[0], s[1]), at); at += s[1] - s[0]; });
-    return new Blob([o], { type: "image/jpeg" });
+    return new Blob([o], { type: type });
   }
 
-  /* ---------- canvas route ---------- */
+  const rescan = async blob => {
+    try {
+      const ab = await blob.arrayBuffer();
+      const s = blob.type === "image/png" ? scanPng(ab) : scanJpeg(ab);
+      return s ? s.dropped.length : null;
+    } catch(err){ return null; }
+  };
+
+  /* ---------- canvas ---------- */
   function loadImg(f){
     return new Promise((res, rej) => {
       const im = new Image(), u = URL.createObjectURL(f);
@@ -3336,70 +3379,79 @@ if ("IntersectionObserver" in window && spyTargets.length){
     const blob = await new Promise(r => c.toBlob(r, type, quality));
     c.width = c.height = 0;
     if (!blob) throw new Error("The browser refused to encode this one — it is probably too large.");
-    return { blob: blob, w: w, h: h };
+    return blob;
   }
 
   /* ---------- UI ---------- */
   function setNote(kind, head, body){
-    noteEl.innerHTML = body
-      ? '<div class="note' + (kind === "warn" ? " warn" : "") + '" style="margin-top:16px"><h5>' +
-        esc(head) + '</h5><p>' + esc(body) + '</p></div>'
-      : "";
+    noteEl.innerHTML = '<div class="note' + (kind === "warn" ? " warn" : "") +
+      '" style="margin-top:16px"><h5>' + esc(head) + '</h5><p>' + esc(body) + '</p></div>';
+  }
+
+  /* is this a straight copy, with only the metadata removed? */
+  function canCopy(){
+    if (!scan) return false;
+    if (fmt === "png") return scan.kind === "png";
+    return scan.kind === "jpeg" && scan.orientation <= 1;
   }
 
   function describe(){
-    const rows = [];
-    rows.push(['File', esc(file.name)]);
-    rows.push(['Type', esc(file.type || "unknown")]);
-    rows.push(['Size', bytes(file.size)]);
+    const rows = [
+      ['File', esc(file.name)],
+      ['Type', esc(file.type || "unknown")],
+      ['Size', bytes(file.size)]
+    ];
     if (prevImg.naturalWidth) rows.push(['Pixels', prevImg.naturalWidth + " × " + prevImg.naturalHeight]);
+    if (scan && scan.kind === "png") {
+      rows.push(['Depth', scan.depth + "-bit" + (scan.colour === 3 ? " palette" : "") + (scan.apng ? " · animated" : "")]);
+    }
     if (scan) {
       const total = scan.dropped.reduce((a, s) => a + s.bytes, 0);
       rows.push(['Metadata', scan.dropped.length
-        ? '<b>' + bytes(total) + '</b> in ' + scan.dropped.length + ' segment' + (scan.dropped.length > 1 ? 's' : '')
+        ? '<b>' + bytes(total) + '</b> in ' + scan.dropped.length + ' block' + (scan.dropped.length > 1 ? 's' : '')
         : 'none found']);
-      if (scan.orientation > 1) rows.push(['Orientation', 'EXIF rotation ' + scan.orientation]);
+      if (scan.kind === "jpeg" && scan.orientation > 1)
+        rows.push(['Orientation', 'EXIF rotation ' + scan.orientation]);
     }
     metaEl.innerHTML = rows.map(r =>
       '<div><span class="k">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>').join("");
-
-    if (scan && scan.dropped.length) {
+    if (scan && scan.dropped.length)
       metaEl.innerHTML += '<div class="ph-strip">' + scan.dropped.map(s =>
-        '<div><span>' + esc(SEG_NAMES[s.m] || ("marker 0x" + s.m.toString(16).toUpperCase())) +
-        '</span><b>' + bytes(s.bytes) + '</b></div>').join("") + '</div>';
-    }
+        '<div><span>' + esc(s.name) + '</span><b>' + bytes(s.bytes) + '</b></div>').join("") + '</div>';
     plan();
   }
 
   function plan(){
-    qWrap.hidden = fmt !== "jpg";
-    const isJpeg = file && file.type === "image/jpeg" && scan;
-    if (fmt === "png") {
-      setNote("", "Lossless", "Every pixel is preserved exactly and PNG carries no camera metadata, so the download is nothing but the image. Expect a much larger file than a JPEG — that is what lossless costs.");
-    } else if (isJpeg && scan.orientation <= 1) {
-      qWrap.hidden = true;
-      setNote("", "Lossless", "The source is already JPEG, so the compressed image data is copied through byte for byte and only the metadata segments are dropped. No re-encoding, no quality loss.");
-    } else if (isJpeg) {
-      setNote("warn", "This one has to be re-encoded", "The file carries an EXIF rotation flag. Removing the metadata would leave the picture lying on its side, so the rotation is baked into the pixels instead — which means a JPEG re-encode and a small quality loss. Choose PNG to avoid it.");
-    } else {
-      setNote("warn", "JPEG is a lossy format", "This file is not a JPEG, so making one means compressing it. At quality 100 the loss is hard to see, but it is not zero. Choose PNG if the pixels must stay exact.");
-    }
+    qWrap.hidden = fmt !== "jpg" || canCopy();
+    if (canCopy() && fmt === "png")
+      setNote("", "PNG → PNG · nothing re-encoded",
+        "The compressed image data is copied through byte for byte and only the metadata blocks are dropped. Bit depth, palette and any animation frames survive exactly as they were.");
+    else if (canCopy())
+      setNote("", "JPEG → JPEG · nothing re-encoded",
+        "The entropy-coded scan is copied through byte for byte and only the metadata segments are dropped. No re-compression, so no generation loss.");
+    else if (fmt === "png")
+      setNote("", "Lossless pixels",
+        "Different format in and out, so this goes through a canvas. Every pixel is preserved exactly and PNG carries no camera metadata. Expect a much larger file than a JPEG — that is what lossless costs. A 16-bit source is reduced to 8-bit, and animation is flattened to the first frame.");
+    else if (scan && scan.kind === "jpeg")
+      setNote("warn", "This one has to be re-encoded",
+        "The file carries an EXIF rotation flag. Removing the metadata would leave the picture lying on its side, so the rotation is baked into the pixels instead — which means a JPEG re-encode and a small quality loss. Choose PNG to avoid it.");
+    else
+      setNote("warn", "JPEG is a lossy format",
+        "The source is not a JPEG, so making one means compressing it. At quality 100 the loss is hard to see, but it is not zero. Choose PNG if the pixels must stay exact.");
   }
 
   async function makeBlob(){
-    if (fmt === "jpg" && file.type === "image/jpeg" && scan && scan.orientation <= 1)
-      return { blob: joinSegs(buf, scan.keep), lossless: true };
-    const r = await viaCanvas(file,
-      fmt === "png" ? "image/png" : "image/jpeg",
-      fmt === "png" ? undefined : (+qIn.value) / 100);
-    if (fmt === "jpg") {
-      /* the browser's own encoder writes a JFIF header and an sRGB ICC
-         profile of its own. Nothing from the original, but not nothing
-         either — take those out too so the file really is bare pixels. */
-      const ab = await r.blob.arrayBuffer(), s2 = scanJpeg(ab);
-      if (s2 && s2.dropped.length) return { blob: joinSegs(ab, s2.keep), lossless: false };
-    }
-    return { blob: r.blob, lossless: fmt === "png" };
+    if (canCopy())
+      return { blob: join(buf, scan.keep, fmt === "png" ? "image/png" : "image/jpeg"),
+               lossless: true, copied: true };
+    if (fmt === "png")
+      return { blob: await viaCanvas(file, "image/png"), lossless: true, copied: false };
+    const blob = await viaCanvas(file, "image/jpeg", (+qIn.value) / 100);
+    /* the browser's own encoder writes a JFIF header and an sRGB ICC profile
+       of its own. Nothing from the original, but not nothing either. */
+    const ab = await blob.arrayBuffer(), s2 = scanJpeg(ab);
+    if (s2 && s2.dropped.length) return { blob: join(ab, s2.keep, "image/jpeg"), lossless: false, copied: false };
+    return { blob: blob, lossless: false, copied: false };
   }
 
   async function run(){
@@ -3408,19 +3460,16 @@ if ("IntersectionObserver" in window && spyTargets.length){
     outEl.innerHTML = '<p class="mono small" style="margin-top:14px;color:var(--text-3)">Working…</p>';
     try {
       built = await makeBlob();
-      /* re-read our own output and prove nothing came along */
-      let left = null;
-      if (built.blob.type === "image/jpeg") {
-        const s2 = scanJpeg(await built.blob.arrayBuffer());
-        left = s2 ? s2.dropped.length : null;
-      }
+      const left = await rescan(built.blob);
       const delta = built.blob.size - file.size;
       outEl.innerHTML =
         '<div class="note" style="margin-top:16px"><h5>Ready · ' +
-          (built.lossless ? 'pixels unchanged' : 're-encoded at quality ' + qIn.value) + '</h5>' +
+          (built.copied ? 'copied, not re-encoded'
+            : built.lossless ? 'pixels unchanged'
+            : 're-encoded at quality ' + qIn.value) + '</h5>' +
           '<p class="mono small">' + bytes(file.size) + ' → <b>' + bytes(built.blob.size) + '</b>' +
           (delta ? ' (' + (delta > 0 ? '+' : '−') + bytes(Math.abs(delta)) + ')' : '') + '</p>' +
-          (left === 0 ? '<p class="mono small ph-ok">Checked the result: 0 metadata segments left.</p>' : '') +
+          (left === 0 ? '<p class="mono small ph-ok">Checked the result: 0 metadata blocks left.</p>' : '') +
         '</div>';
       const a = document.createElement("a");
       a.href = URL.createObjectURL(built.blob);
@@ -3437,15 +3486,14 @@ if ("IntersectionObserver" in window && spyTargets.length){
   async function accept(f){
     if (!f) return;
     if (!/^image\//.test(f.type || "")) {
-      stage.hidden = true;
-      outEl.innerHTML = "";
+      stage.hidden = true; outEl.innerHTML = "";
       noteEl.innerHTML = '<div class="note warn" style="margin-top:16px"><h5>Not an image</h5><p>' +
         esc(f.name) + ' does not look like an image file.</p></div>';
       return;
     }
     file = f; built = null; outEl.innerHTML = "";
     buf = await f.arrayBuffer();
-    scan = f.type === "image/jpeg" ? scanJpeg(buf) : null;
+    scan = isJpeg() ? scanJpeg(buf) : isPng() ? scanPng(buf) : null;
     if (prevUrl) URL.revokeObjectURL(prevUrl);
     prevUrl = URL.createObjectURL(f);
     prevImg.onload = () => { stage.hidden = false; describe(); };
@@ -3476,8 +3524,7 @@ if ("IntersectionObserver" in window && spyTargets.length){
     e.preventDefault(); drop.classList.remove("is-over");
   }));
   drop.addEventListener("drop", e => {
-    const dt = e.dataTransfer;
-    accept(dt && dt.files && dt.files[0]);
+    const dt = e.dataTransfer; accept(dt && dt.files && dt.files[0]);
   });
   $$("[data-fmt]").forEach(b => b.addEventListener("click", () => {
     fmt = b.dataset.fmt;
