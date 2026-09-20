@@ -170,7 +170,9 @@ img,canvas,svg{max-width:100%}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none;flex:none}
 .brand-mark{width:22px;height:22px;flex:none;color:var(--accent)}
 .brand-txt{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2);white-space:nowrap}
-.nav-links{display:flex;align-items:center;gap:3px;margin-left:auto;flex-wrap:nowrap}
+.nav-links{display:flex;align-items:center;gap:3px;margin-left:auto;flex-wrap:nowrap;
+  min-width:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.nav-links::-webkit-scrollbar{display:none}
 .nav-links a{
   font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--text-2);text-decoration:none;padding:7px 9px;border-radius:var(--r-sm);white-space:nowrap;
@@ -193,7 +195,7 @@ img,canvas,svg{max-width:100%}
 }
 .road-btn:hover{filter:brightness(1.08)}
 .burger{display:none}
-@media (max-width:1080px){
+@media (max-width:1200px){
   .nav-links{
     display:none;position:fixed;inset:var(--nav-h) 0 auto 0;
     flex-direction:column;align-items:stretch;gap:0;
@@ -603,6 +605,16 @@ img,canvas,svg{max-width:100%}
 .newroute i{width:1px;height:11px;background:rgba(199,154,74,.55);display:block}
 .newroute span{color:rgba(237,232,220,.9)}
 
+/* --- matchday facts --- */
+.mcr-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.mcr-facts div{background:var(--surface);padding:14px 15px;display:flex;flex-direction:column;gap:5px}
+.mcr-facts span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.mcr-facts b{font-size:14.5px;font-weight:600;line-height:1.3}
+.mcr-facts .is-key{background:color-mix(in srgb,var(--accent) 11%,var(--surface))}
+.mcr-facts .is-key b{color:var(--accent)}
+@media (max-width:760px){ .mcr-facts{grid-template-columns:repeat(2,1fr)} }
+.edi-row.is-key{border-left:2px solid var(--accent);padding-left:12px}
+
 /* --- photo scrubber --- */
 .ph-drop{
   display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;
@@ -922,6 +934,7 @@ body.road-open{overflow:hidden}
       <a href="#stays">Overnight</a>
       <a href="#todo">To-Do</a>
       <a href="#tobuy">To Buy</a>
+      <a href="#manchester">Manchester</a>
       <a href="#photo">Photo Tool</a>
       <a href="#packing">Packing</a>
       <a href="#rules">Camper Rules</a>
@@ -1342,6 +1355,13 @@ body.road-open{overflow:hidden}
 </section>
 
 <!-- ============================================================ LINKS -->
+<!-- ============================================================ MANCHESTER -->
+<section class="section" id="manchester" style="padding-top:0">
+  <div class="wrap">
+    <div id="manchesterCard"></div>
+  </div>
+</section>
+
 <!-- ============================================================ PHOTO TOOL -->
 <section class="section" id="photo" style="padding-top:0">
   <div class="wrap">
@@ -1880,6 +1900,51 @@ const TRIP = {
     links:[
       { url:"https://www.google.com/maps/dir/Holyrood,+Edinburgh,+UK/St+Giles'+Cathedral,+Edinburgh,+UK/Victoria+Street,+Edinburgh,+UK/Grassmarket,+Edinburgh,+UK/Castle+Esplanade,+Edinburgh,+UK", label:"Open Edinburgh walking route", primary:true },
       { url:"https://edinburgh.org/", label:"Edinburgh visitor information" }
+    ]
+  },
+
+  manchester: {
+    kicker:"Matchday · Sunday 20 September",
+    title:"Manchester",
+    sub:"Out of the hotel at 10:00, kick-off at 14:00. Two and a half hours to use, and one tram to catch.",
+    lede:"The whole morning is shaped by one number: be inside the Etihad by 13:15. Work backwards from that and the city centre gives you a comfortable two and a half hours — enough for one proper stop, a wander and an early lunch, without ever being more than fifteen minutes from a tram stop.",
+    base:"Britannia Hotel, Portland Street",
+    baseNote:"The Grade II listed former Watts warehouse, on the edge of Chinatown and two minutes from Piccadilly Gardens. Almost everything below is walkable from the front door.",
+    kickoff:"14:00",
+    match:"Manchester City vs Sunderland · Etihad Stadium",
+    leaveBy:"12:25",
+    plan:[
+      { t:"10:00", h:"Out of the hotel", p:"Turn left onto Portland Street. Piccadilly Gardens is two minutes away and everything today radiates from there." },
+      { t:"10:05", h:"Manchester Art Gallery", p:"Mosley Street, a four-minute walk. Free, and it opens at ten. The Pre-Raphaelite collection is one of the best anywhere — Holman Hunt, Millais, Rossetti — and there is a good Turner room. Forty-five minutes is plenty.", tag:"Free · closest thing to the hotel" },
+      { t:"11:05", h:"Walk up into the Northern Quarter", p:"Ten minutes north through Piccadilly Gardens. Red brick, fire escapes, murals on Stevenson Square and Afflecks — four floors of independent stalls in an old department store. This is the bit of Manchester people remember.", tag:"Street art · Afflecks · coffee" },
+      { t:"11:45", h:"Early lunch", p:"Eat in the Northern Quarter, or double back to Chinatown, which starts at the end of Portland Street. Either way eat now — food inside the ground is queues and disappointment.", tag:"Do not skip this" },
+      { t:"12:25", h:"Tram from Piccadilly Gardens", p:"Ashton-under-Lyne line to Etihad Campus, about ten minutes. Buy the ticket before you join the queue.", tag:"The one fixed time today" },
+      { t:"12:45", h:"At the ground", p:"Gates are usually open well before kick-off. Time to find the block, get a drink and watch the warm-up." },
+      { t:"14:00", h:"Kick-off · City vs Sunderland", p:"Sunderland are the visitors and the Etihad is not where they will want to start. Enjoy it.", key:true },
+      { t:"≈16:00", h:"Full time", p:"Walk back into town rather than fighting the tram queue — see the note below." }
+    ],
+    travel:[
+      { name:"Tram · Piccadilly Gardens → Etihad Campus", note:"Ashton-under-Lyne line, roughly ten minutes. The most obvious option and therefore the busiest — buy in advance on the app or a machine, not in the matchday scrum." },
+      { name:"Walk · 30–35 minutes", note:"Out along Great Ancoats Street and Ashton New Road, or take the Ashton Canal towpath, which is quieter and much nicer. Perfectly reasonable in dry weather." },
+      { name:"Coming back afterwards", note:"The queue at Etihad Campus after full time is long and slow. Walking back to the city centre is often quicker, and the crowd thins out after ten minutes of it." }
+    ],
+    swaps:[
+      { name:"National Football Museum", note:"Cathedral Gardens, fifteen minutes north-west. Thematically perfect for today, but it is the opposite direction from the Etihad — only do it instead of the Northern Quarter, not as well." },
+      { name:"John Rylands Library", note:"Deansgate, twelve minutes. A neo-Gothic reading room that looks like a cathedral and is free to walk into. Check the opening days before you set off — it is not open every morning." },
+      { name:"Central Library", note:"St Peter's Square, eight minutes. Free, and the domed reading room upstairs is worth the detour on its own. Quick — fifteen minutes." },
+      { name:"Science and Industry Museum", note:"Castlefield, twenty minutes away and free, but it is far too big for the time you have. Save it for a day without a kick-off in it." }
+    ],
+    evening:"Chinatown starts at the end of Portland Street and the Northern Quarter is ten minutes away, so dinner needs no planning. Canal Street and the Gay Village are also a couple of minutes from the hotel if the evening wants to go on.",
+    notes:[
+      { warn:true, h:"Check two things before you leave the room", t:"Premier League kick-off times move for television, so confirm 14:00 on the day. And check the Etihad bag policy — bags bigger than roughly A4 are usually turned away and there is nowhere convenient to leave one." },
+      { warn:false, h:"The ground is cashless", t:"Card or phone only inside the stadium. Nothing else needed." }
+    ],
+    links:[
+      { url:"https://www.mancity.com/", label:"Manchester City", primary:true },
+      { url:"https://tfgm.com/public-transport/tram", label:"Metrolink · trams and tickets" },
+      { url:"https://manchesterartgallery.org/", label:"Manchester Art Gallery" },
+      { url:"https://www.nationalfootballmuseum.com/", label:"National Football Museum" },
+      { url:"https://www.google.com/maps/dir/Britannia+Hotel,+Portland+Street,+Manchester,+UK/Manchester+Art+Gallery,+UK/Northern+Quarter,+Manchester,+UK/Etihad+Stadium,+Manchester,+UK", label:"The day in Google Maps" }
     ]
   },
 
@@ -2425,6 +2490,60 @@ function whySleepHTML(w){
   '</div>';
 }
 
+function manchesterHTML(m){
+  return '' +
+  '<div class="card">' +
+    '<div class="section-head" style="margin-bottom:24px">' +
+      '<p class="eyebrow">' + esc(m.kicker) + '</p>' +
+      '<h2 class="h-xl">' + esc(m.title) + ' <span class="prio-tag p-must">Matchday</span></h2>' +
+      '<p class="lede" style="font-size:18px;color:var(--text)">' + esc(m.sub) + '</p>' +
+      '<p class="lede">' + esc(m.lede) + '</p>' +
+    '</div>' +
+
+    '<div class="mcr-facts">' +
+      '<div><span>Base</span><b>' + esc(m.base) + '</b></div>' +
+      '<div><span>Match</span><b>' + esc(m.match) + '</b></div>' +
+      '<div class="is-key"><span>Kick-off</span><b>' + esc(m.kickoff) + '</b></div>' +
+      '<div class="is-key"><span>Leave town by</span><b>' + esc(m.leaveBy) + '</b></div>' +
+    '</div>' +
+    '<p class="muted small" style="margin:10px 0 26px">' + esc(m.baseNote) + '</p>' +
+
+    '<div class="grid-2" style="gap:26px;align-items:start">' +
+      '<div>' +
+        '<p class="dash-label" style="margin-bottom:14px">The day</p>' +
+        '<div class="edi-list">' +
+          m.plan.map(s =>
+            '<div class="edi-row' + (s.key ? ' is-key' : '') + '">' +
+              '<b><span class="mono" style="color:var(--accent);font-size:12px">' + esc(s.t) + '</span>' + esc(s.h) + '</b>' +
+              '<p>' + esc(s.p) + '</p>' +
+              (s.tag ? '<p class="scenic-badge">' + esc(s.tag) + '</p>' : '') +
+            '</div>').join("") +
+        '</div>' +
+      '</div>' +
+      '<div>' +
+        '<p class="dash-label" style="margin-bottom:14px">Getting to the Etihad</p>' +
+        '<div class="edi-list">' +
+          m.travel.map(t => '<div class="edi-row"><b>' + esc(t.name) + '</b><p>' + esc(t.note) + '</p></div>').join("") +
+        '</div>' +
+
+        '<p class="dash-label" style="margin:22px 0 14px">Swap the morning stop for</p>' +
+        '<div class="edi-list">' +
+          m.swaps.map(t => '<div class="edi-row"><b>' + esc(t.name) + '</b><p>' + esc(t.note) + '</p></div>').join("") +
+        '</div>' +
+
+        m.notes.map(n => '<div class="note ' + (n.warn ? "warn" : "") + '" style="margin-top:18px"><h5>' +
+          esc(n.h) + '</h5><p>' + esc(n.t) + '</p></div>').join("") +
+
+        '<div class="note" style="margin-top:18px"><h5>After the match</h5><p>' + esc(m.evening) + '</p></div>' +
+
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">' +
+          m.links.map(l => linkBtn(l.url, l.label, l.primary)).join("") +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
 function edinburghHTML(e){
   return '' +
   '<div class="card">' +
@@ -2562,6 +2681,7 @@ $("#days").innerHTML = TRIP.days.map(dayHTML).join("");
    OVERNIGHTS, EDINBURGH, GALLERY, LINKS, HIGHLIGHTS
    ============================================================== */
 $("#edinburghCard").innerHTML = edinburghHTML(TRIP.edinburgh);
+$("#manchesterCard").innerHTML = manchesterHTML(TRIP.manchester);
 $("#staysGrid").innerHTML = TRIP.overnights.map(s => '' +
   '<article class="stay">' +
     '<div class="stay-art"><canvas data-ridge="' + s.ridge + '" data-seed="' + s.seed + '" aria-hidden="true"></canvas><b>Night ' + s.night + '</b></div>' +
