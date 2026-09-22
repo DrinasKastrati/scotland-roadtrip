@@ -661,6 +661,7 @@ img,canvas,svg{max-width:100%}
 .ph-strip div{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:11px;color:var(--text-3)}
 .ph-strip div b{color:var(--text-2);font-weight:500}
 .ph-ok{color:var(--ok)}
+.ph-bad{color:var(--warn)}
 
 /* --- deadline treatment --- */
 .hero-stats .is-deadline{background:rgba(199,154,74,.2)}
@@ -3430,8 +3431,10 @@ if ("IntersectionObserver" in window && spyTargets.length){
     0xED:"APP13 · IPTC / Photoshop", 0xEF:"APP15", 0xFE:"COM · comment"
   };
   const PNG_SIG = [137,80,78,71,13,10,26,10];
-  /* metadata chunks. Everything else — IHDR, PLTE, tRNS, IDAT, IEND,
-     gAMA/cHRM/sRGB, sBIT and the APNG chunks — is image, so it stays. */
+  /* Only these are the picture. Everything else is dropped, including
+     chunk types nobody has heard of — a blacklist would miss those. */
+  const PNG_KEEP = { IHDR:1, PLTE:1, IDAT:1, IEND:1, tRNS:1, gAMA:1, cHRM:1, sRGB:1, sBIT:1,
+                     acTL:1, fcTL:1, fdAT:1 };
   const PNG_NAMES = {
     tEXt:"tEXt · text", zTXt:"zTXt · compressed text", iTXt:"iTXt · XMP / text",
     eXIf:"eXIf · EXIF", tIME:"tIME · timestamp", iCCP:"iCCP · ICC profile",
@@ -3466,29 +3469,68 @@ if ("IntersectionObserver" in window && spyTargets.length){
     return 0;
   }
 
-  function scanJpeg(ab){
-    const d = new DataView(ab);
-    if (d.byteLength < 4 || d.getUint16(0) !== 0xFFD8) return null;
-    const keep = [[0, 2]], dropped = [];
-    let p = 2, orientation = 1;
-    while (p < d.byteLength - 1) {
-      if (d.getUint8(p) !== 0xFF) return null;
-      let q = p;
-      while (q < d.byteLength && d.getUint8(q) === 0xFF) q++;
-      if (q >= d.byteLength) return null;
-      const m = d.getUint8(q), segStart = q - 1;
-      if (m === 0xD9 || m === 0xDA) { keep.push([segStart, d.byteLength]); break; }
-      if (m === 0x01 || (m >= 0xD0 && m <= 0xD7)) { p = q + 1; continue; }
-      if (q + 3 > d.byteLength) return null;
-      const len = d.getUint16(q + 1), end = q + 1 + len;
-      if (len < 2 || end > d.byteLength) return null;
-      if (m === 0xE1) { const o = readOrientation(d, q + 3, len - 2); if (o) orientation = o; }
-      /* APP14 (Adobe) carries the colour transform, not personal data — keep it */
-      if ((m >= 0xE0 && m <= 0xEF && m !== 0xEE) || m === 0xFE)
-        dropped.push({ name: JPG_NAMES[m] || ("marker 0x" + m.toString(16).toUpperCase()), bytes: end - segStart });
-      else keep.push([segStart, end]);
-      p = end;
+  /* Everything that is structurally part of the picture. Anything else —
+     APPn (bar APP14 Adobe), COM, stray bytes, and whatever trails after
+     EOI — is metadata or payload and goes. */
+  const JPG_KEEP = m =>
+    m === 0xD8 || m === 0xD9 || m === 0xDA || m === 0xDB || m === 0xDD ||
+    m === 0xEE || (m >= 0xC0 && m <= 0xCF) || m === 0x01 || (m >= 0xD0 && m <= 0xD7);
+
+  /* Walk the entropy-coded scan, stepping over stuffed bytes and restart
+     markers, and stop at the next real marker. */
+  function endOfScan(u, from){
+    let i = from;
+    while (i < u.length - 1) {
+      if (u[i] === 0xFF) {
+        const m = u[i + 1];
+        if (m === 0x00) { i += 2; continue; }
+        if (m === 0xFF) { i += 1; continue; }
+        if (m >= 0xD0 && m <= 0xD7) { i += 2; continue; }
+        return i;
+      }
+      i++;
     }
+    return u.length;
+  }
+
+  function scanJpeg(ab){
+    const d = new DataView(ab), u = new Uint8Array(ab);
+    if (u.length < 4 || d.getUint16(0) !== 0xFFD8) return null;
+    const keep = [[0, 2]], dropped = [];
+    let p = 2, orientation = 1, sawSOS = false, hitEOI = false;
+    const note = (name, n) => { if (n > 0) dropped.push({ name: name, bytes: n }); };
+
+    while (p < u.length - 1) {
+      if (u[p] !== 0xFF) {                       /* junk between segments */
+        let q = p;
+        while (q < u.length && u[q] !== 0xFF) q++;
+        note("stray bytes", q - p);
+        p = q; continue;
+      }
+      let q = p;
+      while (q < u.length && u[q] === 0xFF) q++;
+      if (q >= u.length) break;
+      const m = u[q], segStart = q - 1;
+
+      if (m === 0xD9) { keep.push([segStart, q + 1]); p = q + 1; hitEOI = true; break; }
+      if (m === 0x01 || (m >= 0xD0 && m <= 0xD7)) { keep.push([segStart, q + 1]); p = q + 1; continue; }
+      if (q + 3 > u.length) return null;
+      const len = d.getUint16(q + 1);
+      if (len < 2 || q + 1 + len > u.length) return null;
+      const hdrEnd = q + 1 + len;
+
+      if (m === 0xDA) {                          /* SOS header plus its scan */
+        const e = endOfScan(u, hdrEnd);
+        keep.push([segStart, e]);
+        sawSOS = true; p = e; continue;
+      }
+      if (m === 0xE1) { const o = readOrientation(d, q + 3, len - 2); if (o) orientation = o; }
+      if (JPG_KEEP(m)) keep.push([segStart, hdrEnd]);
+      else note(JPG_NAMES[m] || ("marker 0x" + m.toString(16).toUpperCase()), hdrEnd - segStart);
+      p = hdrEnd;
+    }
+    if (!sawSOS) return null;
+    if (hitEOI && p < u.length) note("trailing data after the image", u.length - p);
     return { kind: "jpeg", keep: keep, dropped: dropped, orientation: orientation };
   }
 
@@ -3498,20 +3540,22 @@ if ("IntersectionObserver" in window && spyTargets.length){
     if (u.length < 12) return null;
     for (let i = 0; i < 8; i++) if (u[i] !== PNG_SIG[i]) return null;
     const keep = [[0, 8]], dropped = [];
-    let p = 8, depth = 0, colour = -1, apng = false, sawIHDR = false;
+    let p = 8, depth = 0, colour = -1, apng = false, sawIHDR = false, sawIEND = false;
     while (p + 8 <= u.length) {
       const len = d.getUint32(p);
       const type = String.fromCharCode(u[p+4], u[p+5], u[p+6], u[p+7]);
       const end = p + 12 + len;
-      if (len < 0 || end > u.length) return null;
+      if (end > u.length) return null;
       if (type === "IHDR") { sawIHDR = true; depth = u[p+16]; colour = u[p+17]; }
       if (type === "acTL") apng = true;
-      if (PNG_NAMES[type]) dropped.push({ name: PNG_NAMES[type], bytes: end - p });
-      else keep.push([p, end]);
+      /* whitelist: only chunks that are part of the picture survive */
+      if (PNG_KEEP[type]) keep.push([p, end]);
+      else dropped.push({ name: PNG_NAMES[type] || (type + " · non-image chunk"), bytes: end - p });
       p = end;
-      if (type === "IEND") break;
+      if (type === "IEND") { sawIEND = true; break; }
     }
     if (!sawIHDR) return null;
+    if (sawIEND && p < u.length) dropped.push({ name: "trailing data after the image", bytes: u.length - p });
     return { kind: "png", keep: keep, dropped: dropped, depth: depth, colour: colour, apng: apng };
   }
 
@@ -3523,13 +3567,55 @@ if ("IntersectionObserver" in window && spyTargets.length){
     return new Blob([o], { type: type });
   }
 
-  const rescan = async blob => {
-    try {
-      const ab = await blob.arrayBuffer();
-      const s = blob.type === "image/png" ? scanPng(ab) : scanJpeg(ab);
-      return s ? s.dropped.length : null;
-    } catch(err){ return null; }
-  };
+  /* Verification has to be independent of the stripper, or it only ever
+     confirms the stripper's own blind spots. This walks the finished file
+     and lists every block actually present, whatever it turns out to be. */
+  const SOF = { 0xC0:"SOF0", 0xC1:"SOF1", 0xC2:"SOF2", 0xC3:"SOF3", 0xC5:"SOF5", 0xC6:"SOF6",
+                0xC7:"SOF7", 0xC9:"SOF9", 0xCA:"SOF10", 0xCB:"SOF11", 0xCD:"SOF13",
+                0xCE:"SOF14", 0xCF:"SOF15", 0xC4:"DHT", 0xCC:"DAC", 0xDB:"DQT",
+                0xDD:"DRI", 0xDA:"SOS", 0xD8:"SOI", 0xD9:"EOI", 0xEE:"APP14" };
+  const JPG_OK = { SOI:1, EOI:1, SOS:1, DQT:1, DHT:1, DAC:1, DRI:1, APP14:1, RST:1,
+                   SOF0:1, SOF1:1, SOF2:1, SOF3:1, SOF5:1, SOF6:1, SOF7:1,
+                   SOF9:1, SOF10:1, SOF11:1, SOF13:1, SOF14:1, SOF15:1 };
+
+  function inventory(ab, kind){
+    const u = new Uint8Array(ab), d = new DataView(ab), types = [];
+    const add = t => { if (types.indexOf(t) < 0) types.push(t); };
+    let trailing = 0;
+    if (kind === "png") {
+      let p = 8;
+      while (p + 8 <= u.length) {
+        const len = d.getUint32(p);
+        const t = String.fromCharCode(u[p+4], u[p+5], u[p+6], u[p+7]);
+        add(t);
+        p += 12 + len;
+        if (t === "IEND") break;
+      }
+      trailing = Math.max(0, u.length - p);
+      return { types: types, trailing: trailing,
+               unexpected: types.filter(t => !PNG_KEEP[t]) };
+    }
+    let p = 2;
+    add("SOI");
+    while (p < u.length - 1) {
+      if (u[p] !== 0xFF) { trailing = u.length - p; break; }
+      let q = p;
+      while (q < u.length && u[q] === 0xFF) q++;
+      if (q >= u.length) break;
+      const m = u[q];
+      add(SOF[m] || ((m >= 0xE0 && m <= 0xEF) ? "APP" + (m - 0xE0)
+                   : m === 0xFE ? "COM"
+                   : (m >= 0xD0 && m <= 0xD7) ? "RST"
+                   : "0x" + m.toString(16).toUpperCase()));
+      if (m === 0xD9) { p = q + 1; trailing = u.length - p; break; }
+      if (m === 0x01 || (m >= 0xD0 && m <= 0xD7)) { p = q + 1; continue; }
+      if (q + 3 > u.length) break;
+      const len = d.getUint16(q + 1), hdrEnd = q + 1 + len;
+      if (len < 2 || hdrEnd > u.length) break;
+      p = (m === 0xDA) ? endOfScan(u, hdrEnd) : hdrEnd;
+    }
+    return { types: types, trailing: trailing, unexpected: types.filter(t => !JPG_OK[t]) };
+  }
 
   /* ---------- canvas ---------- */
   function loadImg(f){
@@ -3714,7 +3800,9 @@ if ("IntersectionObserver" in window && spyTargets.length){
     outEl.innerHTML = '<p class="mono small" style="margin-top:14px;color:var(--text-3)">Working…</p>';
     try {
       built = await makeBlob();
-      const left = await rescan(built.blob);
+      let inv = null;
+      try { inv = inventory(await built.blob.arrayBuffer(), fmt === "png" ? "png" : "jpeg"); }
+      catch (err) { inv = null; }
       const delta = built.blob.size - file.size;
       outEl.innerHTML =
         '<div class="note" style="margin-top:16px"><h5>Ready · ' +
@@ -3724,7 +3812,12 @@ if ("IntersectionObserver" in window && spyTargets.length){
             : 're-encoded at quality ' + qIn.value) + '</h5>' +
           '<p class="mono small">' + bytes(file.size) + ' → <b>' + bytes(built.blob.size) + '</b>' +
           (delta ? ' (' + (delta > 0 ? '+' : '−') + bytes(Math.abs(delta)) + ')' : '') + '</p>' +
-          (left === 0 ? '<p class="mono small ph-ok">Checked the result: 0 metadata blocks left.</p>' : '') +
+          (inv ? '<p class="mono small ' + (inv.unexpected.length || inv.trailing ? 'ph-bad' : 'ph-ok') +
+            '">Result contains: ' + esc(inv.types.join(", ")) +
+            (inv.trailing ? ' + ' + bytes(inv.trailing) + ' trailing' : '') +
+            (inv.unexpected.length || inv.trailing
+              ? ' — unexpected: ' + esc(inv.unexpected.join(", ") || "trailing bytes")
+              : '. Nothing but the image.') + '</p>' : '') +
         '</div>';
       const a = document.createElement("a");
       a.href = URL.createObjectURL(built.blob);
